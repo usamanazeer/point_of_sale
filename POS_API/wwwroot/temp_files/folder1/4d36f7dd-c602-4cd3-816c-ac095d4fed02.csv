@@ -1,0 +1,36 @@
+Message,Action,ItemCode,Name,BarCode,Measurement,Unit,Purchase Rate,Sales Rate,Discount Amount,Is Discount In Percentage?,Main Category, Sub-Category,Minimum Quantity,Brand,Color,Size, Is Returnable?,Display On POS?, Is Raw Item
+DUPLICATE! Item Already Exists.,Create,,Mixed Chaat,,,120,140,0,0,Chatori Chaat,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Chana Papdi,,,120,140,0,0,Chatori Chaat,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Plain Dahi Bara,,,120,140,0,0,Chatori Chaat,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Dahi Bara Burger,,,150,170,0,0,Chatori Chaat,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Aik Plate Or Special,,,150,170,0,0,Chatori Chaat,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Pani Puri,,,120,140,0,0,Puri,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Meethi Puri,,,120,140,0,0,Puri,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Dahi Puri,,,130,150,0,0,Puri,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Sev Puri,,,140,160,0,0,Puri,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Masala Kuiya,,,100,120,0,0,Kuiya,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Meethi Kuiya,,,100,120,0,0,Kuiya,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Pizza Kuiya,,,130,150,0,0,Kuiya,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,BBQ Kuiya,,,130,150,0,0,Kuiya,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Burns Road Single,,,30,45,0,0,Bun Kabab,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Burns Road Duble,,,70,90,0,0,Bun Kabab,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Aloo Chatni,,,30,45,0,0,Bun Kabab,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Flamingo,,,240,260,0,0,Wraps,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Entertainer,,,270,290,0,0,Wraps,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Sharpshooter,,,270,290,0,0,Wraps,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Saj Wrap,,,280,300,0,0,Wraps,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Mexican Pizza,,,290,310,0,0,Pita Pizza,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Taksim Square,,,300,320,0,0,Pita Pizza,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Corn by Jorn,,,310,330,0,0,Pita Pizza,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Plain Hummus,,,290,310,0,0,Hummus,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Spicy Hummus,,,310,330,0,0,Hummus,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Plain Fries,,,120,140,0,0,Fries,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Masala Fries,,,130,150,0,0,Fries,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Mayo Fries,,,140,160,0,0,Fries,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Soft Drinks Can,,,50,70,0,0,Drinks,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Mineral Water Small,,,20,40,0,0,Drinks,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Mineral Water Large,,,50,70,0,0,Drinks,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Minute Maid,,,60,80,0,0,Drinks,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Chicken Sajji,,,1000,1090,0,0,Aik Plate Aur Special Balochi Sajji,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Sev,,,10,20,0,0,Extra Topping,,0,Aik Plate Aur,,,0,0,0
+DUPLICATE! Item Already Exists.,Create,,Papdi,,,10,20,0,0,Extra Topping,,0,Aik Plate Aur,,,0,0,0

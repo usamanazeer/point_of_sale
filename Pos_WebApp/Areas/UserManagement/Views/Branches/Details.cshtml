@@ -1,0 +1,123 @@
+﻿@model BranchDto
+@{
+    ViewData["Title"] = "Branch - Details";
+}
+
+
+@section Styles{
+    
+}
+
+<section id="about">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">Branch Details</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    @*<h5>Branch Details</h5>*@
+                </div>
+
+                <div class="card-content" style="padding-top:0px;">
+                    <div class="card-body" style="padding-top:0px;">
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Name:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.Name</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Phone:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.Phone</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>City:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.City</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Address:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.Address</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Is Main Branch:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.IsMainBranchText</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Status:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.StatusText</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created By:</a></span>
+                                        @if (Model.CreatedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.CreatedByUser.FirstName @Model.CreatedByUser.LastName (@Model.CreatedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.CreatedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified By:</a></span>
+                                        @if (Model.ModifiedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.ModifiedByUser.FirstName @Model.ModifiedByUser.LastName (@Model.ModifiedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.ModifiedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--About section ends-->

@@ -1,0 +1,66 @@
+﻿@model InvItemBarCodeDto
+@{
+    ViewData["Title"] = "Create - ItemBarCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script>
+        bindSubmit('create-barcode-form', 'btn-create-barcode', '/ItemBarCodes/Create', true);
+    </script>
+}
+
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Add Item-BarCode</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-barcode-form" class="form" autocomplete="off" asp-route="CreateItemBarCode" method="post">
+                            <input type="hidden" asp-for="@Model.ItemId" />
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Item</label>&nbsp;<span class="red"></span>
+                                            @if (@Model.Item != null)
+                                            {
+                                                <span type="text" class="form-control border-grey" style="background-color: #ECEFF1">@Model.Item.FullName &nbsp;&nbsp;-&nbsp;&nbsp; @Model.Item.ItemBarCode</span>
+                                            }
+                                            else
+                                            {
+                                                <span type="text" class="form-control border-grey" style="background-color: #ECEFF1"></span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.BarCode"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.BarCode" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions right">
+                                <button id="btn-create-barcode" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                                <button type="reset" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                    <i class=""></i> Reset
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

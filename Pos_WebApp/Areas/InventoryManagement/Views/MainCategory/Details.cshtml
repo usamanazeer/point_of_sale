@@ -1,0 +1,111 @@
+﻿@model InvCategoryDto
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+@section Styles{
+}
+
+    <section id="about">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="content-header">Category Details</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        @*<h5>Category Details</h5>*@
+                    </div>
+                    <div class="card profile-with-cover">
+
+                        <div class="media profil-cover-details row">
+                            <div class="col-5">
+                                <div class="align-self-start halfway-fab pl-3 pt-2">
+                                    <div class="text-left">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="align-self-center halfway-fab text-center">
+                                    <a class="profile-image">
+                                        <img src="@Model.ImageUrl" class="rounded-circle img-border gradient-summer width-200 height-200" alt="Card image">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                            </div>
+
+                        </div>
+                        <div class="profile-section">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 ">
+                                    <ul class="profile-menu no-list-style">
+                                    </ul>
+                                </div>
+                                <div class="col-lg-2 col-md-2 text-center">
+                                    <span class="font-medium-2 text-uppercase">@Model.Name </span>
+                                </div>
+                                <div class="col-lg-5 col-md-5">
+                                    <ul class="profile-menu no-list-style">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content" style="padding-top:0px;">
+                        <div class="card-body" style="padding-top:0px;">
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a> Name:</a>&nbsp;</span>
+                                            <span class="text-bold-500 overflow-hidden">@Model.Name</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a> Display On POS:</a>&nbsp;</span>
+                                            <span class="text-bold-500 overflow-hidden">@Model.DisplayOnPosText</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a> Status:</a>&nbsp;</span>
+                                            <span class="text-bold-500 overflow-hidden">@Model.StatusText</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a> Create Date:</a>&nbsp;</span>
+                                            <span class="text-bold-500 overflow-hidden">@Model.CreatedOn.ToString("dd MMM, yyyy")</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a> Last Modified Date:</a>&nbsp;</span>
+                                            <span class="text-bold-500 overflow-hidden">@Model.ModifiedOn.ToString("dd MMM, yyyy")</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+<!--About section ends-->

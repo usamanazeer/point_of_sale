@@ -1,0 +1,64 @@
+﻿@model InvItemBarCodeDto
+@{
+    ViewData["Title"] = "Edit - ItemBarCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script>
+        bindSubmit('edit-barcode-form', 'btn-edit-barcode', '/ItemBarCodes/Edit');
+    </script>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Edit Item BarCode</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="edit-barcode-form" class="form" autocomplete="off" method="post">
+                            <input type="hidden" asp-for="@Model.Id" />
+                            <input type="hidden" asp-for="@Model.ItemId" />
+
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.BarCode"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.BarCode" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Status"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="Status" class="form-control border-grey" required>
+                                                <option value="">Select Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="2">InActive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions right">
+
+                                <button id="btn-edit-barcode" type="submit" class="btn btn-raised btn-success" style="float:right" value="Save">Save</button>
+                                @*<button type="reset" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                        <i class=""></i> Reset
+                                    </button>*@
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

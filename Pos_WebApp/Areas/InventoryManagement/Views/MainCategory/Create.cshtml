@@ -1,0 +1,71 @@
+﻿@model InvCategoryDto
+@{
+    ViewData["Title"] = "Create - MainCategory";
+}
+
+@section Scripts{
+    <script>
+        bindSubmit('create-main-category-form', 'btn-create-main-category', '/MainCategory/Create', true);
+    </script>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create Category</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-main-category-form" class="form" autocomplete="off" asp-route="CreateMainCategory" method="post" enctype="multipart/form-data">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Name" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch" style="padding-top:35px;">
+                                                <input type="checkbox" asp-for="DisplayOnPos" class="custom-control-input" id="displayOnPosSwitch">
+                                                <label class="custom-control-label" asp-for="DisplayOnPos" for="displayOnPosSwitch"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group" style="padding-left:15px;">
+                                            <label asp-for="@Model.ImageUrl"></label>&nbsp;<span class="red"></span>
+                                            <input id="category-image-input" name="categoryImage" type="file" accept="image/*" class="border-grey" />
+                                            <div class="d-inline">
+                                                <img id="category-image" src="@Model.ImageUrl" width="100" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-actions right">
+
+                                <button id="btn-create-main-category" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                                <button type="reset" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                    <i class=""></i> Reset
+                                </button>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

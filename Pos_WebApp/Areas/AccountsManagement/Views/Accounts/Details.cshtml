@@ -1,0 +1,136 @@
+﻿@model AccAccountDto
+@{
+    ViewData[index: "Title"] = "Account - Details";
+}
+
+
+<!-- from super-profile-page.html  -->
+<!--About section starts-->
+
+<section id="about">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">Account Details</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    @*<h5>DeliveryBoy Details</h5>*@
+                </div>
+                @* ReSharper disable once UnknownCssClass *@
+                <div class="card-content" style="padding-top: 0;">
+                    <div class="card-body" style="padding-top: 0;">
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a>Account Title:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.Title</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a>Account Code:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.Code</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a>Account No:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.AccNo</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a> Account Type:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.AccountType?.Name</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a> Parent Account:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.Parent?.Title</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a> Status:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.StatusText</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a>Created By:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.CreatedByUser?.FirstName @Model.CreatedByUser?.LastName (@Model.CreatedByUser?.Role?.Name) </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a>Created On:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.CreatedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a>Last Modified By:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.ModifiedByUser?.FirstName @Model.ModifiedByUser?.LastName (@Model.ModifiedByUser?.Role?.Name) </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary">
+                                            <a>Last Modified On:</a>
+                                        </span>
+                                        <span class="d-block overflow-hidden">@Model.ModifiedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--About section ends-->

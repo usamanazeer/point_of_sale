@@ -1,0 +1,131 @@
+﻿@model InvModifierDto
+@{
+    ViewData["Title"] = "Create - Modifier";
+}
+
+
+@section Styles{
+    <!--select2-->
+    <link href="~/app-assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+}
+@section Scripts{
+
+    <script src="~/app-assets/vendors/select2/dist/js/select2.min.js" asp-append-version="true"></script>
+
+    <environment include="Development">
+        <script src="~/js/Areas/InventoryManagement/Modifiers/Create.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/InventoryManagement/Modifiers/Create.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create Modifier</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-modifier-form" class="form" autocomplete="off" asp-route="CreateModifier" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Name" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.ModifierCharges"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.ModifierCharges" type="number" step="any" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row" id="table-container">
+
+                                            <div class="col-md-12">
+
+                                                <div class="card-body card-dashboard table-responsive">
+                                                    <label id="table-label">Modifier Items</label>
+                                                    <table class="table table-striped table-bordered" id="subitems-table">
+                                                        <thead class="subitems-table-thead" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>Item Name <span class="red">*</span></th>
+                                                                <th>Item BarCode</th>
+                                                                <th>Unit Measurement</th>
+                                                                <th>Quantity</th>
+                                                                <th>Unit Amount</th>
+                                                                <th>Total Amount</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.InvModifierItems != null && Model.InvModifierItems.Count() > 0)
+                                                            {
+                                                                for (int i = 0; i < Model.InvModifierItems.Count; i++)
+                                                                {
+                                                                    @await Component.InvokeAsync("AddModifier_SubItemRow", new Tuple<int, InvModifierItemDto>(i, Model.InvModifierItems[i]))
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                @await Component.InvokeAsync("AddModifier_SubItemRow", new Tuple<int, InvModifierItemDto>(0, null))
+                                                            }
+                                                        </tbody>
+                                                        <tfoot class="subitems-table-tfoot" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>Item Name <span class="red">*</span></th>
+                                                                <th>Item BarCode</th>
+                                                                <th>Unit Measurement</th>
+                                                                <th>Quantity</th>
+                                                                <th>Unit Amount</th>
+                                                                <th>Total Amount</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                            <tr class="border-1 border-white">
+                                                                <td class="border-0"><input id="btn-add-subitems-row" type="button" class="btn btn-sm bg-blue btn-flat white" value="Add More" onclick="AddRow()" /></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+
+                                                    <!--NEVER EVER REMOVE THIS TABLE-->
+                                                    <table style="display:none;" id="deleted-rows-table">
+                                                        <tbody>
+                                                            <!--NEVER EVER REMOVE THIS ROW-->
+                                                            <tr></tr>
+                                                        </tbody>
+                                                    </table>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions right">
+                                <button id="btn-create-modifier" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                                <button type="button" class="btn btn-raised btn-warning mr-1" style="float:right" onclick="ResetForm()">
+                                    <i class=""></i> Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

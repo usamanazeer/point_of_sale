@@ -1,0 +1,171 @@
+﻿@model InvPoMasterDto
+@{
+    ViewData["Title"] = Model.PoNo;
+}
+
+
+@section Styles{
+
+}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Services/JsPdfService.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Services/JsPdfService.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<div class="row">
+    <div class="col-md-12">
+        <h4>Purchase Order</h4> <button onclick="printDiv('pdf-content')" class="btn btn-md btn-success">Print</button>
+    </div>
+</div>
+<section class="po-template" id="pdf-content">
+    <div class="card">
+        <div class="card-content p-3">
+            <div id="po-template" class="card-body">
+                <!-- PO Company Details -->
+                <div id="po-company-details" class="row">
+                    <div class="col-md-6 col-sm-12 text-center text-md-left">
+                        <div class="media">
+                            <img src="@Model.CreatedByUser.Company.Logo" alt="company logo" width="80" height="80">
+                            <div class="media-body">
+                                <ul class="ml-2 px-0 list-unstyled">
+                                    <li class="text-bold-800">@Model.CreatedByUser.Company.Name</li>
+                                    <li>@Model.CreatedByUser.Company.MainBranch.Address</li>
+                                    @*<li>Melbourne,</li>
+                                        <li>Florida 32940,</li>
+                                        <li>USA</li>*@
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-center text-md-right">
+                        <h2>Purchase Order</h2>
+                        <p class="pb-3"># @Model.PoNo</p>
+                    </div>
+                </div>
+                <!--/ PO Company Details -->
+                <!-- PO Customer Details -->
+                <div id="po-customer-details" class="row pt-2">
+                    <div class="col-sm-12 text-left">
+                        <p class="text-muted">Bill To</p>
+                    </div>
+                    <div class="col-md-6 col-sm-12  text-center text-md-left">
+                        <ul class="px-0 list-unstyled">
+                            <li class="text-bold-800">@(Model.Vendor.ContactName) <span>(@Model.Vendor.CompanyName)</span></li>
+                            <li>@Model.Vendor.Address</li>
+                            @*<li>4879 Westfall Avenue,</li>
+                                <li>Albuquerque,</li>
+                                <li>New Mexico-87102.</li>*@
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-center text-md-right">
+                        <p><span class="text-muted">PO Date :</span> @Model.PoDate.ToString("dd MMM, yyyy")</p>
+                        @*<p><span class="text-muted">Terms :</span> Due on Receipt</p>*@
+                        <p><span class="text-muted">Delivery Date :</span> @Model.DeliveryDate.ToString("dd MMM, yyyy")</p>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-md-9 col-sm-12">
+                        <h6>Description:</h6>
+                        <p>@Model.Description</p>
+                    </div>
+                </div>
+                <br />
+                <!--/ PO Customer Details -->
+                <!-- PO Items Details -->
+                <div id="po-items-details" class="pt-2">
+                    <div class="row">
+                        <div class="table-responsive col-sm-12">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Item &amp; Description</th>
+                                        <th class="text-right">Quantity</th>
+                                        <th class="text-right">Rate</th>
+                                        <th class="text-right">Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.InvPoDetails.Count(); i++)
+                                    {
+                                        var item = Model.InvPoDetails[i];
+                                        <tr>
+                                            <th scope="row">@(i+1)</th>
+                                            <td>
+                                                <p>@item.Item.FullName</p>
+                                                @*<p class="text-muted">@item.Item.Description</p>*@
+                                            </td>
+                                            <td class="text-right">@item.RequestedQuantity</td>
+                                            <td class="text-right">@item.Rate</td>
+                                            <td class="text-right">@item.SubTotal</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 text-left">
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            @*<p class="lead">Total Amount</p>*@
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr class="bg-grey bg-lighten-4">
+                                            <td class="text-bold-800">Total</td>
+                                            <td class="text-bold-800 text-right">@Model.InvPoDetails.Sum(item => item.RequestedQuantity * (item.Item.PurchaseRate ?? 0))</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center">
+                                <p>Authorized person</p>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                @*<img src="~/app-assets/img/pages/signature-scan.png" alt="signature" class="width-250">
+                                    <h6>Amanda Orton</h6>
+                                    <p class="text-muted">Managing Director</p>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- PO Footer -->
+
+                <div id="po-footer">
+                    <div class="row">
+                        @*<div class="row">
+                              <div class="col-md-9 col-sm-12">
+                                <h6>Terms &amp; Condition</h6>
+                                <p>You know, being a test pilot isn't always the healthiest business in the world. We predict too
+                                  much for the next year and yet far too little for the next 10.</p>
+                              </div>
+                              <div class="col-md-3 col-sm-12 text-center">
+                                <button type="button" class="btn btn-primary btn-raised my-1"><i class="fa fa-paper-plane-o"></i> Send
+                                  PO</button>
+                              </div>
+                            </div>*@
+                    </div>
+                    <!--/ PO Footer -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagebreak"></div>
+</section>
+
+<!--About section ends-->

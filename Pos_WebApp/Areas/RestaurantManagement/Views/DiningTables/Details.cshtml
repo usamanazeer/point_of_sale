@@ -1,0 +1,121 @@
+﻿@model RestDiningTableDto
+@{
+    ViewData["Title"] = "Table - Details";
+}
+
+@section Scripts
+{
+    <environment include="Development">
+        <script src="~/js/Areas/RestaurantManagement/DiningTables/Details.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/RestaurantManagement/DiningTables/Details.min.js"></script>
+    </environment>
+}
+
+@Html.AntiForgeryToken()
+<section id="about">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">Table Details</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    @*<h5>Table Details</h5>*@
+                </div>
+
+                <div class="card-content" style="padding-top:0px;">
+                    <div class="card-body" style="padding-top: 0px;">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="custom-control custom-switch" style="padding-top:35px;">
+                                    <input type="checkbox" asp-for="@Model.IsOccupied" class="custom-control-input" id="isInPercentSwitch" onclick="UpdateTableOccupyStatus('@Model.Id')">
+                                    <label class="custom-control-label" asp-for="@Model.IsOccupied" for="isInPercentSwitch"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Table No:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.TableNo</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Capacity:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.Capacity</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Floor:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.Floor.Name</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Status:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.StatusText</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created By:</a></span>
+                                        @if (Model.CreatedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.CreatedByUser.FirstName @Model.CreatedByUser.LastName (@Model.CreatedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.CreatedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified By:</a></span>
+                                        @if (Model.ModifiedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.ModifiedByUser.FirstName @Model.ModifiedByUser.LastName (@Model.ModifiedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.ModifiedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--About section ends-->

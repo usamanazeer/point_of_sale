@@ -1,0 +1,28 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Acess Denied";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content">
+    <div class="content-wrapper">
+        <h1 class="text-danger">Error.</h1>
+        <h2 class="text-danger">An error occurred while processing your request.</h2>
+
+        @if (Model.Response.ErrorOccured)
+        {
+            <p>
+                <strong>Request ID:</strong> <code>@Model.Response.ErrorOccured</code>
+            </p>
+        }
+        else
+        {
+            <p>
+                <strong></strong> <code>@Model.Response.ResponseMessage</code>
+            </p>
+        }
+        <h3>Development Mode</h3>
+        
+    </div>
+
+</div>

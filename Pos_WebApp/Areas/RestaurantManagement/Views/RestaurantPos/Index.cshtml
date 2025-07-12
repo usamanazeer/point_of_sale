@@ -1,0 +1,893 @@
+﻿@{
+    var Categories = (List<InvCategoryDto>) ViewBag.Categories ?? new List<InvCategoryDto>();
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<!-- BEGIN : Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Apex admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Apex admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>POS</title>
+    <link rel="apple-touch-icon" sizes="60x60" href="~/app-assets/img/ico/apple-icon-60.png" asp-append-version="true">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/app-assets/img/ico/apple-icon-76.png" asp-append-version="true">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/app-assets/img/ico/apple-icon-120.png" asp-append-version="true">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/app-assets/img/ico/apple-icon-152.png" asp-append-version="true">
+    <link rel="shortcut icon" type="image/x-icon" href="~/app-assets/img/ico/favicon.ico" asp-append-version="true">
+    <link rel="shortcut icon" type="image/png" href="~/app-assets/img/ico/favicon-32.png" asp-append-version="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link href="~/app-assets/fonts/fonts.css" rel="stylesheet" asp-append-version="true" />
+    @*<link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900|Montserrat:300,400,500,600,700,800,900" rel="stylesheet">*@
+    <!-- BEGIN APEX CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/app.min.css" asp-append-version="true">
+
+    <environment include="Development">
+        <!-- END APEX CSS-->
+        <!-- BEGIN VENDOR CSS-->
+        <!-- font icons-->
+        <link rel="stylesheet" type="text/css" href="~/app-assets/fonts/feather/style.min.css" asp-append-version="true">
+        <link rel="stylesheet" type="text/css" href="~/app-assets/fonts/simple-line-icons/style.min.css" asp-append-version="true">
+        <link rel="stylesheet" type="text/css" href="~/app-assets/fonts/font-awesome/css/font-awesome.min.css" asp-append-version="true">
+        <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/perfect-scrollbar.min.css" asp-append-version="true">
+        <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/prism.min.css" asp-append-version="true">
+        <!--select2-->
+        <link href="~/app-assets/vendors/select2/dist/css/select2.min.css" asp-append-version="true" rel="stylesheet">
+
+        <!-- END VENDOR CSS-->
+        <!--Sweet alert-->
+        <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/sweetalert2.min.css" asp-append-version="true">
+        <!-- BEGIN Page Level CSS-->
+        <link href="~/custom-elements/number-input/css/custom-number-input.css" asp-append-version="true" rel="stylesheet">
+        <link href="~/css/Areas/RestaurantManagement/RestaurantPos/Index.css" asp-append-version="true" rel="stylesheet">
+        <!-- END Page Level CSS-->
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/Areas/RestaurantManagement/RestaurantPos/Index.min.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
+   
+    
+
+    <!--<script src="~/lib/axios/axios.js" asp-append-version="true"></script>-->
+
+    @if (ViewBag.Ser_Categories != null)
+    {
+        <script>
+                window.Categories = JSON.parse('@Html.Raw(ViewBag.Ser_Categories)');
+                window.Tables = JSON.parse('@Html.Raw(ViewBag.Ser_Tables)');
+                window.Waiters = JSON.parse('@Html.Raw(ViewBag.Ser_Waiters)');
+                window.DeliveryServices = JSON.parse('@Html.Raw(ViewBag.Ser_DeliveryServices)');
+                window.DeliveryBoys = JSON.parse('@Html.Raw(ViewBag.Ser_DeliveryBoys)');
+                //console.log('window.DeliveryServices', window.DeliveryServices);
+                //console.log('window.DeliveryBoys', window.DeliveryBoys);
+        </script>
+    }
+
+
+</head>
+    <!-- END : Head-->
+    <!-- BEGIN : Body-->
+<body data-col="2-columns" class=" 2-columns ">
+    @Html.AntiForgeryToken()
+    <div class="wrapper page-wrapper" id="posapp" v-cloak>
+
+        <!-- main menu-->
+        <!--.main-menu(class="#{menuColor} #{menuOpenType}", class=(menuShadow == true ? 'menu-shadow' : ''))-->
+        <div data-active-color="white" @*data-background-color="man-of-steel"*@ @*data-image="~/app-assets/img/sidebar-bg/01.jpg"*@ class="app-sidebar" style="width: 60px;">
+            <!-- main menu header-->
+            <!-- Sidebar Header starts-->
+            <div class="sidebar-header">
+                <div class="logo clearfix">
+                    <a href="~/" class="logo-text float-left">
+                        <div class="logo-img">
+                            <img src="~/app-assets/img/logo-dark.png" />
+                        </div>@*<span class="text align-middle">APEX</span>*@
+                        @*</a><a id="sidebarToggle" href="javascript:;" class="nav-toggle d-none d-sm-none d-md-none d-lg-block"><i data-toggle="collapsed" class="toggle-icon ft-toggle-right"></i></a><a id="sidebarClose" href="javascript:;" class="nav-close d-block d-md-block d-lg-none d-xl-none"><i class="ft-x"></i>*@
+
+                    </a>
+                </div>
+            </div>
+            <!-- Sidebar Header Ends-->
+            <!-- / main menu header-->
+            <!-- main menu content-->
+            <div class="sidebar-content">
+                <div class="nav-container">
+                    <ul id="" data-menu="" data-scroll-to-active="true" class="cat-ul">
+                        <li v-on:click="CategoryClick()" :class="'nav-item '+(Active_Category == null? 'active' : '')" id="category-li-default">
+                            <a class="category" data-cat-id="" data-item-type="" data-cat-name="All Categories">All</a>
+                        </li>
+                        @foreach (var cat in Categories)
+                        {
+                            <li v-on:click="CategoryClick('@cat.Id')" :class="'nav-item '+(Active_Category == @cat.Id ? 'active' : '')" id="category-li-@cat.Id">
+                                <a class="category" data-cat-id="@cat.Id" data-item-type="@(ItemTypes.NormalItem.ToInt())" data-cat-name="@cat.Name">@cat.Name</a>
+                            </li>
+                        }
+                        <li v-on:click="DealsClick()" :class="'nav-item '+(Active_Category == 'deals' ? 'active' : '')" id="category-li-deals">
+                            <a class="category" data-item-type="@(ItemTypes.DealItem.ToInt())" data-cat-name="Deals">Deals</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- main menu content-->
+            <div class="sidebar-background"></div>
+            <!-- main menu footer-->
+            <!-- include includes/menu-footer-->
+            <!-- main menu footer-->
+        </div>
+        <!-- / main menu-->
+        <!-- Navbar (Header) Starts-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-faded header-navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <div class="row">
+                        <div class="col-6">
+                            <h2 class="main-cat-title">{{MainCategoryTitle}}</h2>
+                        </div>
+                        <div class="col-6">
+                            <form role="search" class="navbar-form navbar-right">
+                                <div class="position-relative has-icon-right">
+                                    <input v-model="SearchItemText" v-on:keyup="SearchItems" type="text" placeholder="Search" class="form-control round item-search-box" />
+                                    <div class="form-control-position">
+                                        <i class="ft-search"></i>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-container">
+                    <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                        <ul class="navbar-nav">
+                            <li class="nav-item mr-2 d-none d-lg-block">
+                                <a id="navbar-fullscreen" href="javascript:;" class="nav-link apptogglefullscreen">
+                                    <i class="ft-maximize font-medium-3 white"></i>
+                                    <p class="d-none">fullscreen</p>
+                                </a>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a id="dropdownBasic2" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle">
+                                    <i class="ft-bell font-medium-3 white"></i><span class="notification badge badge-pill badge-danger">@*4*@</span>
+                                    <p class="d-none">Notifications</p>
+                                </a>
+                                <div class="notification-dropdown dropdown-menu dropdown-menu-right">
+                                    <div class="noti-list">
+                                    </div>
+                                    <a class="noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1">Read All Notifications</a>
+                                </div>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a id="dropdownBasic3" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle">
+                                    <i class="ft-user font-medium-3 white"></i>
+                                    <p class="d-none">User Settings</p>
+                                </a>
+                                <div ngbdropdownmenu="" aria-labelledby="dropdownBasic3" class="dropdown-menu text-left dropdown-menu-right">
+                                    
+                                    <a href="/auth/logout" class="dropdown-item">
+                                        <i class="ft-power mr-2"></i><span>Logout</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item d-none d-lg-block">
+                                <a href="javascript:;" class="nav-link position-relative notification-sidebar-toggle">
+                                    <i class="ft-align-left font-medium-3 white pr-2"></i>
+                                    <span class="notification badge badge-pill badge-danger">{{PendingOrders.length}}</span>
+                                    <p class="d-none">Notifications Sidebar</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar (Header) Ends-->
+
+        <div class="main-panel">
+            <!-- BEGIN : Main Content-->
+            <div class="main-content" style="padding-left: 55px;">
+                <div class="content-wrapper">
+
+                    <div class="row page-content">
+                        <div class="col-lg-9 items-panel">
+                            <div class="col-lg-12">
+                                <ul class="sub-cat-ul">
+                                    <li :class="'sub-cat-li '+(Active_SubCategory == null ? 'active': '' )" id="subcat-li-default">
+                                        <button v-on:click="SubCategoryClick()" class="sub-category" data-subcat-id="">All</button>
+                                    </li>
+                                    <li v-for="subcat in SubCategoriesList" :class="'sub-cat-li '+(subcat.value == Active_SubCategory ? 'active': '' )" :id="'subcat-li-'+subcat.value">
+                                        <button v-on:click="SubCategoryClick(subcat.value)" class="sub-category" :data-subcat-id="subcat.value">{{subcat.text}}</button>
+                                    </li>
+
+                                    @*<li class="sub-cat-li active" data-subcat-id=""><button class="sub-category" data-subcat-id=""> All </button></li>
+                                        @foreach (var subCat in SubCategories)
+                                        {
+                                            <li class="sub-cat-li"><button class="sub-category" data-subcat-id="@subCat.Value"> @subCat.Text </button></li>
+                                        }*@
+                                </ul>
+                            </div>
+                            <div class="col-lg-12 items-container ps-scrollbar-y ps-scrollbar-y-rail">
+                                <div class="row items-row" style="width: 99.99%;">
+
+                                    <div v-for="(item, index) in ItemsList" class="col-xl-3 col-pos-tablet col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-3 tilted-left" id="'item-'+item.id">
+                                        <div class="card item-card mb-1">
+                                            <button :disabled="item.quantity == 0" v-on:click="OpenAddModifierModal(item.id)" data-toggle="modal" data-backdrop="true" data-target="#addModifierModal" class="fa fa-plus-circle green no-border no-outline bg-transparent btn-add-addon tilted-right" title="ad-ons"></button>
+                                            <div class="card-header text-center tilted-right" style="z-index: 0;">
+                                                <img :src="item.imageUrl" alt="Brek" width="100" height="100" class="rounded-circle gradient-mint">
+
+                                            </div>
+                                            <div class="card-content tilted-right">
+                                                <div class="card-body text-center item-card-body">
+                                                    <h6 class="card-title">{{item.name}}</h6>
+                                                    <p class="category text-gray font-small-5 ">{{item.fullName}}</p>
+
+                                                    <div class="row">
+                                                        <div class="col-12 mt-1 pl-4">
+                                                            <div class="row grey justify-content-center">
+                                                                <div class="custom-number-input custom-number-input-large btns-prevent-default">
+                                                                    <div class="custom-number-input-nav">
+                                                                        <button v-on:click="item.quantity--;AddToOrderList(index)" class="custom-number-input-button custom-number-input-down bg-custom-orange white">
+                                                                            <span>-</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <input class="openModalInput" data-prop-name="quantity" v-model="item.quantity" v-on:keyup="ItemQuantityChange" :data-index="index" :data-id="item.id" type="number" min="0" :max="item.remainingInventory" step="1">
+                                                                    <div class="custom-number-input-nav">
+                                                                        <button v-on:click="item.quantity++;AddToOrderList(index)" class="custom-number-input-button custom-number-input-up bg-custom-orange white">
+                                                                            <span>+</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class=" badge bg-custom-yellow round rate-badge">
+                                                {{item.finalSalesRate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 order-summery-panel">
+                            <div class="order-items-head">
+                                <h3 class="color-custom-greenish font-weight-600">Order Summery</h3>
+                                @*<h6 v-if="OrderToEdit != null" class="d-inline" style="float: right; position: relative; top: 8px;">
+                                        OrderNo: {{OrderToEdit!= null ? OrderToEdit.orderNo: null}}
+                                        <button v-on:click="ResetPage()" class="btn btn-danger btn-min-width btn-remove-edit-order">x</button>
+                                    </h6>*@
+
+                            </div>
+                            <div class="row mt-2 text-center">
+                                <div class="col-4">
+                                    <button v-on:click="OrderType = ORDER_TYPES.DineIn" :class="'btn-md btn-block btn-order-type btn-dinein '+(OrderType == ORDER_TYPES.DineIn? 'bg-custom-yellow': '')"> Dine in </button>
+                                </div>
+                                <div class="col-4">
+                                    <button :disabled="EditMode == true" v-on:click="OrderType = ORDER_TYPES.TakeAway" :class="'btn-md btn-block btn-order-type btn-takeaway '+(OrderType == ORDER_TYPES.TakeAway? 'bg-custom-yellow': '')"> To Go </button>
+                                </div>
+                                <div class="col-4">
+                                    <button :disabled="EditMode == true" v-on:click="OrderType = ORDER_TYPES.Delivery" :class="'btn-md btn-block  btn-order-type btn-delivery '+(OrderType == ORDER_TYPES.Delivery? 'bg-custom-yellow': '')"> Delivery </button>
+                                </div>
+                            </div>
+                            <div class="row mt-2 container-order-attributes-selects">
+                                <div class="col-6 pr-1" v-show="OrderType == ORDER_TYPES.DineIn">
+                                    <select id="select-table-no" class="select block form-control color-custom-greenish bg-custom-light-greenish select-table-no">
+                                        <option value=""> Table No: </option>
+                                        <option v-for="(item, index) in FreeTables(true)" :value="item.Value"> {{item.Text}} ({{item.FloorName}}) </option>
+                                    </select>
+                                </div>
+                                <div v-show="OrderType == ORDER_TYPES.DineIn" class="col-6 pl-1">
+                                    <select id="select-waiter-no" :disabled="TableNo==''" class="select block form-control bg-custom-light-greenish color-custom-greenish select-waiter-no">
+                                        <option value=""> Waiter: </option>
+                                        <option v-for="(item, index) in WaitersList" :value="item.Value"> {{item.Text}} </option>
+                                    </select>
+                                </div>
+                                <div v-show="OrderType == ORDER_TYPES.Delivery" class="col-6 pl-1">
+                                    <select id="select-delivery-service" class="select block form-control bg-custom-light-greenish color-custom-greenish select-delivery-service">
+                                        <option value=""> Delivery Service: </option>
+                                        <option v-for="(item, index) in DeliveryServicesList" :value="item.Value" :data-is-self="String(item.IsSelf)"> {{item.Text}} </option>
+                                    </select>
+                                </div>
+                                @*<div class="col-6 pr-1" v-show="OrderType == ORDER_TYPES.Delivery">
+                                        <select id="select-delivery-service" class="select block form-control color-custom-greenish bg-custom-light-greenish select-delivery-service">
+                                            <option value=""> Delivery Service: </option>
+                                            <option v-for="(item, index) in FreeTables(true)" :value="item.Value"> {{item.Text}} ({{item.FloorName}})  </option>
+                                        </select>
+                                    </div>
+                                    <div v-show="OrderType == ORDER_TYPES.Delivery" class="col-6 pl-1">
+                                        <select id="select-delivery-boy" v-show="" class="select block form-control bg-custom-light-greenish color-custom-greenish select-delivery-boy">
+                                            <option value=""> Delivery Boy:  </option>
+                                            <option v-for="(item, index) in WaitersList" :value="item.Value"> {{item.Text}} </option>
+                                        </select>
+                                    </div>*@
+                            </div>
+                            <div class="row order-items-container">
+                                <div class="col-12">
+                                    <div class="card ordered-items-card">
+                                        @for (var i = 0; i < Categories.Count(); i++)
+                                        {
+                                            <div class="card-header pb-2 ordered-items-card-header" id="order-category-container-@Categories[index: i].Id" v-show="FilterCartItemsByCategory(@Categories[index: i].Id).length > 0" @*style="display:none"*@>
+                                                <h6 class="card-title">@Categories[index: i].Name</h6>
+                                                <div class="card-content ordered-item-card-content">
+                                                    <ul id="order-item-category-@Categories[index: i].Id" class="list-group">
+                                                        <li v-for="(item, index) in FilterCartItemsByCategory(@Categories[index: i].Id)" :id="'order-item-'+item.id" class="list-group-item ordered-item-li">
+
+                                                            <div class="col-6 h-ft-content d-inline-block p-0">{{item.fullName}}</div>
+                                                            <div class="col-2 h-ft-content d-inline-block text-center order-item-quantity p-0">x<span>{{item.quantity}}</span></div>
+                                                            <div class="col-3 h-ft-content d-inline-block text-center order-item-subtotal p-0">
+                                                                <span class="badge bg-secondary">{{item.subTotal}}</span>
+                                                            </div>
+                                                            <div class="col-1 h-ft-content d-inline-block text-right p-0">
+                                                                <button class="btn btn-raised btn-outline-danger btn-min-width mr-1 btn-remove-order-item" v-on:click="RemoveFromCart(item.id)">x</button>
+                                                            </div>
+
+                                                            <div :class="'col-12 addons-ul adons-item-'+item.id">
+                                                                <div v-for="(modifier, index) in item.itemModifiers" :class="'row modifier-'+modifier.id">
+                                                                    <div class="col-6 h-ft-content d-inline-block p-0">{{modifier.modifier.name}}</div>
+                                                                    <div class="col-2 h-ft-content d-inline-block text-center p-0">x<span>{{modifier.totalQuantity}}</span></div>
+                                                                    <div class="col-3 h-ft-content d-inline-block text-center p-0">
+                                                                        <span class="badge bg-secondary">{{modifier.totalCharges}}</span>
+                                                                    </div>
+                                                                    <div class="col-1 h-ft-content d-inline-block text-right p-0">
+                                                                        <button v-show="modifier.isMandatory == false" v-on:click="RemoveModifier(item.id, modifier.id)" class="btn btn-raised btn-outline-danger btn-min-width mr-1 btn-remove-order-item">x</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="card-header pb-2 ordered-items-card-header" id="order-category-container-deals" v-show="FilterCartItemsByDeals().length > 0">
+                                            <h4 class="card-title">Deals</h4>
+                                            <div class="card-content ordered-item-card-content">
+                                                <ul id="order-item-deals" class="list-group">
+                                                    <li v-for="(item, index) in FilterCartItemsByDeals()" :id="'order-item-'+item.id" class="list-group-item ordered-item-li">
+                                                        <div class="col-6 h-ft-content d-inline-block p-0">{{item.fullName}}</div>
+                                                        <div class="col-2 h-ft-content d-inline-block text-center order-item-quantity p-0">x<span>{{item.quantity}}</span></div>
+                                                        <div class="col-3 h-ft-content d-inline-block text-center order-item-subtotal p-0">
+                                                            <span class="badge bg-secondary">{{item.subTotal}}</span>
+                                                        </div>
+                                                        <div class="col-1 h-ft-content d-inline-block text-right p-0">
+                                                            <button class="btn btn-raised btn-outline-danger btn-min-width mr-1 btn-remove-order-item" v-on:click="RemoveFromCart(item.id)">x</button>
+                                                        </div>
+
+                                                        <div :class="'col-12 addons-ul adons-item-'+item.id">
+                                                            <div v-for="(modifier, index) in item.itemModifiers" :class="'row modifier-'+modifier.id">
+                                                                <div class="col-6 h-ft-content d-inline-block p-0">{{modifier.modifier.name}}</div>
+                                                                <div class="col-2 h-ft-content d-inline-block text-center order-item-quantity p-0">x<span>{{modifier.totalQuantity}}</span></div>
+                                                                <div class="col-3 h-ft-content d-inline-block text-center order-item-subtotal p-0">
+                                                                    <span class="badge bg-secondary">{{modifier.totalCharges}}</span>
+                                                                </div>
+                                                                <div class="col-1 h-ft-content d-inline-block text-right p-0">
+                                                                    <button v-show="modifier.isMandatory == false" class="btn btn-raised btn-outline-danger btn-min-width mr-1 btn-remove-order-item" v-on:click="RemoveModifier(item.id, modifier.id)">x</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row order-summery-footer">
+                                <div class="col-12 pt-1 container-total-amount">
+                                    <h5 class="pl-3 pr-3" style="margin-bottom:4px;">Sub Total: <span class="pl-1 float-right" style="font-weight: 600;" id="total-amount">{{OrderTotal}}</span></h5>
+                                    <h5 class="pl-3 pr-3" style="margin-bottom:4px;">
+                                        <span v-show="TaxToApply.name">{{TaxToApply.name}} ({{TaxToApply.amountText}}):</span><span v-show="!TaxToApply.name">Tax:</span> <span class="pl-1 float-right" style="font-weight: 600;" id="total-amount">{{TaxAmount}}</span>
+                                    </h5>
+                                    <h5 class="pl-3 pr-3" style="margin-bottom:4px;">Delivery Charges: <span class="pl-1 float-right" style="font-weight: 600;" id="total-amount">{{DeliveryCharges}}</span></h5>
+                                    <h5 class="pl-3 pr-3" style="margin-bottom:4px;">
+                                        <span>Total:</span> <span class="pl-1 float-right" style="font-weight: 600;" id="total-amount">{{NetTotal}}</span>
+                                    </h5>
+
+                                    @*<h5 class="pl-3 pr-3">Tax (& other charger): <span class="pl-1 float-right" style="font-weight: 600;" id="tax-charges">-</span></h5>*@
+
+                                </div>
+                                <div class="col-12 container-order-button">
+                                    @*<div class="col-6 d-inline float-left text-center p-1">
+                                            <button v-on:click="PlaceOrder()" :disabled="EnablePlaceOrder == false" :class="'btn btn-raised btn-block btn-place-order '+(EditMode == false? 'btn-secondary' : 'btn-success')">
+                                                <span v-show="!EditMode">Place Order</span>
+                                                <span v-show="EditMode">Update Order</span>
+                                            </button>
+                                        </div>*@
+                                    <div class="col-12 d-inline float-right text-center p-1">
+                                        <button v-on:click="OrderBtnClick()" :disabled="EnableCheckout == false" :class="'btn btn-raised btn-block btn-checkout '+(EditMode == false? 'bg-custom-orange' : 'btn-success')">
+                                            <span v-show="!EditMode">Place Order</span>
+                                            <span v-show="EditMode">Update Order</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END : End Main Content-->
+                <!-- BEGIN : Footer-->
+                @*<footer class="footer footer-static footer-light">
+                        <p class="clearfix text-muted text-sm-center px-2"><span>Copyright  &copy; 2019 <a href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent" id="pixinventLink" target="_blank" class="text-bold-800 primary darken-2">PIXINVENT </a>, All rights reserved. </span></p>
+                    </footer>*@
+                <!-- End : Footer-->
+            </div>
+        </div>
+        <!-- ////////////////////////////////////////////////////////////////////////////-->
+        <!-- START Notification Sidebar-->
+        <aside id="notification-sidebar" class="notification-sidebar d-none d-sm-none d-md-block">
+            <a class="notification-sidebar-close">
+                <i class="ft-x font-medium-3"></i>
+            </a>
+            <div class="side-nav notification-sidebar-content">
+                <div class="row">
+                    <div class="col-12 mt-1">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a id="base-tab1" data-toggle="tab" aria-controls="tab1" href="#activity-tab" aria-expanded="true" class="nav-link active">Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="base-tab2" data-toggle="tab" aria-controls="tab2" href="#chat-tab" aria-expanded="false" class="nav-link">Tables</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content px-1 pt-1">
+                            <div id="activity-tab" role="tabpanel" aria-expanded="true" aria-labelledby="base-tab1" class="tab-pane active">
+                                <div id="activity" class="col-12 timeline-left">
+                                    <h6 class="mt-1 mb-3 text-bold-400">DineIn Pending Orders ({{DineInPendingOrders().length}})</h6>
+                                    <div id="timeline" class="timeline-left timeline-wrapper">
+                                        <ul class="timeline">
+                                            <li v-for="(item,index) in DineInPendingOrders()" v-on:click="LoadOrderToEdit(item.id)" class="timeline-item dinein-order-li cursor-pointer">
+                                                <div class="timeline-badge order-bedge">
+                                                    <span data-toggle="tooltip" data-placement="right" title="Portfolio project work" class="bg-purple bg-lighten-1">
+                                                        <i @*class="ft-shopping-cart"*@></i>
+                                                    </span>
+                                                </div>
+                                                <div class="col s9 recent-activity-list-text">
+                                                    <div class="col-10 p-0" style="display: inline-table !important;">
+                                                        <h4 href="#" class="medium-small seagreen font-weight-bolder">
+                                                            <span>Table: {{TableNameWithFloor(item.diningTableId)}}</span>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-2 p-0" style="display: contents !important;">
+                                                        <button v-on:click="CheckoutBtnClick(item.id, item.orderTypeId)" class="btn btn-sm btn-raised btn-outline-success icon-action-redo success border-0" title="Check-out"></button>
+                                                    </div>
+                                                    <h6 href="#" class="medium-small">Waiter: {{WaiterName(item.waiterId)}}</h6>
+                                                    @*<p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">Waiter: {{item.waiterId}}</p>*@
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div id="activity" class="col-12 timeline-left">
+                                    <h6 class="mt-1 mb-3 text-bold-400">Delivery Pending Orders ({{DeliveryPendingOrders().length}})</h6>
+                                    <div id="timeline" class="timeline-left timeline-wrapper">
+                                        <ul class="timeline">
+                                            <li v-for="(item,index) in DeliveryPendingOrders()" v-on:click="LoadOrderToEdit(item.id)" class="timeline-item dinein-order-li cursor-pointer">
+                                                <div class="timeline-badge order-bedge">
+                                                    <span data-toggle="tooltip" data-placement="right" title="Portfolio project work" class="bg-purple bg-lighten-1">
+                                                        <i @*class="ft-shopping-cart"*@></i>
+                                                    </span>
+                                                </div>
+                                                <div class="col s9 recent-activity-list-text">
+                                                    <div class="col-10 p-0" style="display: inline-table !important;">
+                                                        <h4 href="#" class="medium-small seagreen font-weight-bolder">
+                                                            <span> Delivery Service: {{DeliveryServiceName(item.deliveryServiceVendorId)}}</span>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-2 p-0" style="display: contents !important;">
+                                                        <button v-on:click="CheckoutBtnClick(item.id,item.orderTypeId,item.isSelfDelivery)" class="btn btn-sm btn-raised btn-outline-success icon-action-redo success border-0" title="Check-out"></button>
+                                                    </div>
+                                                    <h6 href="#" class="medium-small">Order Reference: {{item.deliveryServiceReferenceNo}}</h6>
+                                                    @*<p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">Waiter: {{item.waiterId}}</p>*@
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="chat-tab" aria-labelledby="base-tab2" class="tab-pane">
+                                <div id="chatapp" class="col-12">
+                                    <h6 class="mt-1 mb-3 text-bold-600">Free Tables ({{FreeTables().length}})</h6>
+                                    <div class="collection border-none">
+                                        <div v-for="(table, index) in FreeTables()" class="media mb-1 dining-tables-li cursor-pointer">
+                                            @*<a><img alt="96x96" src="~/app-assets/img/portrait/small/avatar-s-12.png" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"></a>*@
+                                            <div class="media-body pl-2 pr-2">
+                                                <div class="clearfix">
+                                                    <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left font-weight-bold">{{table.Text }} <span class="font-small-2 font-weight-light">({{table.FloorName}})</span></h4>@*<span class="medium-small float-right blue-grey-text text-lighten-3">5.00 AM</span>*@
+                                                </div>
+                                                <p class="text-muted font-small-3">Capacity: {{table.Capacity }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <h6 class="mt-1 mb-3 text-bold-600">Occupied Tables ({{OccupiedTables().length}})</h6>
+                                    <div class="collection border-none">
+                                        <div v-for="(table, index) in OccupiedTables()" class="media mb-1 dining-tables-li cursor-pointer">
+                                            @*<a><img alt="96x96" src="~/app-assets/img/portrait/small/avatar-s-12.png" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"></a>*@
+                                            <div class="media-body pl-2 pr-2">
+                                                <div class="clearfix">
+                                                    <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left font-weight-bold">{{table.Text }} <span class="font-small-2 font-weight-light">({{table.FloorName}})</span></h4>@*<span class="medium-small float-right blue-grey-text text-lighten-3">5.00 AM</span>*@
+                                                </div>
+                                                <p class="text-muted font-small-3">Capacity: {{table.Capacity }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- END Notification Sidebar-->
+        <!-- Theme customizer Starts-->
+        <!-- Theme customizer Ends-->
+        <!-- BEGIN VENDOR JS-->
+        <!--Modals-->
+
+        <div class="modal fade text-left" id="addModifierModal" tabindex="-1" role="dialog" aria-labelledby="addModifierModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addModifierModalLabel">Add Modifiers</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <h5>Add Modifiers To <span class="font-weight-bold">{{ItemToAddModifiers.name}}</span></h5>
+                                <ul class="list-group">
+                                    <li v-for="(modifier, index) in ItemToAddModifiers.itemModifiers" :id="'item-modifier-id-'+modifier.id" class="list-group-item ordered-item-li">
+                                        <div class="col-7 h-ft-content d-inline-block">{{modifier.modifier.name}}</div>
+                                        <div class="col-5 h-ft-content d-inline-block text-center order-item-quantity position-relative" style="top: 10px;">
+                                            <div class="custom-number-input custom-number-input-small btns-prevent-default">
+                                                <div v-on:click="modifier.totalQuantity--;AddModifier(modifier.id)" class="custom-number-input-nav custom-btn-small">
+                                                    <button class="custom-number-input-button custom-number-input-down bg-custom-orange white">-</button>
+                                                </div>
+                                                <input v-model="modifier.totalQuantity" v-on:keyup="AddModifier(modifier.id)" :data-index="index" :data-id="modifier.id" type="number" min="0" step="1" class=" custom-btn-small">
+                                                <div class="custom-number-input-nav custom-btn-small">
+                                                    <button v-on:click="modifier.totalQuantity++;AddModifier(modifier.id)" class="custom-number-input-button custom-number-input-up bg-custom-orange white">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-6 d-inline-block keypad-container">
+                                <div class="onscreen-keypad">
+                                    <div class="col-10">
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('1')">1</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('2')">2</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('3')">3</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('4')">4</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('5')">5</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('6')">6</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('7')">7</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('8')">8</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('9')">9</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('0')">0</div>
+                                            @*<div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('.')">.</div>*@
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn2('x')">X</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                        @*<button type="button" class="btn btn-outline-primary">Save changes</button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade text-left" id="cashReceivingModal" tabindex="-1" role="dialog" aria-labelledby="cashReceivingModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 v-show="OrderType != ORDER_TYPES.Delivery" class="modal-title" id="cashReceivingModalLabel">Payment</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div v-show="OrderType != ORDER_TYPES.Delivery" class="col-6 d-inline-block">
+                                <label style="font-weight: bold; width: 200px;">Payment Mode: </label><br />
+                                <input type="radio" value="0" v-model="PaymentMode" /> &nbsp;
+                                <span>
+                                    <b> Cash</b>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" value="1" v-model="PaymentMode" /> &nbsp;
+                                <span>
+                                    <b> Card</b>
+                                </span>
+                                <br />
+                                <br />
+                                <div>
+                                    <label style="font-weight: bold; width: 120px;">Order Total: </label><input :value="OrderTotal" readonly disabled />
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; width: 120px;">Discount: </label><input data-vue-model="OnOrderDiscount" class="OnOrderDiscount" v-model="OnOrderDiscount" :input="TotalOrderAmount()" />
+
+                                    <div class="custom-control custom-switch" style="display:inline !important" id="discountInPercentSwitchContainer">
+                                        <input type="checkbox" id="DiscountInPercent" v-model="DiscountInPercent" class="custom-control-input">
+                                        <label class="custom-control-label" for="DiscountInPercent">%</label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; width: 120px;">Net Total: </label><input :value="OrderTotal-DiscountAmount" readonly disabled />
+                                </div>
+                                <br />
+                                <div v-show="TaxToApply.name">
+                                    <label style="font-weight: bold; width: 120px;">{{TaxToApply.name}}({{TaxToApply.amountText}}): </label><input v-model="TaxAmount" readonly disabled />
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; width: 120px;">Total: </label><input :value="NetTotal" readonly disabled />
+                                </div>
+                                <hr />
+                                <div v-show="PaymentMode==1">
+                                    <label style="font-weight: bold; width: 120px;">Cash Received: </label><input v-model="CardCashReceived" disabled="disabled" />
+                                </div>
+                                <div v-show="PaymentMode!=1">
+                                    <label style="font-weight: bold; width: 120px;">Cash Received: </label><input data-vue-model="CashReceived" v-model="CashReceived" :input="CashReceivedInput()" />
+                                </div>
+                                <div v-show="PaymentMode!=1">
+                                    <label style="font-weight: bold; width: 120px;">Cash Back: </label><input v-model="CashBack" readonly />
+                                </div>
+                            </div>
+                            <div class="col-6 d-inline-block keypad-container" style="padding-top: 100px;">
+                                <div class="onscreen-keypad">
+                                    <div class="col-10">
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('1')">1</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('2')">2</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('3')">3</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('4')">4</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('5')">5</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('6')">6</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('7')">7</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('8')">8</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('9')">9</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('0')">0</div>
+                                            <!--<div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('.')">.</div>-->
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('x')">X</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal" v-on:click="CashReceived = 0">Close</button>
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal" v-on:click="PlaceOrderOrCheckout()" :disabled="(OrderType != ORDER_TYPES.Delivery && CashBack < 0 && PaymentMode== 0) ||( OrderType == ORDER_TYPES.Delivery &&  DeliveryServiceReferenceNo == '')">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade text-left" id="deliveryServiceReferenceModal" tabindex="-1" role="dialog" aria-labelledby="deliveryServiceReferenceModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Order Details</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 d-inline-block">
+                                <div v-show="!IsSelfDeliveryService">
+                                    <label style="font-weight: bold;margin-bottom: 0px !important;">{{DeliveryService.Text}}</label><br />
+                                    <label style="font-weight: bold; width:140px;">Order Reference: <span class="red">*</span></label>
+                                    <input type="text" data-vue-model="DeliveryServiceReferenceNo" class="DeliveryServiceReferenceNo" v-model="DeliveryServiceReferenceNo" /> &nbsp;
+                                    <hr />
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; width: 140px;">Order Total: </label><input :value="OrderTotal" readonly disabled />
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; width: 140px;">Discount: </label><input data-vue-model="OnOrderDiscount" class="OnOrderDiscount" v-model="OnOrderDiscount" :input="TotalOrderAmount()" />
+                                    <div class="custom-control custom-switch" style="display:inline !important" id="discountInPercentSwitchContainer1">
+                                        <input type="checkbox" id="DiscountInPercent1" v-model="DiscountInPercent" class="custom-control-input">
+                                        <label class="custom-control-label" for="DiscountInPercent1">%</label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; width: 140px;">Net Total: </label><input :value="OrderTotal-DiscountAmount" readonly disabled />
+                                </div>
+                                <br />
+                                <div v-show="TaxToApply.name">
+                                    <label style="font-weight: bold; width: 140px;">{{TaxToApply.name}}({{TaxToApply.amountText}}): </label><input v-model="TaxAmount" readonly disabled />
+                                </div>
+                                <div v-show="IsSelfDeliveryService">
+                                    <label style="font-weight: bold; width: 140px;">Delivery Charges: </label><input v-model="DeliveryCharges" readonly disabled />
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; width: 140px;">Total: </label><input :value="NetTotal" readonly disabled />
+                                </div>
+                            </div>
+                            <div class="col-6 d-inline-block keypad-container" :style="[!IsSelfDeliveryService ? {'padding-top': '32px'} : {'padding-top': '0px'}]">
+                                <div class="onscreen-keypad">
+                                    <div class="col-10">
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('1')">1</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('2')">2</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('3')">3</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('4')">4</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('5')">5</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('6')">6</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('7')">7</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('8')">8</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('9')">9</div>
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('0')">0</div>
+                                            @*<div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('.')">.</div>*@
+                                            <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn('x')">X</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal" v-on:click="CashReceived = 0">Close</button>
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal" v-on:click="PlaceOrderOrCheckout()" :disabled="OrderType == ORDER_TYPES.Delivery && (DeliveryServiceReferenceNo == '' && !IsSelfDeliveryService)">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade text-left" id="deliveryBoyModal" tabindex="-1" role="dialog" aria-labelledby="deliveryBoyModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="deliveryBoyModalLabel">Delivery Boys</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label style="font-weight: bold; width: 400px;">Asign Delivery Boy: </label><br />
+                            <select id="select-delivery-boy-no" class=" form-control select-delivery-boy-no">
+                                <option value=""> Select: </option>
+                                <option v-for="(item, index) in DeliveryBoysList" :value="item.Value"> {{item.Text}} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal" v-on:click="CashReceived = 0">Close</button>
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal" v-on:click="Checkout(CheckoutOrderId)" :disabled="(DeliveryBoyId == '')">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade text-left" id="checkoutConfirmModal" tabindex="-1" role="dialog" aria-labelledby="checkoutConfirmModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="checkoutConfirmModalLabel">Delivery Boys</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label style="font-weight: bold; width: 400px;">Confirm to Checkout. </label><br />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal" v-on:click="CashReceived = 0">Close</button>
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal" v-on:click="Checkout(CheckoutOrderId)">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="floatingKeyboard" style="display:none;">
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="close" v-on:click="HideKeyPadModal()" style="margin-right: 4px;"><span>×</span></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-inline-block keypad-container">
+                    <div class="onscreen-keypad">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('1')">1</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('2')">2</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('3')">3</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('4')">4</div>
+                            </div>
+                            <div class="row">
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('5')">5</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('6')">6</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('7')">7</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('8')">8</div>
+                            </div>
+                            <div class="row">
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('9')">9</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('0')">0</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('.')">.</div>
+                                <div class="onscreen-keypad-btn" v-on:click="PressOnScreenKeypadBtn1('x')">X</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <environment include="Development">
+        <!-- ////////////////////////////////////////////////////////////////////////////-->
+        <!--Sweet alert-->
+        <script src="~/js/Shared/Constants.js" asp-append-version="true"></script>
+        <script src="~/js/Utilities/JSFunctions.js" asp-append-version="true"></script>
+        <script src="~/app-assets/vendors/js/sweetalert2.min.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/js/Services/SweetAlertService.js" asp-append-version="true"></script>
+        <script src="~/js/Shared/ResponseMessageAlertManager.js" asp-append-version="true"></script>
+
+        <script src="~/app-assets/vendors/js/core/jquery-3.2.1.min.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/app-assets/vendors/js/core/popper.min.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/app-assets/vendors/js/core/bootstrap.min.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/app-assets/vendors/js/perfect-scrollbar.jquery.min.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/app-assets/vendors/js/prism.min.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/app-assets/vendors/js/jquery.matchHeight-min.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/app-assets/vendors/js/screenfull.min.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/app-assets/vendors/js/pace/pace.min.js" asp-append-version="true" type="text/javascript"></script>
+        <!-- BEGIN VENDOR JS-->
+        <!-- BEGIN PAGE VENDOR JS-->
+        <!-- END PAGE VENDOR JS-->
+        <!-- BEGIN APEX JS-->
+        <script src="~/app-assets/js/app-sidebar.js" asp-append-version="true" type="text/javascript"></script>
+        <script src="~/app-assets/js/notification-sidebar.js" asp-append-version="true" type="text/javascript"></script>
+
+        <!-- END APEX JS-->
+        <!-- BEGIN PAGE LEVEL JS-->
+        <script src="~/custom-elements/number-input/js/custom-number-input.js" asp-append-version="true"></script>
+        <!--select2-->
+        <script src="~/app-assets/vendors/select2/dist/js/select2.min.js" asp-append-version="true"></script>
+
+
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/RestaurantManagement/RestaurantPos/Index.min.js" asp-append-version="true"></script>
+    </environment>
+    <!--Vue.js-->
+    <script src="~/lib/vuejs/dev/vue.min.js" asp-append-version="true"></script>
+    <script src="~/js/Areas/RestaurantManagement/RestaurantPos/vuejs/Index.js" asp-append-version="true"></script>
+</body>
+    <!-- END : Body-->
+</html>

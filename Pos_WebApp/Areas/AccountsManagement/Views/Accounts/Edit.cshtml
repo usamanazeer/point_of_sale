@@ -1,0 +1,86 @@
+﻿@model AccAccountDto
+@{
+    ViewData[index: "Title"] = "Edit - Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var accountTypesList = new SelectList(items: (IList<AccAccountTypeDto>)ViewBag.AccountTypes ?? new List<AccAccountTypeDto>(),
+        dataValueField: "Id",
+        dataTextField: "Name");
+    var accountsList = (IList<Account_SLM>)ViewBag.Accounts ?? new List<Account_SLM>();
+}
+
+
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Areas/AccountsManagement/Accounts/Edit.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/AccountsManagement/Accounts/Edit.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Edit Account</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="edit-account-form" class="form" autocomplete="off" asp-route="EditAccount" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user-plus"></i> General</h4>
+                                <input type="hidden" asp-for="Id" />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label> Account Type </label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="AccountType.Name" type="text" class="form-control border-grey" readonly="readonly" />
+                                            @*<select asp-for="AccountTypeId" asp-items="accountTypesList" class="form-control border-grey" required onchange="filterAccountsList()">
+                                                    <option value=""></option>
+                                                </select>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Parent Account</label>&nbsp;<span class="red"></span>
+                                            <input value="@($"{Model.Parent?.Title} {(Model.Parent == null ? "" : "("+Model.Parent.Code+")")}")" type="text" class="form-control border-grey" readonly="readonly" />
+                                            @*<select asp-for="ParentId" class="form-control border-grey">
+                                                    <option value=""></option>
+                                                    @foreach (var account in accountsList)
+                                                    {
+                                                        <option value="@account.Value" data-acc-code="@account.Code" data-acc-no="@account.AccNo" data-account-type-id="@account.AccountTypeId" data-parent-id="@account.ParentId" data-is-editable="@account.IsEditable">@account.Text (@account.Code)</option>
+                                                    }
+                                                </select>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Title"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="Title" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="AccNo"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="AccNo" type="text" step="any" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button id="btn-edit-account" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Save">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

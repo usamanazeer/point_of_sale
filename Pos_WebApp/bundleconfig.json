@@ -1,0 +1,577 @@
+[
+  //{
+  //  "outputFileName": "wwwroot/app-assets/js/datatable-full-bundle.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/app-assets/vendors/js/datatable/datatables.min.js",
+  //    "wwwroot/app-assets/js/data-tables/datatable-basic.js",
+  //    "wwwroot/app-assets/vendors/js/datatable/dataTables.buttons.min.js",
+  //    "wwwroot/app-assets/vendors/js/datatable/buttons.flash.min.js",
+  //    "wwwroot/app-assets/vendors/js/datatable/jszip.min.js",
+  //    "wwwroot/app-assets/vendors/js/datatable/pdfmake.min.js",
+  //    "wwwroot/app-assets/vendors/js/datatable/vfs_fonts.js",
+  //    "wwwroot/app-assets/vendors/js/datatable/buttons.html5.min.js",
+  //    "wwwroot/app-assets/vendors/js/datatable/buttons.print.min.js",
+  //    "wwwroot/app-assets/js/data-tables/datatable-advanced.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+
+
+
+
+  //{
+  //  "outputFileName": "wwwroot/app-assets/js/datetime-plugin-bundle.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/app-assets/vendors/js/pickadate/picker.js",
+  //    "wwwroot/app-assets/vendors/js/pickadate/picker.date.js",
+  //    "wwwroot/app-assets/vendors/js/pickadate/picker.time.js",
+  //    "wwwroot/app-assets/vendors/js/pickadate/legacy.js",
+  //    "wwwroot/app-assets/js/pick-a-datetime.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+
+  //{
+  //  "outputFileName": "wwwroot/js/Shared/DeleteEntity.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/Shared/DeleteEntity.js"
+
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/Services/JsPdfService.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/Services/JsPdfService.js"
+
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+  //For all Index.cshtml
+  //{
+  //  "outputFileName": "wwwroot/js/Shared/Index.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/app-assets/vendors/js/datatable/datatables.min.js",
+  //    "wwwroot/app-assets/js/data-tables/datatable-basic.min.js",
+  //    "wwwroot/js/Shared/DeleteEntity.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/Shared/Reporting/SalesReporting/Shared/SalesReport.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/Shared/Reporting/SalesReporting/Shared/SalesReport.js"
+
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+
+
+
+  //Layout
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      //"wwwroot/app-assets/css/app.min.css",
+      "wwwroot/app-assets/fonts/feather/style.css",
+      "wwwroot/app-assets/fonts/simple-line-icons/style.css",
+      "wwwroot/app-assets/fonts/font-awesome/css/font-awesome.css",
+      "wwwroot/app-assets/vendors/css/perfect-scrollbar.min.css",
+      "wwwroot/app-assets/vendors/css/prism.min.css",
+      "wwwroot/app-assets/vendors/css/sweetalert2.min.css",
+      "wwwroot/css/site.css"
+    ]
+  },
+
+
+
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/Services/SweetAlertService.js",
+      "wwwroot/js/Shared/Constants.js",
+      "wwwroot/js/Utilities/JSFunctions.js",
+      "wwwroot/js/Shared/ResponseMessageAlertManager.js",
+      "wwwroot/app-assets/vendors/js/core/jquery-3.2.1.min.js",
+      "wwwroot/app-assets/vendors/js/sweetalert2.min.js",
+      "wwwroot/app-assets/vendors/js/chartist.min.js",
+      "wwwroot/app-assets/vendors/js/core/popper.min.js",
+      "wwwroot/app-assets/vendors/js/core/bootstrap.min.js",
+      "wwwroot/app-assets/vendors/js/perfect-scrollbar.jquery.min.js",
+      "wwwroot/app-assets/vendors/js/prism.min.js",
+      "wwwroot/app-assets/vendors/js/jquery.matchHeight-min.js",
+      "wwwroot/app-assets/vendors/js/screenfull.min.js",
+      "wwwroot/app-assets/vendors/js/pace/pace.min.js",
+      "wwwroot/app-assets/js/app-sidebar.js",
+      "wwwroot/app-assets/js/notification-sidebar.min.js",
+      "wwwroot/js/Shared/_Layout.js",
+      "wwwroot/js/SignalRClients/NotificationClient.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+
+
+
+
+  //AREA UserManagement
+  {
+    "outputFileName": "wwwroot/js/Areas/UserManagement/Home/Index.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/UserManagement/Home/Index.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/UserManagement/Home/Setup.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/UserManagement/Home/Setup.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/UserManagement/Roles/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/UserManagement/Roles/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  //{
+  //  "outputFileName": "wwwroot/js/Areas/UserManagement/Users/Create.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/Areas/UserManagement/Users/Create.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/Areas/UserManagement/Users/Edit.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/Areas/UserManagement/Users/Edit.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+
+
+
+  //AREA AccountsManagement
+  {
+    "outputFileName": "wwwroot/js/Areas/AccountsManagement/Accounts/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/AccountsManagement/Accounts/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/AccountsManagement/Accounts/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/AccountsManagement/Accounts/Edit.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/AccountsManagement/Bills/PayBill.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/AccountsManagement/Bills/PayBill.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/AccountsManagement/Journal/Add.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/AccountsManagement/Journal/Add.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/AccountsManagement/Journal/UnverifiedEntries.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/AccountsManagement/Journal/UnverifiedEntries.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+
+  //AREA DeliveryService
+  {
+    "outputFileName": "wwwroot/js/Areas/DeliveryService/DeliveryServiceVendors/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/DeliveryService/DeliveryServiceVendors/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/DeliveryService/DeliveryServiceVendors/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/DeliveryService/DeliveryServiceVendors/Edit.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+
+
+
+
+  //AREA GeneralSettings
+  {
+    "outputFileName": "wwwroot/js/Areas/GeneralSettings/Taxes/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/GeneralSettings/Taxes/Edit.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+
+
+
+
+
+
+
+  //Area InventoryManagement
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/Items/Index.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/Items/Index.js",
+      "wwwroot/app-assets/js/components-modal.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/GoodsReceivedNotes/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/GoodsReceivedNotes/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/GoodsReceivedNotes/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/GoodsReceivedNotes/Edit.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/GoodsReturnNotes/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/GoodsReturnNotes/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/GoodsReturnNotes/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/GoodsReturnNotes/Edit.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/Items/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/Items/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/Items/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/Items/Edit.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/Modifiers/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/Modifiers/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/Modifiers/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/Modifiers/Edit.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/PhysicalStocks/BillDetails.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/PhysicalStocks/BillDetails.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/PurchaseOrders/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/PurchaseOrders/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/PurchaseOrders/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/PurchaseOrders/Edit.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/InventoryManagement/Purchases/Create.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/InventoryManagement/Purchases/Create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+
+
+
+  //AREA Reporting
+  {
+    "outputFileName": "wwwroot/js/Areas/Reporting/SalesReporting/Basic.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/Reporting/SalesReporting/Basic.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Reporting/SalesReporting/SalesByDeliveryServices.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/Reporting/SalesReporting/SalesByDeliveryServices.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Reporting/SalesReporting/SalesByItems.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/Reporting/SalesReporting/SalesByItems.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+
+
+
+
+
+
+  //AREA RestaurantManagement
+  {
+    "outputFileName": "wwwroot/js/Areas/RestaurantManagement/DiningTables/Details.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/RestaurantManagement/DiningTables/Details.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+
+
+  {
+    "outputFileName": "wwwroot/css/Areas/RestaurantManagement/RestaurantPos/Index.min.css",
+    "inputFiles": [
+      //"wwwroot/app-assets/css/app.min.css",
+      "wwwroot/app-assets/fonts/feather/style.min.css",
+      "wwwroot/app-assets/fonts/simple-line-icons/style.css",
+      "wwwroot/app-assets/fonts/font-awesome/css/font-awesome.min.css",
+      "wwwroot/app-assets/vendors/css/perfect-scrollbar.min.css",
+      "wwwroot/app-assets/vendors/css/prism.min.css",
+      "wwwroot/app-assets/vendors/select2/dist/css/select2.min.css",
+      "wwwroot/custom-elements/number-input/css/custom-number-input.css",
+      "wwwroot/app-assets/vendors/css/sweetalert2.min.css",
+      "wwwroot/css/Areas/RestaurantManagement/RestaurantPos/Index.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/RestaurantManagement/RestaurantPos/Index.min.js",
+    "inputFiles": [
+      "wwwroot/js/Shared/Constants.js",
+      "wwwroot/js/Utilities/JSFunctions.js",
+      "wwwroot/app-assets/vendors/js/sweetalert2.min.js",
+      "wwwroot/js/Services/SweetAlertService.js",
+      "wwwroot/js/Shared/ResponseMessageAlertManager.js",
+      "wwwroot/app-assets/vendors/js/core/jquery-3.2.1.min.js",
+      "wwwroot/app-assets/vendors/js/core/popper.min.js",
+      "wwwroot/app-assets/vendors/js/core/bootstrap.min.js",
+      "wwwroot/app-assets/vendors/js/perfect-scrollbar.jquery.min.js",
+      "wwwroot/app-assets/vendors/js/prism.min.js",
+      "wwwroot/app-assets/vendors/js/jquery.matchHeight-min.js",
+      "wwwroot/app-assets/vendors/js/screenfull.min.js",
+      "wwwroot/app-assets/vendors/js/pace/pace.min.js",
+      "wwwroot/app-assets/js/app-sidebar.js",
+      "wwwroot/app-assets/js/notification-sidebar.js",
+      "wwwroot/custom-elements/number-input/js/custom-number-input.js",
+      "wwwroot/app-assets/vendors/select2/dist/js/select2.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+
+
+
+
+  //AREA SalesManagement
+  {
+    "outputFileName": "wwwroot/js/Areas/SalesManagement/Orders/Index.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/SalesManagement/Orders/Index.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/SalesManagement/Orders/Details.min.js",
+    "inputFiles": [
+      "wwwroot/js/Areas/SalesManagement/Orders/Details.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

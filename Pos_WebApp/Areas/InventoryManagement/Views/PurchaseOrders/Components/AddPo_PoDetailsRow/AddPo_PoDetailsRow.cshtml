@@ -1,0 +1,53 @@
+﻿@model Tuple<int, InvPoDetailsDto>
+@{
+    Layout = null;
+    var ItemsNameList = (List<Models.DTO.ViewModels.SelectList.InventoryManagement.InvItem_SLM>)ViewBag.Items;
+    //var ItemsBarCodeList = (List<Models.DTO.ViewModels.SelectList.InventoryManagement.InvItemBarCode_SLM>)ViewBag.ItemBarCodes;
+
+    var rowNo = Model.Item1;
+    var _model = Model.Item2 ?? new InvPoDetailsDto() { ItemId = -1};
+}
+
+
+<tr class="add-stock-row row-no-@rowNo" data-row-no="@rowNo">
+
+    <td style="width:534.500px;max-width:600.500px;">
+        <input type="hidden" id="InvPoDetails_@rowNo.ToString()__Status" name="InvPoDetails[@rowNo].Status" value="1" class="row-status" />
+        <select id="InvPoDetails_@rowNo.ToString()__ItemId" asp-for="@_model.ItemId" name="InvPoDetails[@rowNo].ItemId" class="form-control item-select col-md-12 select" onchange="ItemSelect_OnChange('@rowNo')">
+            <option value="-1" data-ItemBrCode="" data-purchaseRate="0" data-itemMeasurement="" data-itemUnit=""></option>
+            @foreach (var item in ItemsNameList)
+            {
+                <option value="@item.Value" data-ItemBrCode="@item.BarCode" data-purchaseRate="@item.PurchaseRate" data-itemMeasurement="@item.Measurement" data-itemUnit="@item.UnitName">@item.FullName</option>
+            }
+        </select>
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Please Select Item</span>
+    </td>
+    @*<td>
+        <select id="InvPoDetails_@rowNo.ToString()__BarCodeId" asp-for="@_model.BarcodeId" name="InvPoDetails[@rowNo].BarCodeId" class="form-control item-barcode-select col-md-12 select" onchange="ItemBarCodeSelect_OnChange('@rowNo')" style="width:153.500px;max-width:153.500px;">
+            <option value="-1" data-ItemId="-1"></option>
+            @foreach (var barcode in ItemsBarCodeList)
+            {
+                <option value="@barcode.Value" data-ItemId="@barcode.ItemId">@barcode.Text</option>
+            }
+        </select>
+    </td>*@
+    @*<td>
+        <input type="text" readonly id="InvPoDetails_@rowNo.ToString()__Measurement" name="InvPoDetails[@rowNo].Measurement" class="form-control measurement" />
+    </td>*@
+    <td>
+        <input type="number" step="any" min="0" id="InvPoDetails_@rowNo.ToString()__RequestedQuantity" asp-for="@_model.RequestedQuantity" oninput="CalculatePoDetails_Total('@rowNo')" name="InvPoDetails[@rowNo].RequestedQuantity" class="form-control quantity" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Requested Quantity is  required.</span>
+    </td>
+    <td>
+        <input type="number" step="any" min="0" id="InvPoDetails_@rowNo.ToString()__Rate" name="InvPoDetails[@rowNo].Rate" asp-for="@_model.Rate" oninput="CalculatePoDetails_Total('@rowNo')" class="form-control" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Rate is  required.</span>
+    </td>
+
+    <td>
+        <input type="number" step="any" id="InvPoDetails_@rowNo.ToString()__Amount" name="InvPoDetails[@rowNo].Amount" class="form-control" />
+    </td>
+
+    <td>
+        <span onclick="RemoveRow('@rowNo')" class="btn bg-transparent red border-1 border-lighten-1 border-grey" style="cursor:pointer;"><i class="fa fa-close"></i></span>
+    </td>
+</tr>

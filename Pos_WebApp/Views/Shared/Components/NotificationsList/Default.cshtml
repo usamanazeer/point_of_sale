@@ -1,0 +1,21 @@
+﻿@model IList<NotiUserNotificationsViewDto>
+@if (Model != null)
+{
+    foreach (var noti in Model)
+    {
+    <div style="border-bottom: 1px solid #dee2e6 !important; word-wrap: break-word !important;" id="noti-id-@noti.NotificationId"  title="@noti.NotificationMessage">
+        <a style="position: relative; display: inline-block; width: 90%;border-bottom:none !important;" href="@(noti.NotificationUrl!=""? noti.NotificationUrl:"#")" class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
+            <i class="@noti.NotificationIcon info float-left d-block font-large-1 mt-1 mr-2"></i>
+            <p class="noti-wrapper" style="display: inline-block; width: 93%; white-space: nowrap; overflow: hidden !important; text-overflow: ellipsis;">
+                <span class="noti-title line-height-1  text-bold-400 @noti.NotificationCssClasses">@noti.NotificationTitle</span>
+
+                <br />
+                @noti.NotificationMessage
+            </p>
+        </a>
+        <span onclick="SetNotificationToSeen('@noti.NotificationId')" class="noti-seen" style="position: absolute; display: inline-block; width: 10%; padding:10px 0px; margin-top:40px;" title="set to seen">
+            <i class="ft-eye info float-right d-block font-small-2 mt-1 mr-2"></i>
+        </span>
+    </div>
+    }
+}

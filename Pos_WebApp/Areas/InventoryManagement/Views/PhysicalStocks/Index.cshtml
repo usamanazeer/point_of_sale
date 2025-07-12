@@ -1,0 +1,236 @@
+﻿@model PhysicalStocks_ViewModel
+
+@{
+    ViewData["Title"] = "Physical Stocks";
+    if (ViewBag.Items == null)
+    {
+        ViewBag.Items = new List<Models.DTO.ViewModels.SelectList.InventoryManagement.InvItem_SLM>();
+    }
+    var ItemsSelect = new SelectList((List<Models.DTO.ViewModels.SelectList.InventoryManagement.InvItem_SLM>)ViewBag.Items, "Value", "FullName");
+    var BillsList = new SelectList((List<InvPhysicalInventoryDto>)Model.PhysicalInventories ?? new List<InvPhysicalInventoryDto>(), "Id", "BillNo");
+    var ItemBarCodesSelect = new SelectList((List<Models.DTO.ViewModels.SelectList.InventoryManagement.InvItemBarCode_SLM>)ViewBag.ItemBarCodes
+        ?? new List<Models.DTO.ViewModels.SelectList.InventoryManagement.InvItemBarCode_SLM>(), "Value", "Text");
+    var VendorsSelect = new SelectList((List<InvVendorDto>)Model.Vendors ?? new List<InvVendorDto>(), "Id", "ContactName");
+    
+}
+
+@section Styles{
+    <!--select2-->
+    <link href="~/app-assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/pickadate/pickadate.min.css" asp-append-version="true">
+    <style>
+        .filter {
+            height: calc(1.5em + 0.75rem + -5px) !important;
+        }
+    </style>
+}
+@section Scripts{
+    <script src="~/app-assets/vendors/select2/dist/js/select2.min.js" type="text/javascript" asp-append-version="true"></script>
+    <!-- BEGIN pickadate JS-->
+    <script src="~/app-assets/js/datetime-plugin-bundle.min.js" type="text/javascript" asp-append-version="true"></script>
+
+    <environment include="Development">
+        <script src="~/app-assets/vendors/js/datatable/datatables.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/app-assets/js/data-tables/datatable-basic.js" type="text/javascript" asp-append-version="true"></script>
+
+        <script src="~/js/Shared/DeleteEntity.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Shared/Index.min.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+
+<script>
+    function ApplySelect2() {
+        $('.select').select2();
+    }
+    $(document).ready(function () {
+
+        ApplySelect2();
+
+
+    });
+</script>
+}
+
+<!-- File export table -->
+<section id="file-export">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Physical Stocks</h4>
+                    <p class="card-text">
+                        
+                    </p>
+                </div>
+                <div class="card-content ">
+                    <div class="row" style="margin:auto !important">
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin:auto !important">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pl-5 pr-5 pt-5 pb-0">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @if (ViewBag.rights.ContainsKey(UserRights.AddPhysicalStock))
+                                    {
+                                        <a href="PhysicalStocks/Add" class="btn btn-raised btn-info btn-min-width mr-1 mb-1" data-original-title="Add" title="Add">
+                                            Add Stock
+                                        </a>
+                                    }
+
+                                    <br />
+                                    <br />
+                                    <form method="post">
+                                        <div class="col-md-12">
+                                            <input type="hidden" asp-for="Request" value="Get" />
+
+                                            <div class="col-lg-1 disp-inline-block font-small-5 font-weight-bold"><label class="black">Filters:</label></div>
+                                            <div class="col-lg-2 disp-inline-block font-small-3">
+                                                <label>Select Bill-No</label>
+                                                <select asp-for="@Model.Id" asp-items="BillsList" class="form-control bill-no-list filter select">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-3 disp-inline-block font-small-3">
+                                                <label>Bill Date</label>
+                                                <div class="input-group font-small-3">
+                                                    <input type='text' asp-for="@Model.BillDate" class="form-control pickadate-selectors filter  bg-white" value="@Model.BillDate.ToString("dd MMMM, yyyy")" />
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <span class="fa fa-calendar-o"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 disp-inline-block font-small-3">
+                                                <label>Select Item</label>
+                                                <select asp-for="@Model.ItemId" class="form-control items-list filter select" asp-items="ItemsSelect">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2 disp-inline-block font-small-3">
+                                                <label>Select Bar-Code</label>
+                                                <select asp-for="@Model.BarCodeId" class="form-control barcodes-list filter select" asp-items="ItemBarCodesSelect">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-12">
+
+                                            <div class="col-lg-1 disp-inline-block font-small-5 font-weight-bold"><label></label></div>
+                                            <div class="col-lg-2 disp-inline-block font-small-3">
+                                                <label>Select Vendor</label>
+                                                <select asp-for="@Model.VendorId" class="form-control vendors-list filter select" asp-items="VendorsSelect">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-3 disp-inline-block font-small-3">
+                                                <label>Expiry Date Limit</label>
+                                                <div class="input-group font-small-3">
+
+                                                    <input type='text' asp-for="ExpiryDate" class="form-control pickadate-selectors filter bg-white" value="@Model.ExpiryDate.ToString("dd MMMM, yyyy")" />
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <span class="fa fa-calendar-o"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="col-lg-2 disp-inline-block font-small-3">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" asp-for="@Model.OnlyNearToEnd" class="custom-control-input filter" id="onlyNearToEndSwitch">
+                                                        <label class="custom-control-label" for="onlyNearToEndSwitch">Near To End Only </label>
+                                                    </div>
+                                                </div>*@
+                                            <div class="col-lg-2 disp-inline-block font-small-3">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" asp-for="@Model.OnlyIfRemaining" class="custom-control-input filter" id="onlyAvailableSwitch">
+                                                    <label class="custom-control-label" for="onlyAvailableSwitch">Available Stock Only</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-1 disp-inline-block font-small-5"><input type="submit" class="btn btn-sm btn-raised btn-success right" value="Apply"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="card-body card-dashboard table-responsive">
+
+
+                        <!--<table class="table table-striped table-bordered file-export">-->
+
+                        <table class="table table-striped table-bordered zero-configuration" id="main-table">
+                            <thead>
+                                <tr>
+                                    <th>Bill No#</th>
+                                    <th>Bill Date</th>
+                                    <th>Vendor Name</th>
+                                    <th>Item</th>
+                                    <th>BarCode</th>
+                                    <th>Expiry Date</th>
+                                    <th>Quantity</th>
+                                    <th>Remaining Quantity</th>
+                                    <th>Sales Rate</th>
+                                    <th>Purchase Rate</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @*@*@@if (Model.PhysicalInventoryView?.PhysicalInventoryViews != null)
+                                {
+                                    /*@*/
+                                    for (int i = 1; i <= Model.PhysicalInventoryView.PhysicalInventoryViews.Count; i++)
+                                    {
+                                        var item = Model.PhysicalInventoryView.PhysicalInventoryViews[i - 1];
+                                        <tr id="main-table-row-@i">
+                                            <td> <a href="PhysicalStocks/BillDetails/@item.BillId" title="View Bill Details" style="text-decoration-line:underline;color:#0094ff;font-weight:500"> @item.BillNo</a></td>
+                                            <td>@Convert.ToDateTime(item.BillDate).ToString("MMM dd, yyyy")  </td>
+                                            @*<td> <span class="status">@item</span> </td>*@
+                                            <td>@item.VendorName</td>
+                                            <td>@item.ItemName</td>
+                                            <td>@item.ItemBarCode</td>
+                                            <td>@Convert.ToDateTime(item.ExpiryDate).ToString("MMM dd, yyyy")</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.RemainingQuantity</td>
+                                            <td>@item.SalesRate</td>
+                                            <td>@item.PurchaseRate</td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Bill No#</th>
+                                    <th>Bill Date</th>
+                                    <th>Vendor Name</th>
+                                    <th>Item</th>
+                                    <th>BarCode</th>
+                                    <th>Expiry Date</th>
+                                    <th>Quantity</th>
+                                    <th>Remaining Quantity</th>
+                                    <th>Sales Rate</th>
+                                    <th>Purchase Rate</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- File export table -->

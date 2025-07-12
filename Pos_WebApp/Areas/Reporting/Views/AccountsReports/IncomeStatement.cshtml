@@ -1,0 +1,135 @@
+﻿@model RptAccountsIncomeStatementDto
+@{
+    ViewData["Title"] = "IncomeStatement";
+    var dateFormat = "dd MMM, yyyy";
+}
+@section Styles{
+
+}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Services/JsPdfService.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Services/JsPdfService.min.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+}
+
+<section class="journal-template">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Income Statement</h4>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <div class="col-md-12">
+                                <form method="post">
+                                    @*<div class="col-lg-1 disp-inline-block"><label>Filters:</label></div>*@
+                                    <div class="col-lg-3 disp-inline-block font-small-3">
+                                        <label>From Date</label><span class="red">*</span>
+                                        <div class="input-group font-small-3">
+                                            <input type="date" asp-for="@Model.FromDate" class="form-control filter bg-white" required="required" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 disp-inline-block font-small-3">
+                                        <label>To Date</label><span class="red">*</span>
+                                        <div class="input-group font-small-3">
+                                            <input type="date" asp-for="@Model.ToDate" class="form-control filter bg-white" required="required" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 disp-inline-block font-small-5"><input type="submit" class="btn btn-sm btn-raised btn-success right" value="Apply"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br /><br />
+            @if (Model.RevenueTrialBalances.Any() || Model.ExpenseTrialBalances.Any())
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <button onclick="printDiv('pdf-content')" class="btn btn-md btn-success mb-0">Print</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="card-content" id="pdf-content">
+            <div id="journal-template" class="card-body pt-0">
+                <div id="journal-details" class="pt-2">
+                    <div class="row">
+                        <div class="table-responsive col-sm-6">
+                            @if (Model.RevenueTrialBalances.Any() || Model.ExpenseTrialBalances.Any())
+                            {
+                                <table class="table mb-0 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" colspan="2"> Income Statement On @Model.FromDate.ToString(dateFormat)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="2">Revenues</th>
+                                        </tr>
+                                        @for (int i = 0; i < Model.RevenueTrialBalances.Count(); i++)
+                                        {
+                                            var record = Model.RevenueTrialBalances[i];
+                                            <tr>
+                                                <td class="pl-4">@record.Title (@record.Code)</td>
+                                                <td>@record.Balance.ToNDecimalPlaces(2)</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td>Total Revenues</td>
+                                            <td>@Model.TotalRevenue.ToNDecimalPlaces(2)</td>
+                                        </tr>
+                                        <tr> <td colspan="2"></td></tr>
+                                        <tr>
+                                            <th colspan="2">Expenses</th>
+                                        </tr>
+                                        @for (int i = 0; i < Model.ExpenseTrialBalances.Count(); i++)
+                                        {
+                                            var record = Model.ExpenseTrialBalances[i];
+                                            <tr>
+                                                <td class="pl-4">@record.Title (@record.Code)</td>
+                                                <td>@record.Balance.ToNDecimalPlaces(2)</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td>Total Expenses</td>
+                                            <td>@Model.TotalExpense.ToNDecimalPlaces(2)</td>
+                                        </tr>
+                                        <tr> <td colspan="2"></td></tr>
+                                        <tr>
+                                            <td>Net Income</td>
+                                            <td>@Model.NetIncome.ToNDecimalPlaces(2)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <!-- PO Footer -->
+
+                <div id="po-footer">
+                    <div class="row">
+                    </div>
+                    <!--/ PO Footer -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagebreak"></div>
+</section>
+
+<!--About section ends-->

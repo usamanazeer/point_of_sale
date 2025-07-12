@@ -1,0 +1,98 @@
+﻿@model AccAccountDto
+@{
+    ViewData[index: "Title"] = "Create - Account";
+
+    var accountTypesList = new SelectList(items: (IList<AccAccountTypeDto>)ViewBag.AccountTypes ?? new List<AccAccountTypeDto>(), "Id", "Name");
+    var accountsList = (IList<Account_SLM>)ViewBag.Accounts ?? new List<Account_SLM>();
+}
+
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Areas/AccountsManagement/Accounts/Create.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/AccountsManagement/Accounts/Create.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create Account</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-account-form" class="form" autocomplete="off" asp-route="CreateAccount" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user-plus"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label> Account Type </label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="AccountTypeId" asp-items="accountTypesList" class="form-control border-grey" required onchange="filterAccountsList()">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Parent Account</label>&nbsp;<span class="red"></span>
+                                            <select asp-for="ParentId" class="form-control border-grey">
+                                                <option value=""></option>
+                                                @foreach (var account in accountsList)
+                                                {
+                                                    <option value="@account.Value" data-acc-code="@account.Code" data-acc-has-no-child="@account.HasNoChild" data-acc-has-parent-child="@account.HasParentChild" data-acc-has-non-parent-child="@account.HasNonParentChild" data-acc-no="@account.AccNo" data-account-type-id="@account.AccountTypeId" data-parent-id="@account.ParentId" data-is-editable="@account.IsEditable">@account.Text (@account.Code)</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Title"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="Title" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="AccNo"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="AccNo" type="text" step="any" class="form-control border-grey" required="required" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch" style="padding-top: 35px;" id="IsParentContainer">
+                                                <input type="checkbox" asp-for="IsParent" class="custom-control-input">
+                                                <label class="custom-control-label" asp-for="IsParent" for="IsParent"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" asp-for="IsParent" class="">
+                                                <label class="" asp-for="IsParent" for="IsParent"></label>
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button id="btn-create-account" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

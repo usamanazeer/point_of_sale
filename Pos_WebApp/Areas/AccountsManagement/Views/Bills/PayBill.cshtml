@@ -1,0 +1,529 @@
+﻿@using Models.Enums
+@model BillDto
+@{
+    ViewData["Title"] = "Pay Bill";
+    Model.InvPurchaseDetail = Model.InvPurchaseDetail.OrderBy(x => x.Item.FullName).ToList();
+    if (ViewBag.BankAccounts != null)
+    {
+        ViewBag.BankAccounts = new SelectList((IList<Account_SLM>)ViewBag.BankAccounts, "Value", "Text");
+    }
+}
+
+@if (Model.Response != null)
+{
+    var responseObject = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Response);
+    <script type="text/javascript">
+        AlertManager.AlertSweetly(JSON.parse('@Html.Raw(responseObject)'));
+    </script>
+    @if (Model.Response.ErrorOccured)
+    {
+        @*@if (Model.Response.ErrorCode == StatusCodes.Invalid_State.ToInt())
+            {
+                <script type="text/javascript">
+                    sweetAlert.error({ title: 'Invalid Info!', text: '@Model.Response.ResponseMessage' });
+                </script>
+            }*@
+        @if (Model.Response.ErrorCode == StatusCodes.Error_Occured.ToInt())
+        {
+            <script type="text/javascript">
+                  sweetAlert.error({ text: '@Model.Response.ErrorMessage' });
+            </script>
+        }
+    }
+}
+@section Styles{
+
+}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Areas/AccountsManagement/Bills/PayBill.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/AccountsManagement/Bills/PayBill.min.js"></script>
+    </environment>
+}
+<!--from user-profile-page.html-->
+<!--About section starts-->
+<input type="hidden" id="total-bill-amount-hidden" value="@Model.RemainingAmount.ToNDecimalPlaces(2)" />
+<section id="about">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">Pay Bill</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+
+                </div>
+                @* ReSharper disable once UnknownCssClass *@
+                <div class="card-content" style="padding-top:0;">
+                    <div class="card-body" style="padding-top:0;">
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Bill No:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.BillNo</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Bill Date:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.BillDate.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Due Date:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.BillDueDate.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Bill Amount:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.BillAmount.ToNDecimalPlaces(2)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Remaining Amount:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.RemainingAmount.ToNDecimalPlaces(2)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Bill Status:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.BillStatusText</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created By:</a></span>
+                                        @if (Model.CreatedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.CreatedByUser.FirstName @Model.CreatedByUser.LastName (@Model.CreatedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.CreatedOn</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified By:</a></span>
+                                        @if (Model.ModifiedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.ModifiedByUser.FirstName @Model.ModifiedByUser.LastName (@Model.ModifiedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.ModifiedOn</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-12 ml-3">
+                                <div class="accordion" id="accordionBillDetails">
+                                    <div class="accordion-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" type="button" data-toggle="collapse" data-target="#collapseBillDetails" aria-expanded="true" aria-controls="collapseBillDetails">
+                                                <b> Bill Details <span class="fa fa-angle-down"></span></b>
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseBillDetails" class="collapse" aria-labelledby="headingOne" data-parent="#accordionBillDetails">
+                                        <div class="card-body">
+                                            <div id="po-items-details" class="pt-2">
+                                                <div class="row">
+                                                    <div class="table-responsive col-sm-12">
+                                                        <table class="table mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Item &amp; Description</th>
+                                                                    <th class="text-right">BarCode</th>
+                                                                    <th class="text-right">Quantity</th>
+                                                                    <th class="text-right">Rate</th>
+                                                                    <th class="text-right">Sub Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @for (int i = 0; i < Model.InvPurchaseDetail.Count(); i++)
+                                                                {
+                                                                    var detail = Model.InvPurchaseDetail[i];
+                                                                    <tr>
+                                                                        <th scope="row">@(i + 1)</th>
+                                                                        <td>
+                                                                            <p>@detail.Item.FullName <span class="text-muted font-small-1">(@detail.Item.ItemCode)</span></p>
+                                                                        </td>
+                                                                        <td class="text-right">@detail.BarCode?.BarCode</td>
+                                                                        <td class="text-right">@detail.Quantity</td>
+                                                                        <td class="text-right">@detail.PurchaseRate</td>
+                                                                        <td class="text-right">@(detail.PurchaseRate * @detail.Quantity)</td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-12 text-left">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <p class="lead">Total Amount</p>
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <tbody>
+                                                                    <tr class="bg-grey bg-lighten-4">
+                                                                        <td class="text-bold-800">Total</td>
+                                                                        <td class="text-bold-800 text-right">@Model.BillAmount.ToNDecimalPlaces(2)</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.BillPayments.Any())
+                        {
+                            <div class="row">
+                                <div class="col-lg-12 col-xl-12 ml-3">
+                                    <div class="accordion" id="accordionBillPayments">
+                                        <div class="accordion-header" id="headingOne">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" type="button" data-toggle="collapse" data-target="#collapseBillPayments" aria-expanded="true" aria-controls="collapseBillPayments">
+                                                    <b> Bill Payments <span class="fa fa-angle-down"></span></b>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseBillPayments" class="collapse" aria-labelledby="headingOne" data-parent="#accordionBillPayments">
+                                            <div class="card-body">
+                                                <div id="po-items-details" class="pt-2">
+                                                    <div class="row">
+                                                        <div class="table-responsive col-sm-12">
+                                                            <table class="table mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Cash Amount</th>
+                                                                        <th>Cheque Amount</th>
+                                                                        <th>Total Amount</th>
+                                                                        <th>Payment Type</th>
+                                                                        <th>Payment Date</th>
+                                                                        <th>Remarks</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @for (int i = 0; i < Model.BillPayments.Count(); i++)
+                                                                    {
+                                                                        var payment = Model.BillPayments[i];
+                                                                        <tr>
+                                                                            <th scope="row">@(i + 1)</th>
+                                                                            <td>@payment.CashAmount?.ToNDecimalPlaces(2)</td>
+                                                                            <td>@payment.ChequeAmount?.ToNDecimalPlaces(2)</td>
+                                                                            <td>@payment.TotalAmount.ToNDecimalPlaces(2)</td>
+                                                                            <td>@payment.PaymentTypeText</td>
+                                                                            <td>@payment.PaymentDate.ToString("dd MMM, yyyy") </td>
+                                                                            <td>@payment.Remarks </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <p class="lead">Total Amount</p>
+                                                            <div class="table-responsive">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr class="bg-grey bg-lighten-4">
+                                                                            <td class="text-bold-800">Total</td>
+                                                                            <td class="text-bold-800 text-right">@Model.AmountPaid.ToNDecimalPlaces(2)</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.BillStatusId != AccBillStatus.Paid.ToInt())
+                        {
+                            <br />
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-12">
+                                    <div>
+                                        <h1>Pay Bill </h1>
+                                    </div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="base-cash-tab" data-toggle="tab" aria-controls="cashTab" href="#cashTab" aria-expanded="true" onclick="ResetPaymentForm('cash')">Cash</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="base-cheque-tab" data-toggle="tab" aria-controls="chequeTab" href="#chequeTab" aria-expanded="false" onclick="ResetPaymentForm('cheque')">
+                                                Cheque
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="base-split-tab" data-toggle="tab" aria-controls="splitTab" href="#splitTab" aria-expanded="false" onclick="ResetPaymentForm('split')">
+                                                Split
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content px-1 pt-1">
+                                        <div role="tabpanel" class="tab-pane active" id="cashTab" aria-expanded="true" aria-labelledby="base-cash-tab">
+                                            <form class="form payment-form cash-payment-form" autocomplete="off" asp-route="PayBillPost">
+                                                <input type="hidden" id="total-payment-hidden" />
+                                                <div class="form-body">
+                                                    <hr />
+                                                    <input asp-for="Id" hidden="hidden" required="required" />
+                                                    <input asp-for="BillPayment.PaymentTypeId" hidden="hidden" value="@AccBillPaymentType.Cash.ToInt()" required="required" />
+
+                                                    @*<h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>*@
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Cash Amount <span class="red">*</span></label>
+                                                                <input type="number" step="any" class="form-control cash-payment-cash-amount" asp-for="BillPayment.CashAmount" oninput="AmountInput('cash')" required="required">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Payment Date<span class="red">*</span></label>
+                                                                <input type="date" class="form-control" asp-for="BillPayment.PaymentDate" required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Remarks</label><br>
+                                                                <textarea style="resize: none" cols="42" rows="5" asp-for="BillPayment.Remarks"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <table class="cash-payment-table">
+                                                                    <tr><th class="pr-2">Bill Amount:</th> <td><span class="bill-amount">@Model.BillAmount.ToNDecimalPlaces(2)</span></td></tr>
+                                                                    <tr><th class="pr-2">Total Payment:</th> <td><span class="total-payment">0.00</span></td></tr>
+                                                                    <tr><th class="pr-2 pt-2">Remaining Amount:</th> <td class="pt-2"><span class="remaining-amount">@Model.RemainingAmount.ToNDecimalPlaces(2)</span></td></tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <input type="submit" class="btn btn-success btn-md" value="Pay" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane" id="chequeTab" aria-labelledby="base-cheque-tab">
+                                            <form class="form payment-form cheque-payment-form" autocomplete="off" asp-route="PayBillPost">
+                                                <input type="hidden" id="total-payment-hidden" />
+                                                <div class="form-body">
+                                                    <hr />
+                                                    <input asp-for="Id" hidden="hidden" required="required" />
+                                                    <input asp-for="BillPayment.PaymentTypeId" hidden="hidden" value="@AccBillPaymentType.Cheque.ToInt()" required="required" />
+
+                                                    @*<h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>*@
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Select Bank <span class="red">*</span></label>
+                                                                <select class="select form-control" asp-items="ViewBag.BankAccounts" asp-for="BillPayment.BankAccountId" required="required">
+                                                                    <option value=""></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Cheque No <span class="red">*</span></label>
+                                                                <input type="number" step="1" class="form-control" asp-for="BillPayment.ChequeNo" required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Cheque Amount <span class="red">*</span></label>
+                                                                <input type="number" step="any" class="form-control cheque-payment-cheque-amount" asp-for="BillPayment.ChequeAmount" oninput="AmountInput('cheque')" required="required">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>PaymentDate <span class="red">*</span></label>
+                                                                <input type="date" class="form-control" asp-for="BillPayment.PaymentDate" required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Remarks</label><br>
+                                                                <textarea style="resize: none" cols="42" rows="5" asp-for="BillPayment.Remarks"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <table class="cheque-payment-table">
+                                                                    <tr><th class="pr-2">Bill Amount:</th> <td><span class="bill-amount">@Model.BillAmount.ToNDecimalPlaces(2)</span></td></tr>
+                                                                    <tr><th class="pr-2">Total Payment:</th> <td><span class="total-payment">0.00</span></td></tr>
+                                                                    <tr><th class="pr-2 pt-2">Remaining Amount:</th> <td class="pt-2"><span class="remaining-amount">@Model.RemainingAmount.ToNDecimalPlaces(2)</span></td></tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <input type="submit" class="btn btn-success btn-md" value="Pay" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane" id="splitTab" aria-labelledby="base-split-tab">
+                                            <form class="form payment-form split-payment-form" autocomplete="off" asp-route="PayBillPost">
+                                                <input type="hidden" id="total-payment-hidden" />
+                                                <div class="form-body">
+                                                    <input asp-for="Id" hidden="hidden" required="required" />
+                                                    <input asp-for="BillPayment.PaymentTypeId" hidden="hidden" value="@AccBillPaymentType.Split.ToInt()" required="required" />
+                                                    <h4 class="form-section"><i class=""></i> Cash</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Cash Amount <span class="red">*</span></label>
+                                                                <input type="number" step="any" class="form-control split-payment-cash-amount" asp-for="BillPayment.CashAmount" oninput="AmountInput('split')" required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <h4 class="form-section"><i class=""></i>Cheque</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Select Bank <span class="red">*</span></label>
+                                                                <select class="select form-control" asp-items="ViewBag.BankAccounts" asp-for="BillPayment.BankAccountId" required="required">
+                                                                    <option value=""></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Cheque No <span class="red">*</span></label>
+                                                                <input type="number" step="1" class="form-control" asp-for="BillPayment.ChequeNo" required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Cheque Amount <span class="red">*</span></label>
+                                                                <input type="number" step="any" class="form-control split-payment-cheque-amount" asp-for="BillPayment.ChequeAmount" oninput="AmountInput('split')" required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <h4 class="form-section"><i class=""></i> </h4>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>PaymentDate <span class="red">*</span></label>
+                                                                <input type="date" class="form-control" asp-for="BillPayment.PaymentDate" required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Remarks</label><br>
+                                                                <textarea style="resize: none" cols="42" rows="5" asp-for="BillPayment.Remarks"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <table class="split-payment-table">
+                                                                    <tr><th class="pr-2">Bill Amount:</th> <td><span class="bill-amount">@Model.BillAmount.ToNDecimalPlaces(2)</span></td></tr>
+                                                                    <tr><th class="pr-2">Cash Payment:</th> <td><span class="cash-payment">0.00</span></td></tr>
+                                                                    <tr><th class="pr-2">Cheque Payment:</th> <td><span class="cheque-payment">0.00</span></td></tr>
+                                                                    <tr><th class="pr-2 pt-2">Total Payment:</th> <td class="pt-2"><span class="total-payment">0.00</span></td></tr>
+                                                                    <tr><th class="pr-2">Remaining Amount:</th> <td><span class="remaining-amount">@Model.RemainingAmount.ToNDecimalPlaces(2)</span></td></tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <input type="submit" class="btn btn-success btn-md" value="Pay" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--About section ends-->

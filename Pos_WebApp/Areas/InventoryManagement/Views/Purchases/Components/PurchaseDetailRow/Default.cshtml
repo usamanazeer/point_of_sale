@@ -1,0 +1,52 @@
+﻿@model Tuple<int, InvPurchaseDetailDto>
+@{
+    Layout = null;
+    var itemsList = (List<InvItem_SLM>)ViewBag.Items?? new List<InvItem_SLM>();
+    var itemsBarCodesList = (List<InvItemBarCode_SLM>)ViewBag.ItemBarCodes;
+    var rowNo = Model.Item1;
+    var _model = Model.Item2 ?? new InvPurchaseDetailDto();
+
+}
+
+<tr class="purchases-table-row row-no-@rowNo" data-row-no="@rowNo">
+
+    <td style="width:200px;">
+        <input type="hidden" id="InvPurchaseDetail_@rowNo.ToString()__Status" name="InvPurchaseDetail[@rowNo].Status" value="1" class="row-status" />
+        <select id="InvPurchaseDetail_@rowNo.ToString()__ItemId" asp-for="@_model.ItemId" name="InvPurchaseDetail[@rowNo].ItemId" class="form-control item-select col-md-12 select" style="width: 200px;max-width:200px;" onchange="ItemSelect_OnChange('@rowNo')">
+            <option></option>
+            @foreach (var item in itemsList)
+            {
+                <option value="@item.Value" data-ItemBrCode="@item.BarCode" data-PurchaseRate="@item.PurchaseRate" data-SalesRate="@item.SalesRate">@item.FullName</option>
+            }
+        </select>
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Please Select Item</span>
+    </td>
+    <td style="width:200px;">
+        <select id="InvPurchaseDetail_@rowNo.ToString()__BarCodeId" asp-for="@_model.BarCodeId" name="InvPurchaseDetail[@rowNo].BarCodeId" class="form-control item-barcode-select col-md-12 select" style="width: 200px;max-width:200px;" onchange="ItemBarCodeSelect_OnChange('@rowNo')">
+            <option></option>
+            @foreach (var barcode in itemsBarCodesList)
+            {
+                <option value="@barcode.Value" data-ItemId="@barcode.ItemId">@barcode.Text</option>
+            }
+        </select>
+    </td>
+    <td style="width:30px;">
+        <input type="number" step="any" id="InvPurchaseDetail_@rowNo.ToString()__Quantity"  asp-for="@_model.Quantity" name="InvPurchaseDetail[@rowNo].Quantity" class="form-control quantity" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Quantity is required.</span>
+    </td>
+    <td style="width:30px;">
+        <input type="date" id="InvPurchaseDetail_@rowNo.ToString()__ExpiryDate" asp-for="@_model.ExpiryDate" name="InvPurchaseDetail[@rowNo].ExpiryDate" class="form-control expiry" style="cursor:pointer" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Expiry Date is required.</span>
+    </td>
+    <td style="width:117px;">
+        <input type="number" step="any" id="InvPurchaseDetail_@rowNo.ToString()__PurchaseRate" asp-for="@_model.PurchaseRate" name="InvPurchaseDetail[@rowNo].PurchaseRate" class="form-control purchase-rate" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Purchase Rate is required.</span>
+    </td>
+    <td style="width:100px;">
+        <input type="number" step="any" id="InvPurchaseDetail_@rowNo.ToString()__SalesRate" asp-for="@_model.SalesRate" name="InvPurchaseDetail[@rowNo].SalesRate" class="form-control sales-rate"  />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Sales Rate is required.</span>
+    </td>
+    <td style="width:50px;">
+        <span onclick="RemoveRow('@rowNo')" class="btn bg-transparent red border-1 border-lighten-1 border-grey" style="cursor:pointer;"><i class="fa fa-close"></i></span>
+    </td>
+</tr>

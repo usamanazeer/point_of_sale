@@ -1,0 +1,55 @@
+﻿@model RestWaiterDto
+@{
+    ViewData["Title"] = "Edit - Waiter";
+}
+
+@section Scripts{
+    <script>
+        bindSubmit('edit-waiter-form', 'btn-edit-waiter', '/Waiters/Edit', false, true);
+    </script>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Edit Waiter</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="edit-waiter-form" class="form" autocomplete="off" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+                                <input type="hidden" asp-for="Id"/>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Name" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Status"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="Status" class="form-control border-grey" required>
+                                                <option value="">Select Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="2">InActive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button id="btn-edit-waiter" type="submit" class="btn btn-raised btn-success" style="float:right" value="Save">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

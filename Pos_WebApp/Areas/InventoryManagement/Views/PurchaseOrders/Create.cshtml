@@ -1,0 +1,165 @@
+﻿@model InvPoMasterDto
+@{
+    ViewData["Title"] = "Create - PO";
+    var VendorsList = new SelectList(ViewBag.Vendors ?? new List<InvVendor_SLM>(), "Value", "Text");
+}
+
+@*@if (Model.Response != null)
+{
+    <script type="text/javascript">
+        AlertManager.AlertSweetly(JSON.parse('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Response))'), '/PurchaseOrders/Create');
+    </script>
+    
+    @if (Model.Response.ErrorOccured)
+    {
+        @if (Model.Response.ErrorCode == StatusCodes.Error_Occured.ToInt())
+        {
+            <script type="text/javascript">
+                sweetAlert.error({ text: '@Model.Response.ErrorMessage' });
+            </script>
+        }
+    }
+}*@
+
+@section Styles{
+    <!--select2-->
+    <link href="~/app-assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/pickadate/pickadate.min.css" asp-append-version="true" />
+}
+@section Scripts{
+    <!--select2-->
+    <script src="~/app-assets/vendors/select2/dist/js/select2.min.js" asp-append-version="true"></script>
+    <!-- BEGIN pickadate JS-->
+    <script src="~/app-assets/js/datetime-plugin-bundle.min.js" type="text/javascript" asp-append-version="true"></script>
+    <!-- END pickadate  JS-->
+    <environment include="Development">
+        <script src="~/app-assets/vendors/js/datatable/datatables.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/app-assets/js/data-tables/datatable-basic.min.js" type="text/javascript" asp-append-version="true"></script>
+        
+        <script src="~/js/Areas/InventoryManagement/PurchaseOrders/Create.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Shared/Index.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/js/Areas/InventoryManagement/PurchaseOrders/Create.min.js" asp-append-version="true"></script>
+    </environment>
+
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create PO</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-po-form" class="form" autocomplete="off" asp-route="CreatePO" method="post" >
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="PoDate"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="PoDate" type="date" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="DeliveryDate"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="DeliveryDate" type="date" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="VendorId"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="VendorId" asp-items="VendorsList" class="form-control border-grey select" required>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="Description"></label>&nbsp;<span class="red"></span>
+                                            <textarea asp-for="Description" class="form-control border-grey"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row" id="table-container">
+
+                                            <div class="col-md-12">
+
+                                                <div class="card-body card-dashboard table-responsive">
+                                                    <label id="table-label">PO Details</label>
+                                                    <table class="table table-striped table-bordered" id="podetails-table">
+                                                        <thead class="podetails-table-thead" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>Item Name <span class="red">*</span></th>
+                                                                <th>Requested Quantity <span class="red">*</span></th>
+                                                                <th>Rate <span class="red">*</span></th>
+                                                                <th>Amount</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.InvPoDetails != null && Model.InvPoDetails.Any())
+                                                            {
+                                                                for (int i = 0; i < Model.InvPoDetails.Count; i++)
+                                                                {
+                                                                    @await Component.InvokeAsync("AddPo_PoDetailsRow", new Tuple<int, InvPoDetailsDto>(i, Model.InvPoDetails[i]))
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                @await Component.InvokeAsync("AddPo_PoDetailsRow", new Tuple<int, InvPoDetailsDto>(0, null))
+                                                            }
+                                                        </tbody>
+                                                        <tfoot class="podetails-table-tfoot" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>Item Name <span class="red">*</span></th>
+                                                                <th>Requested Quantity <span class="red">*</span></th>
+                                                                <th>Rate <span class="red">*</span></th>
+                                                                <th>Amount</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                            <tr class="border-1 border-white">
+                                                                <td class="border-0"><input id="btn-add-subitems-row" type="button" class="btn btn-sm bg-blue btn-flat white" value="Add More" onclick="AddRow()" /></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+
+                                                    <!--NEVER EVER REMOVE THIS TABLE-->
+                                                    <table style="display:none;" id="deleted-rows-table">
+                                                        <tbody>
+                                                            <!--NEVER EVER REMOVE THIS ROW-->
+                                                            <tr></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions right">
+                                <button id="btn-create-po" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                                <button type="button" class="btn btn-raised btn-warning mr-1" style="float:right" onclick="ResetForm()">
+                                    <i class=""></i> Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

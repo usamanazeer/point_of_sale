@@ -1,0 +1,39 @@
+﻿@model Tuple<int, AccTransactionDetailDto>
+@{
+    Layout = null;
+    var accountsList = (IList<Account_SLM>)ViewBag.Accounts ?? new List<Account_SLM>();
+    var rowNo = Model.Item1;
+    var _model = Model.Item2 ?? new AccTransactionDetailDto();
+
+}
+
+
+<tr class="purchases-table-row row-no-@rowNo" data-row-no="@rowNo">
+
+    <td style="width:50px;">
+        <input type="hidden" id="AccTransactionDetail_@rowNo.ToString()__Status" name="AccTransactionDetail[@rowNo].Status" value="1" class="row-status" />
+        <select id="AccTransactionDetail_@rowNo.ToString()__AccountId" asp-for="@_model.AccountId" name="AccTransactionDetail[@rowNo].AccountId" class="form-control item-select col-md-12 select" style="width: 300px; max-width:300px;" onchange="setStatement('@rowNo')">
+            <option></option>
+            @foreach (var item in accountsList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Please Select Account</span>
+    </td>
+    <td style="width:30px;">
+        <input type="text" style="width: 400px; max-width:400px;background-color: white !important;" id="AccTransactionDetail_@rowNo.ToString()__Statement"  asp-for="@_model.Statement" name="AccTransactionDetail[@rowNo].Statement" class="form-control statement" readonly="readonly" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Statement is is required.</span>
+    </td>
+    <td style="width:117px;">
+        <input type="number" step="any" id="AccTransactionDetail_@rowNo.ToString()__Dr" asp-for="@_model.Cr" name="AccTransactionDetail[@rowNo].Dr" class="form-control dr" onchange="DrChange('@rowNo')" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Expiry Date is required.</span>
+    </td>
+    <td style="width:117px;">
+        <input type="number" step="any" id="AccTransactionDetail_@rowNo.ToString()__Cr" asp-for="@_model.Cr" name="AccTransactionDetail[@rowNo].Cr" class="form-control cr" onchange="CrChange('@rowNo')" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Purchase Rate is required.</span>
+    </td>
+    <td style="width:50px;">
+        <span onclick="RemoveRow('@rowNo')" class="btn bg-transparent red border-1 border-lighten-1 border-grey" style="cursor:pointer;"><i class="fa fa-close"></i></span>
+    </td>
+</tr>

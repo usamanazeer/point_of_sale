@@ -1,0 +1,84 @@
+﻿@model DeliDeliveryBoyDto
+@{
+    ViewData["Title"] = "DeliveryBoy - Create";
+}
+
+
+@section Scripts{
+    <script>
+        bindSubmit('create-delivery-boy-form', 'btn-edit-delivery-boy','/DeliveryBoys/Create',true,true);
+    </script>
+   
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create DeliveryBoy</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-delivery-boy-form" class="form" autocomplete="off" asp-route="CreateDeliveryBoy" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user-plus"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="Name" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="ContactNo"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="ContactNo" type="text" maxlength="15" class="form-control border-grey" required="required" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Cnic"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="Cnic" type="text" maxlength="13" class="form-control border-grey" required="required" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="BikeNo"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="BikeNo" maxlength="10" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Email"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="Email" type="email" maxlength="50" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="AccountNo"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="AccountNo" type="email" maxlength="50" class="form-control border-grey" />
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button id="btn-edit-delivery-boy" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                                <button type="reset" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                    <i class=""></i> Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

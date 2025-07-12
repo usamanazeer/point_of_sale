@@ -1,0 +1,301 @@
+﻿@model RoleDto
+@{
+    ViewData["Title"] = "Role Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Dictionary<int, bool> printedmenu = new Dictionary<int, bool>();
+
+}
+
+@section Styles{
+    <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" asp-append-version="true" />
+}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/app-assets/vendors/js/datatable/datatables.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/app-assets/js/data-tables/datatable-basic.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Shared//Index.min.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    
+}
+
+<section id="about">
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">Role Details</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            @if (Model.Response.ErrorOccured)
+            {
+                <div class="row" style="margin:auto !important">
+                    <div class="col-md-12">
+                        <div class="form-group" style="margin:auto !important">
+                            @if (Model.Response.ErrorOccured)
+                            {
+                                <div class="alert alert-danger alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Error!</strong> @Model.Response.ErrorMessage
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.Id != null && Model.Id != 0)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Role Information</h5>
+                    </div>
+                    <div class="card-content" style="padding-top:0px;">
+                        <div class="card-body" style="padding-top:0px;">
+                            @*<div class="mb-3">
+                                    <span class="text-bold-500 primary">About Me:</span>
+                                    <span class="d-block overflow-hidden">
+                                        Hi, I’m Jose, I’m 29 and I work as a Ninja Developer for the
+                                        “PIXINVENT” Creative Studio. In my research, I follow the flow of early medieval slavery from viking
+                                        raids in the west, through the booming ports of the Scandinavian north, and out into the Islamic world.
+                                        Reading texts against the grain and seeing artifacts as traces of the past can make their lives once
+                                        again visible to us today. This website documents my efforts to do just that, and I hope it will prove
+                                        a resource and an inspiration for others in similar pursuits.
+                                    </span>
+                                </div>*@
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ First Name:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.Name</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Status:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.StatusText</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            @*<hr>
+                                <div class="mt-3">
+                                    <span class="text-bold-500 primary">Hobbies:</span>
+                                    <span class="d-block overflow-hidden">
+                                        I like to ride the cycle to work, swimming, listning music and
+                                        working out. I also like reading magazines, go to museums, watching good movies and eat spicy food
+                                        while
+                                        it’s raining outside.Twin siblings Dipper and Mabel Pines spend the summer at their uncle's tourist
+                                        trap
+                                        in the enigmatic town of Gravity Falls.A mysterious Hollywood stuntman and mechanic moonlights as a
+                                        getaway driver.Scuba Diving, Skiing, Surfing, Photography, Long drive.
+                                    </span>
+                                </div>
+                                <div class="mt-2 overflow-hidden">
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-plane danger font-large-2"></i>
+                                        <span class="mt-2">Travelling</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-speedometer danger font-large-2"></i>
+                                        <span class="mt-2">Driving</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-camera danger font-large-2"></i>
+                                        <span class="mt-2">Photography</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-game-controller danger font-large-2"></i>
+                                        <span class="mt-2">Gaming</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-music-tone-alt danger font-large-2"></i>
+                                        <span class="mt-2">Music</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="ft-monitor danger font-large-2"></i>
+                                        <span class="mt-2">Surfing</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="ft-pie-chart danger font-large-2"></i>
+                                        <span class="mt-2">Foodie</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="ft-tv danger font-large-2"></i>
+                                        <span class="mt-2">TV</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-basket-loaded danger font-large-2"></i>
+                                        <span class="mt-2">Shopping</span>
+                                    </span>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Role Rights</h5>
+                    </div>
+                    <div class="card-content" style="padding-top:0px;">
+                        <div class="card-body" style="padding-top:0px;">
+                            <hr>
+                            <ul>
+                                @if (Model.CompanyModules != null)
+                                {
+                                    @foreach (var module in Model.CompanyModules)
+                                    {
+                                        if (Model.Editable)
+                                        {
+                                            <!--For Non super-admins, print selected-->
+                                            if (@module.Module != null)
+                                            {
+                                                if (@module.Module.IsSelected)
+                                                {
+                                                    <li>@module.Module.Name</li>
+                                                    @foreach (var firstLevel in @module.Module.Rights)
+                                                    {
+                                                        <li style="list-style:none;">
+                                                            <ul>
+                                                                @if ((!printedmenu.ContainsKey(firstLevel.Id.Value)) && firstLevel.DepthLevel == 1 && firstLevel.IsSelected)
+                                                                {
+                                                                    <li>
+                                                                        @*<input type="checkbox" class="role-right parent-right" id="parentRight-@firstLevel.Id" asp-for="@firstLevel.IsSelected" onclick="parentRight_Onclick('@firstLevel.Id')" data-id="@firstLevel.Id" />*@ <span>&nbsp;</span> @firstLevel.Name
+                                                                        @{printedmenu.Add(firstLevel.Id.Value, true);}
+                                                                    </li>
+
+                                                                    <li style="list-style:none;">
+                                                                        <ul>
+                                                                            @foreach (var secondLevel in firstLevel.InverseParent)
+                                                                            {
+                                                                                if ((!printedmenu.ContainsKey(secondLevel.Id.Value)) && secondLevel.DepthLevel == 2 && secondLevel.IsSelected)
+                                                                                {
+                                                                                    <li>
+                                                                                        @*<input type="checkbox" class="role-right child-right child-right-@secondLevel.ParentId" asp-for="@secondLevel.IsSelected" onclick="childRight_Onclick('@secondLevel.ParentId')" data-id="@secondLevel.Id" />*@ <span>&nbsp;</span> @secondLevel.Name
+                                                                                        @{printedmenu.Add(secondLevel.Id.Value, true);}
+                                                                                    </li>
+                                                                                    <li style="list-style:none;">
+                                                                                        <ul>
+                                                                                            @foreach (var thirdLevel in secondLevel.InverseParent)
+                                                                                            {
+                                                                                                if ((!printedmenu.ContainsKey(thirdLevel.Id.Value)) && thirdLevel.DepthLevel == 3 && thirdLevel.IsSelected)
+                                                                                                {
+                                                                                                    <li>
+                                                                                                        @*<input type="checkbox" class="role-right child-right child-right-@thirdLevel.ParentId" asp-for="@thirdLevel.IsSelected" onclick="childRight_Onclick('@thirdLevel.ParentId')" data-id="@thirdLevel.Id" />*@ <span>&nbsp;</span> @thirdLevel.Name
+                                                                                                        @{printedmenu.Add(thirdLevel.Id.Value, true);}
+                                                                                                    </li>
+                                                                                                    <li style="list-style:none;">
+                                                                                                        <ul>
+                                                                                                            @foreach (var fourthLevel in thirdLevel.InverseParent)
+                                                                                                            {
+                                                                                                                if ((!printedmenu.ContainsKey(fourthLevel.Id.Value)) && fourthLevel.DepthLevel == 4 && fourthLevel.IsSelected)
+                                                                                                                {
+                                                                                                                    <li>
+                                                                                                                        @*<input type="checkbox" class="role-right child-right child-right-@thirdLevel.ParentId" asp-for="@thirdLevel.IsSelected" onclick="childRight_Onclick('@thirdLevel.ParentId')" data-id="@thirdLevel.Id" />*@ <span>&nbsp;</span> @fourthLevel.Name
+                                                                                                                        @{printedmenu.Add(fourthLevel.Id.Value, true);}
+                                                                                                                    </li>
+                                                                                                                }
+                                                                                                            }
+                                                                                                        </ul>
+                                                                                                    </li>
+                                                                                                }
+                                                                                            }
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                }
+                                                                            }
+                                                                        </ul>
+                                                                    </li>
+                                                                }
+
+                                                            </ul>
+                                                        </li>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <!--For super-admins, print all-->
+
+                                            if (@module.Module != null)
+                                            {
+                                                <li>@module.Module.Name</li>
+                                                @foreach (var firstLevel in @module.Module.Rights)
+                                                {
+                                                    <li style="list-style:none;">
+                                                        <ul>
+                                                            @if ((!printedmenu.ContainsKey(firstLevel.Id.Value)) && firstLevel.DepthLevel == 1 )
+                                                            {
+                                                                <li>
+                                                                    @*<input type="checkbox" class="role-right parent-right" id="parentRight-@firstLevel.Id" asp-for="@firstLevel.IsSelected" onclick="parentRight_Onclick('@firstLevel.Id')" data-id="@firstLevel.Id" />*@ <span>&nbsp;</span> @firstLevel.Name
+                                                                    @{printedmenu.Add(firstLevel.Id.Value, true);}
+                                                                </li>
+
+                                                                <li style="list-style:none;">
+                                                                    <ul>
+                                                                        @foreach (var secondLevel in firstLevel.InverseParent)
+                                                                        {
+                                                                            if ((!printedmenu.ContainsKey(secondLevel.Id.Value)) && secondLevel.DepthLevel == 2 )
+                                                                            {
+                                                                                <li>
+                                                                                    @*<input type="checkbox" class="role-right child-right child-right-@secondLevel.ParentId" asp-for="@secondLevel.IsSelected" onclick="childRight_Onclick('@secondLevel.ParentId')" data-id="@secondLevel.Id" />*@ <span>&nbsp;</span> @secondLevel.Name
+                                                                                    @{printedmenu.Add(secondLevel.Id.Value, true);}
+                                                                                </li>
+                                                                                <li style="list-style:none;">
+                                                                                    <ul>
+                                                                                        @foreach (var thirdLevel in secondLevel.InverseParent)
+                                                                                        {
+                                                                                            if ((!printedmenu.ContainsKey(thirdLevel.Id.Value)) && thirdLevel.DepthLevel == 3)
+                                                                                            {
+                                                                                                <li>
+                                                                                                    @*<input type="checkbox" class="role-right child-right child-right-@thirdLevel.ParentId" asp-for="@thirdLevel.IsSelected" onclick="childRight_Onclick('@thirdLevel.ParentId')" data-id="@thirdLevel.Id" />*@ <span>&nbsp;</span> @thirdLevel.Name
+                                                                                                    @{printedmenu.Add(thirdLevel.Id.Value, true);}
+                                                                                                </li>
+                                                                                                <li style="list-style:none;">
+                                                                                                    <ul>
+                                                                                                        @foreach (var fourthLevel in thirdLevel.InverseParent)
+                                                                                                        {
+                                                                                                            if ((!printedmenu.ContainsKey(fourthLevel.Id.Value)) && fourthLevel.DepthLevel == 4 )
+                                                                                                            {
+                                                                                                                <li>
+                                                                                                                    @*<input type="checkbox" class="role-right child-right child-right-@thirdLevel.ParentId" asp-for="@thirdLevel.IsSelected" onclick="childRight_Onclick('@thirdLevel.ParentId')" data-id="@thirdLevel.Id" />*@ <span>&nbsp;</span> @fourthLevel.Name
+                                                                                                                    @{printedmenu.Add(fourthLevel.Id.Value, true);}
+                                                                                                                </li>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            }
+                                                                                        }
+                                                                                    </ul>
+                                                                                </li>
+                                                                            }
+                                                                        }
+                                                                    </ul>
+                                                                </li>
+                                                            }
+
+                                                        </ul>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!--About section ends-->

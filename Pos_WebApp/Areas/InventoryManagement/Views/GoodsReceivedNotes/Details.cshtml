@@ -1,0 +1,203 @@
+﻿@model InvGrnMasterDto
+@{
+    ViewData["Title"] = Model.GrnNo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Styles{
+
+}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Services/JsPdfService.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Services/JsPdfService.min.js"></script>
+    </environment>
+   
+}
+<div class="row">
+    <div class="col-md-12">
+        <h4>Goods Received Note</h4> <button onclick="printDiv('pdf-content')" class="btn btn-md btn-success">Print</button>
+    </div>
+</div>
+<section class="grn-template" id="pdf-content">
+    <div class="card">
+        <div class="card-content p-3">
+            <div id="grn-template" class="card-body">
+                <!-- GRN Company Details -->
+                <div id="grn-company-details" class="row">
+                    <div class="col-md-6 col-sm-12 text-center text-md-left">
+                        <div class="media">
+                            <img src="@Model.CreatedByUser.Company.Logo" alt="company logo" width="80" height="80">
+                            <div class="media-body">
+                                <ul class="ml-2 px-0 list-unstyled">
+                                    <li class="text-bold-800">@Model.CreatedByUser.Company.Name</li>
+                                    <li>@Model.CreatedByUser.Company.MainBranch.Address</li>
+                                    @*<li>Melbourne,</li>
+                                        <li>Florida 32940,</li>
+                                        <li>USA</li>*@
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-center text-md-right">
+                        <h2>Goods Received Note</h2>
+                        <p class="pb-3"># @Model.GrnNo</p>
+                        @*<ul class="px-0 list-unstyled">
+                              <li>Balance Due</li>
+                              <li class="lead text-bold-800">$ 12,000.00</li>
+                            </ul>*@
+                    </div>
+                </div>
+                <!--/ GRN Company Details -->
+                <!-- GRN Customer Details -->
+                <div id="grn-customer-details" class="row pt-2">
+                    <div class="col-sm-12 text-left">
+                        <p class="text-muted">Supplier</p>
+                    </div>
+                    <div class="col-md-6 col-sm-12  text-center text-md-left">
+                        <ul class="px-0 list-unstyled">
+                            <li class="text-bold-800">@(Model.Vendor.ContactName) <span>(@Model.Vendor.CompanyName)</span></li>
+                            <li>@Model.Vendor.Address</li>
+                            @*<li>4879 Westfall Avenue,</li>
+                                <li>Albuquerque,</li>
+                                <li>New Mexico-87102.</li>*@
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-center text-md-right">
+                        <p><span class="text-muted">GRN Date :</span> @Model.GrnDate.ToString("dd MMM, yyyy")</p>
+                        @*<p><span class="text-muted">Terms :</span> Due on Receipt</p>*@
+                        @*<p><span class="text-muted">Delivery Date :</span> @Model.DeliveryDate.ToString("dd/MM/yyyy")</p>*@
+                    </div>
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-md-9 col-sm-12">
+                        <h6>Description:</h6>
+                        <p>@Model.Description</p>
+                    </div>
+                </div>
+                <br />
+                <!--/ GRN Customer Details -->
+                <!-- GRN Items Details -->
+                <div id="grn-items-details" class="pt-2">
+                    <div class="row">
+                        <div class="table-responsive col-sm-12">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Item &amp; Description</th>
+                                        <th class="text-right">Batch No</th>
+                                        <th class="text-right">Quantity</th>
+                                        <th class="text-right">Rate</th>
+                                        <th class="text-right">Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.InvGrnDetails.Count(); i++)
+                                    {
+                                        var item = Model.InvGrnDetails[i];
+                                        <tr>
+                                            <th scope="row">@(i+1)</th>
+                                            <td>
+                                                <p>@item.Item.FullName</p>
+                                                @*<p class="text-muted">@item.Item.Description</p>*@
+                                            </td>
+                                            <td class="text-right">@item.BatchNo</td>
+                                            <td class="text-right">@item.ReceivedQuantity</td>
+                                            <td class="text-right">@item.Rate</td>
+                                            <td class="text-right">@item.SubTotal</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 text-left">
+                            @*<p class="lead">Payment Methods:</p>
+                                <div class="row">
+                                  <div class="col-12">
+                                    <table class="table table-borderless table-sm">
+                                      <tbody>
+                                        <tr>
+                                          <td>Bank name:</td>
+                                          <td class="text-right">ABC Bank, USA</td>
+                                        </tr>
+                                        <tr>
+                                          <td>Acc name:</td>
+                                          <td class="text-right">Amanda Orton</td>
+                                        </tr>
+                                        <tr>
+                                          <td>IBAN:</td>
+                                          <td class="text-right">FGS165461646546AA</td>
+                                        </tr>
+                                        <tr>
+                                          <td>SWIFT code:</td>
+                                          <td class="text-right">BTNPP34</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>*@
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            @*<p class="lead">Total Amount</p>*@
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr class="bg-grey bg-lighten-4">
+                                            <td class="text-bold-800">Total</td>
+                                            <td class="text-bold-800 text-right">@Model.GetTotalAmount()</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center">
+                                <p>Authorized person</p>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                @*<img src="~/app-assets/img/pages/signature-scan.png" alt="signature" class="width-250">
+                                    <h6>Amanda Orton</h6>
+                                    <p class="text-muted">Managing Director</p>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- GRN Footer -->
+
+                <div id="grn-footer">
+                    <div class="row">
+                        @*<div class="row">
+                              <div class="col-md-9 col-sm-12">
+                                <h6>Terms &amp; Condition</h6>
+                                <p>You know, being a test pilot isn't always the healthiest business in the world. We predict too
+                                  much for the next year and yet far too little for the next 10.</p>
+                              </div>
+                              <div class="col-md-3 col-sm-12 text-center">
+                                <button type="button" class="btn btn-primary btn-raised my-1"><i class="fa fa-paper-plane-o"></i> Send
+                                  GRN</button>
+                              </div>
+                            </div>*@
+                    </div>
+                    <!--/ GRN Footer -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagebreak"></div>
+</section>
+<!--About section ends-->

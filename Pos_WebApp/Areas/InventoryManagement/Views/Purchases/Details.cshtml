@@ -1,0 +1,151 @@
+﻿@model InvPurchaseMasterDto
+@{
+    ViewData["Title"] = "Purchase - Details";
+    Model.InvPurchaseDetail = Model.InvPurchaseDetail.OrderBy(x => x.Item.FullName).ToList();
+}
+
+
+@section Styles{
+    
+}
+<section id="about">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">Purchase Details</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    
+                </div>
+
+                <div class="card-content" style="padding-top:0px;">
+                    <div class="card-body" style="padding-top:0px;">
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Bill No:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.BillNo</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Purchase Date:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.PurchaseDate.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Status:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.StatusText</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created By:</a></span>
+                                        @if (Model.CreatedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.CreatedByUser.FirstName @Model.CreatedByUser.LastName (@Model.CreatedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.CreatedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified By:</a></span>
+                                        @if (Model.ModifiedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.ModifiedByUser.FirstName @Model.ModifiedByUser.LastName (@Model.ModifiedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.ModifiedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br/>
+                        <div id="po-items-details" class="pt-2">
+                            <div class="row">
+                                <div class="table-responsive col-sm-12">
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Item &amp; Description</th>
+                                                <th class="text-right">BarCode</th>
+                                                <th class="text-right">Quantity</th>
+                                                <th class="text-right">Rate</th>
+                                                <th class="text-right">Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @for (int i = 0; i < Model.InvPurchaseDetail.OrderBy(x => x.Item.FullName).Count(); i++)
+                                        {
+                                            var detail = Model.InvPurchaseDetail[i];
+                                            <tr>
+                                                <th scope="row">@(i + 1)</th>
+                                                <td>
+                                                    <p>@detail.Item.FullName <span class="text-muted font-small-1">(@detail.Item.ItemCode)</span></p>
+                                                </td>
+                                                <td class="text-right">@detail.BarCode?.BarCode</td>
+                                                <td class="text-right">@detail.Quantity</td>
+                                                <td class="text-right">@detail.PurchaseRate</td>
+                                                <td class="text-right">@(detail.PurchaseRate * @detail.Quantity)</td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 text-left">
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    @*<p class="lead">Total Amount</p>*@
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr class="bg-grey bg-lighten-4">
+                                                    <td class="text-bold-800">Total</td>
+                                                    <td class="text-bold-800 text-right">@Model.InvPurchaseDetail.Sum(item => item.Quantity * item.PurchaseRate)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--About section ends-->

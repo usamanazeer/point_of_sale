@@ -1,0 +1,168 @@
+﻿@model InvGrnMasterDto
+@{
+    ViewData["Title"] = "Create - GRN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var VendorsList = new SelectList(ViewBag.Vendors ?? new List<InvVendor_SLM>(), "Value", "Text");
+}
+
+
+@section Styles{
+    <!--select2-->
+    <link href="~/app-assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/pickadate/pickadate.min.css" asp-append-version="true">
+}
+@section Scripts{
+    <script src="~/app-assets/vendors/select2/dist/js/select2.min.js" asp-append-version="true"></script>
+    <script src="~/app-assets/js/datetime-plugin-bundle.min.js" type="text/javascript" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="~/app-assets/vendors/js/datatable/datatables.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/app-assets/js/data-tables/datatable-basic.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/js/Areas/InventoryManagement/GoodsReceivedNotes/Create.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <!--for datatables-->
+        <script src="~/js/Shared/Index.min.js" asp-append-version="true"></script>
+        <script src="~/js/Areas/InventoryManagement/GoodsReceivedNotes/Create.min.js" asp-append-version="true"></script>
+    </environment>
+    <!--select2-->
+
+
+    
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create GRN</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-grn-form" class="form" autocomplete="off" asp-route="CreateGRN" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="GrnDate"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="GrnDate" type="date" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="InvoiceNo"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="InvoiceNo" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="VendorId"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="VendorId" asp-items="VendorsList" class="form-control border-grey select" onchange="Vendor_OnChange()" required>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="Description"></label>&nbsp;<span class="red"></span>
+                                            <textarea asp-for="Description" class="form-control border-grey"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Select Po</label>
+                                            <select id="PoId" class="form-control border-grey select" disabled>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="padding-top: 28px; position: absolute;">
+                                            <input type="button" value="Load PO" class="btn btn-sm btn-flat bg-blue white" title="LoadPO" id="btn-load-po" onclick="LoadPO()" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row" id="table-container">
+
+                                            <div class="col-md-12">
+
+                                                <div class="card-body card-dashboard table-responsive">
+                                                    <label id="table-label">GRN Details</label>
+                                                    <table class="table table-striped table-bordered" id="grndetails-table">
+                                                        <thead class="grndetails-table-thead" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>PO No</th>
+                                                                <th>Item Name <span class="red">*</span></th>
+                                                                <th>Batch No</th>
+                                                                @*<th>Ordered Quantity <span class="red">*</span></th>*@
+                                                                <th>Received Quantity <span class="red">*</span></th>
+                                                                <th>Rate <span class="red">*</span></th>
+                                                                <th>Amount</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.InvGrnDetails != null && Model.InvGrnDetails.Count() > 0)
+                                                            {
+                                                                for (int i = 0; i < Model.InvGrnDetails.Count; i++)
+                                                                {
+                                                                    @await Component.InvokeAsync("AddGrn_GrnDetailsRow", new Tuple<int, InvGrnDetailsDto>(i, Model.InvGrnDetails[i]))
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                @await Component.InvokeAsync("AddGrn_GrnDetailsRow", new Tuple<int, InvGrnDetailsDto>(0, null))
+                                                            }
+                                                        </tbody>
+                                                        <tfoot class="grndetails-table-tfoot" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>PO No</th>
+                                                                <th>Item Name <span class="red">*</span></th>
+                                                                <th>Batch No</th>
+                                                                @*<th>Ordered Quantity<span class="red">*</span></th>*@
+                                                                <th>Received Quantity <span class="red">*</span></th>
+                                                                <th>Rate <span class="red">*</span></th>
+                                                                <th>Amount</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                            <tr class="border-1 border-white">
+                                                                <td class="border-0"><input id="btn-add-subitems-row" type="button" class="btn btn-sm bg-blue btn-flat white" value="Add More" onclick="AddRow()" /></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+                                                    <!--NEVER EVER REMOVE THIS TABLE-->
+                                                    <table style="display:none;" id="deleted-rows-table">
+                                                        <tbody>
+                                                            <!--NEVER EVER REMOVE THIS ROW-->
+                                                            <tr></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions right">
+                                <button id="btn-create-grn" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                                <button type="button" class="btn btn-raised btn-warning mr-1" style="float:right" onclick="ResetForm()">
+                                    <i class=""></i> Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,106 @@
+﻿:root {
+    --input-height: 50px;
+}
+.custom-number-input-small > .custom-number-input-nav, .custom-number-input-small > input {
+    height: 2em !important;
+}
+.custom-number-input-small > input {
+    width: 98px !important;
+    
+}
+.custom-number-input-small .custom-number-input-nav > button {
+    padding: 0px 20px 0px 10px !important;
+    font-size: 18px;
+}
+.custom-number-input-large > .custom-number-input-nav, .custom-number-input-large > input {
+    height: 3em !important;
+}
+.custom-number-input-large > input {
+    width: 122px !important;
+}
+.custom-number-input-large > .custom-number-input-nav> button {
+    padding: 0px 24px 0px 12px !important;
+    font-size: 20px;
+}
+.custom-number-input {
+    position: relative;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.custom-number-input input {
+   /* width: 122px;*/
+    /*height: var(--input-height);*/
+    line-height: 1.65;
+    float: left;
+    display: block;
+    padding: 0;
+    margin: 0;
+    padding-left: 23px;
+    border: 1px solid #eee;
+    border-radius: 7px 7px 7px 7px;
+}
+
+    .custom-number-input input:focus {
+        outline: 0;
+    }
+
+.custom-number-input-nav {
+    float: left;
+    position: relative;
+    /*height: var(--input-height);*/
+}
+
+.custom-number-input-button {
+    position: relative;
+    cursor: pointer;
+    border-left: 1px solid #eee;
+    width: 20px;
+    text-align: center;
+    color: #333;
+    font-size: 13px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+    line-height: 1.7;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+.custom-number-input-button {
+    position: absolute;
+    height: 100%;
+    background-color: lightgrey;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    /*padding: 0px 24px 0px 12px;*/
+    border: none
+}
+.custom-number-input-button:focus {
+    outline: none;
+}
+.custom-number-input-button.custom-number-input-up {
+    
+    top: 0;
+    border-radius: 0px 7px 7px 0px;
+}
+
+.custom-number-input-button.custom-number-input-down {
+    
+    bottom: 0px;
+    border-radius: 7px 0px 0px 7px;
+    margin-left: 20px;
+   
+}
+

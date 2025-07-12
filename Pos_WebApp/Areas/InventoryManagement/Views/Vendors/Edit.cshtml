@@ -1,0 +1,150 @@
+﻿@model InvVendorDto
+@{
+    ViewData["Title"] = "Edit - Vendor";
+}
+
+@section Scripts{
+    <script>
+        bindSubmit('edit-vendor-form', 'btn-edit-vendor', '/Vendors/Edit');
+    </script>
+}
+
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Edit User</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                @*<div class="card-header">
+                        <h4 class="card-title" id="basic-layout-colored-form-control">General</h4>
+                        <p class="mb-0">
+                            You can always change the border color of the form controls using <code>border-*</code>
+                            class. In this example we have user <code>border-grey</code> class for form controls. Form action
+                            buttons are on the bottom right position.
+                        </p>
+                    </div>*@
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="edit-vendor-form" class="form" autocomplete="off" method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user-plus"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.VendorCode">Vendor</label>&nbsp;<span class="red"></span>
+                                            <span type="text" class=" border-grey red">#@Model.VendorCode</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.ContactName"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.ContactName" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.CompanyName"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.CompanyName" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.City"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.City" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Country"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.Country" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Address"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.Address" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.PrimaryEmail"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.PrimaryEmail" type="email" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.OtherEmail"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.OtherEmail" type="email" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Phone"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.Phone" type="tel" class="form-control border-grey" />
+                                            <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Mobile"></label>
+                                            <input asp-for="@Model.Mobile" type="tel" class="form-control border-grey">
+                                            <span asp-validation-for="@Model.Mobile" class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.AccountNo"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.AccountNo" type="text" maxlength="50" class="form-control border-grey" />
+                                            @*<span asp-validation-for="@Model.AccountNo" class="text-danger"></span>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Status"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="Status" class="form-control border-grey" required>
+                                                <option value="">Select Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="2">InActive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*<h4 class="form-section"><i class="fa fa-key"></i> Account Info</h4>*@
+
+
+                            </div>
+
+                            <div class="form-actions right">
+
+                                <button id="btn-edit-vendor" type="submit" class="btn btn-raised btn-success" style="float:right" value="Save">Save</button>
+                                @*<button type="reset" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                        <i class=""></i> Reset
+                                    </button>*@
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

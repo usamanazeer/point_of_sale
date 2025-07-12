@@ -1,0 +1,300 @@
+﻿@{
+    ViewData["Title"] = "Index";
+
+}
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/chartist.min.css" asp-append-version="true">
+    <style>
+        table tbody {
+            display: block;
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+
+            table thead, table tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/app-assets/vendors/js/chart.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/app-assets/js/dashboard1.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/Shared/Reporting/SalesReporting/Shared/SalesReport.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="~/js/Areas/UserManagement/Home/Index.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/UserManagement/Home/Index.min.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+
+    @if (ViewBag.rights.ContainsKey(UserRights.SalesReports))
+    {
+        <script type="text/javascript">
+            $(this).ready(function () {
+                LoadLastWeekSalesReport();
+                LoadLastSixMonthsSalesReport();
+
+                var endDate = new Date();
+                var startDate = endDate;
+                var todayDate = new Date();
+                LoadSalesAmountInWidget(todayDate, todayDate, null, null, "today-sales-widget");
+
+
+                startDate = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
+                LoadSalesAmountInWidget(startDate, endDate, null, null, "current-month-sales-widget");
+
+                startDate = new Date(endDate.getFullYear(), 0, 1);
+                LoadSalesAmountInWidget(startDate, endDate, null, null, "current-year-sales-widget");
+
+
+                //by order type sale
+                LoadSalesAmountInWidget(todayDate, todayDate, ORDER_SERVE_TYPE.DineIn, null, "dine-in-sale-widget");
+                LoadSalesAmountInWidget(todayDate, todayDate, ORDER_SERVE_TYPE.TakeAway, null, "take-away-widget");
+                LoadSalesAmountInWidget(todayDate, todayDate, ORDER_SERVE_TYPE.Delivery, null, "delivery-sale-widget");
+                //by cash/card sale
+                LoadSalesAmountInWidget(todayDate, todayDate, null, Payment_Mode.Cash, "with-cash-sale-widget");
+                LoadSalesAmountInWidget(todayDate, todayDate, null, Payment_Mode.Card, "with-card-sale-widget");
+
+                //LoadTaxCollected(todayDate, todayDate, "tax-collected-widget");
+                var toDueDate = todayDate;
+                toDueDate.setDate(toDueDate.getDate() + 7);
+                LoadUpcomingDues(null, toDueDate, "upcomingDuesTable", function (res) {
+                    if (res.model && res.model.length > 0) {
+                        $('#upcomingDuesTableContainer').css('display', 'block');
+                    } else {
+                        $('#upcomingDuesTableContainer').css('display', 'none');
+                    }
+                });
+            });
+        </script>
+    }
+    @*<script src="~/js/SignalRClients/SalesClient.js"></script>*@
+}
+<!--Statistics cards Starts-->
+@Html.AntiForgeryToken()
+@if (ViewBag.rights.ContainsKey(UserRights.SalesReports))
+{
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card gradient-ibiza-sunset">
+                <div class="card-content">
+                    <div class="card-body pt-2 pb-0">
+                        <div class="media">
+                            <div class="media-body white text-left today-sales-widget">
+                                <h3 class="font-large-1 mb-0">PKR <span class="widget-amount">0</span></h3>
+                                <span class="widget-title">Today Sales</span>
+                            </div>
+                            <div class="media-right white text-right">
+                                <i class="icon-graph font-large-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Widget-line-chart4" class="height-50 WidgetlineChart WidgetlineChartshadow mb-2">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card gradient-blackberry">
+                <div class="card-content">
+                    <div class="card-body pt-2 pb-0">
+                        <div class="media">
+                            <div class="media-body white text-left current-month-sales-widget">
+                                <h3 class="font-large-1 mb-0">PKR <span class="widget-amount">0</span></h3>
+                                <span class="widget-title">Current Month Sales</span>
+                            </div>
+                            <div class="media-right white text-right">
+                                <i class="icon-graph font-large-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Widget-line-chart4" class="height-50 WidgetlineChart WidgetlineChartshadow mb-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card gradient-green-tea">
+                <div class="card-content">
+                    <div class="card-body pt-2 pb-0">
+                        <div class="media">
+                            <div class="media-body white text-left current-year-sales-widget">
+                                <h3 class="font-large-1 mb-0">PKR <span class="widget-amount">0</span></h3>
+                                <span class="widget-title">Current Year Sales</span>
+                            </div>
+                            <div class="media-right white text-right">
+                                <i class="icon-graph font-large-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Widget-line-chart4" class="height-50 WidgetlineChart WidgetlineChartshadow mb-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card gradient-pomegranate">
+                <div class="card-content">
+                    <div class="card-body pt-2 pb-0">
+                        <div class="media">
+                            <div class="media-body white text-left dine-in-sale-widget">
+                                <h3 class="font-large-1 mb-0">PKR <span class="widget-amount">0</span></h3>
+                                <span class="widget-title">Dine-in Sale (Today)</span>
+                            </div>
+                            <div class="media-right white text-right">
+                                <i class="icon-graph font-large-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Widget-line-chart4" class="height-50 WidgetlineChart WidgetlineChartshadow mb-2">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card gradient-red-pink">
+                <div class="card-content">
+                    <div class="card-body pt-2 pb-0">
+                        <div class="media">
+                            <div class="media-body white text-left delivery-sale-widget">
+                                <h3 class="font-large-1 mb-0">PKR <span class="widget-amount">0</span></h3>
+                                <span class="widget-title">Delivery Sale (Today)</span>
+                            </div>
+                            <div class="media-right white text-right">
+                                <i class="icon-graph font-large-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Widget-line-chart5" class="height-50 WidgetlineChart WidgetlineChartshadow mb-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card gradient-amber-amber">
+                <div class="card-content">
+                    <div class="card-body pt-2 pb-0">
+                        <div class="media">
+                            <div class="media-body white text-left take-away-widget">
+                                <h3 class="font-large-1 mb-0">PKR <span class="widget-amount">0</span></h3>
+                                <span class="widget-title">Take-away Sale (Today)</span>
+                            </div>
+                            <div class="media-right white text-right">
+                                <i class="icon-graph font-large-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Widget-line-chart4" class="height-50 WidgetlineChart WidgetlineChartshadow mb-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card gradient-purple-pink">
+                <div class="card-content">
+                    <div class="card-body pt-2 pb-0">
+                        <div class="media">
+                            <div class="media-body white text-left with-cash-sale-widget">
+                                <h3 class="font-large-1 mb-0">PKR <span class="widget-amount">0</span></h3>
+                                <span class="widget-title">With Cash Sale (Today)</span>
+                            </div>
+                            <div class="media-right white text-right">
+                                <i class="icon-graph font-large-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Widget-line-chart4" class="height-50 WidgetlineChart WidgetlineChartshadow mb-2">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card gradient-indigo-dark-blue">
+                <div class="card-content">
+                    <div class="card-body pt-2 pb-0">
+                        <div class="media">
+                            <div class="media-body white text-left with-card-sale-widget">
+                                <h3 class="font-large-1 mb-0">PKR <span class="widget-amount">0</span></h3>
+                                <span class="widget-title">With Card Sale (Today)</span>
+                            </div>
+                            <div class="media-right white text-right">
+                                <i class="icon-graph font-large-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Widget-line-chart5" class="height-50 WidgetlineChart WidgetlineChartshadow mb-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--Statistics cards Ends-->
+
+    <div class="row">
+        <div class="col-sm-12" id="last-week-sales-report">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Sale Report By Days</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body chartjs">
+                        <canvas height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12" id="last-sixmonths-sales-report">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Sale Report By Days</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body chartjs">
+                        <canvas height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (ViewBag.rights.ContainsKey(UserRights.Bills))
+{
+    <div id="upcomingDuesTableContainer" class="row match-height" style="display: none;">
+        <div class="col-xl-18 col-lg-12 col-12">
+            <div class="card" style="height: 419px;">
+                <div class="card-header pb-2">
+                    <h4 class="card-title">Upcoming Dues</h4>
+                </div>
+                <div class="card-content">
+                    <table id="upcomingDuesTable" class="table table-responsive-sm text-center">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Due Date</th>
+                                <th>BillNo</th>
+                                <th>Bill Amount</th>
+                                <th>Remaining Amount</th>
+                                <th>Bill Status</th>
+                                <th>Pay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

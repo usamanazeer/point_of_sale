@@ -1,0 +1,71 @@
+﻿@model AccFiscalYearDto
+@{
+    ViewData["Title"] = "Create - Fiscal Year";
+}
+@if (Model.Response != null)
+{
+    @if (Model.Response != null)
+    {
+        var responseObject = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Response);
+        <script type="text/javascript">
+             AlertManager.AlertSweetly(JSON.parse('@Html.Raw(responseObject)'), '/FiscalYears/Create');
+        </script>
+    }
+    @if (Model.Response.ErrorOccured)
+    {
+        @*@if (Model.Response.ErrorCode == StatusCodes.Invalid_State.ToInt())
+            {
+                <script type="text/javascript">
+                sweetAlert.error({ title: 'Invalid Info!', text: '@Model.Response.ResponseMessage' });
+                </script>
+            }*@
+        @if (Model.Response.ErrorCode == StatusCodes.Error_Occured.ToInt())
+        {
+            <script type="text/javascript">
+            sweetAlert.error({ text: '@Model.Response.ErrorMessage' });
+            </script>
+        }
+    }
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create FiscalYear</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form class="form" autocomplete="off" asp-route="CreateFiscalYear" method="post" enctype="multipart/form-data">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.StartDate"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.StartDate" type="date" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.EndDate"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.EndDate" type="date" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <input type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create" />
+                                <button type="reset" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                    <i class=""></i> Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

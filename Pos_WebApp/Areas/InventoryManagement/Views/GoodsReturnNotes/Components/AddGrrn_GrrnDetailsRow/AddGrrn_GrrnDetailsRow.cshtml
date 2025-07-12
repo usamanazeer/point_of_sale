@@ -1,0 +1,47 @@
+﻿@model Tuple<int, InvGrrnDetailsDto>
+@{
+    Layout = null;
+    var ItemsNameList = (List<Models.DTO.ViewModels.SelectList.InventoryManagement.InvItem_SLM>)ViewBag.Items;
+
+    var rowNo = Model.Item1;
+    var _model = Model.Item2 ?? new InvGrrnDetailsDto() { ItemId = -1 };
+}
+
+
+<tr class="add-stock-row row-no-@rowNo" data-row-no="@rowNo">
+    <td style="width:534.500px;max-width:600.500px;">
+        <input type="hidden" id="InvGrrnDetails_@rowNo.ToString()__Status" name="InvGrrnDetails[@rowNo].Status" value="1" class="row-status" />
+        <select id="InvGrrnDetails_@rowNo.ToString()__ItemId" asp-for="@_model.ItemId" name="InvGrrnDetails[@rowNo].ItemId" class="form-control item-select col-md-12" onchange="ItemSelect_OnChange('@rowNo')">
+            <option value="-1" data-ItemBrCode="" data-purchaseRate="0" data-itemMeasurement="" data-itemUnit=""></option>
+            @foreach (var item in ItemsNameList)
+            {
+                <option value="@item.Value" data-ItemBrCode="@item.BarCode" data-purchaseRate="@item.PurchaseRate" data-itemMeasurement="@item.Measurement" data-itemUnit="@item.UnitName">@item.FullName</option>
+            }
+        </select>
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Please Select Item</span>
+
+    </td>
+
+    <td>
+        <input type="text" id="InvGrrnDetails_@rowNo.ToString()__BatchNo" asp-for="@_model.BatchNo" name="InvGrrnDetails[@rowNo].BatchNo" class="form-control" />
+    </td>
+    <td>
+       <input type="number" step="any" min="0" id="InvGrrnDetails_@rowNo.ToString()__ReturnQuantity" asp-for="@_model.ReturnQuantity" oninput="CalculateGrrnDetails_Total('@rowNo')" name="InvGrrnDetails[@rowNo].ReturnQuantity" class="form-control" />
+            <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Return Quantity is  required.</span>
+
+    </td>
+
+    <td>
+        <input type="number" step="any" min="0" id="InvGrrnDetails_@rowNo.ToString()__Rate" name="InvGrrnDetails[@rowNo].Rate" asp-for="@_model.Rate" oninput="CalculateGrrnDetails_Total('@rowNo')" class="form-control" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Rate is  required.</span>
+    </td>
+
+    <td>
+        <input readonly type="number" step="any" id="InvGrrnDetails_@rowNo.ToString()__Amount" name="InvGrrnDetails[@rowNo].Amount" class="form-control" />
+    </td>
+
+    <td>
+        <span onclick="RemoveRow('@rowNo')" class="btn bg-transparent red border-1 border-lighten-1 border-grey" style="cursor:pointer;"><i class="fa fa-close"></i></span>
+    </td>
+
+</tr>

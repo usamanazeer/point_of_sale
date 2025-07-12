@@ -1,0 +1,119 @@
+﻿@model UserDto
+@{
+    ViewData[index: "Title"] = "Create - User";
+    var rolesSelectList = new SelectList(Model.Role.Roles, "Id", "Name");
+}
+
+@section Scripts{
+    <script>
+        bindSubmit('create-user-form', 'btn-create-user', '/Users/Create',  true, true);
+    </script>
+
+}
+
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create User</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-user-form" class="form" autocomplete="off" asp-route="CreateUser" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user-plus"></i> General</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.FirstName"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.FirstName" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.LastName"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.LastName" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Gender"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="@Model.Gender" class="custom-select" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="true">Male</option>
+                                                <option value="false">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Phone"></label>
+                                            <input asp-for="@Model.Phone" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.PrimaryEmail"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.PrimaryEmail" type="email" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.OtherEmail"></label>
+                                            <input asp-for="@Model.OtherEmail" type="email" class="form-control border-grey">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="form-section"><i class="fa fa-key"></i> Account Info</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.UserName"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.UserName" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Password"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Password" minlength="5" type="password" class="form-control border-grey" required />
+                                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.RoleId"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="@Model.RoleId" asp-items="rolesSelectList" class="custom-select" required>
+                                                <option value="">Select Role</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions right">
+
+                                <button id="btn-create-user" type="submit" class="btn btn-raised btn-primary" style="float: right" value="Create">Create</button>
+                                <button type="reset" class="btn btn-raised btn-warning mr-1" style="float: right">
+                                    <i class=""></i> Reset
+                                </button>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

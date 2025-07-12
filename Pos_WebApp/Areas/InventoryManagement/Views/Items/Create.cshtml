@@ -1,0 +1,440 @@
+﻿@model InvItemDto
+
+@{
+    ViewData["Title"] = "Create - Item";
+    var unitsSelectList = new SelectList(((List<InvUnitDto>)ViewBag.Units), "Id", "Name");
+    //var TaxSelectList = new SelectList(((List<TaxDto>)ViewBag.Taxes), "Id", "Name");
+    var categorySelectList = new SelectList(((List<InvCategoryDto>)ViewBag.Categories), "Id", "Name");
+    var subCategorySelectList = new SelectList(((List<InvSubCategoryDto>)ViewBag.SubCategories ?? new List<InvSubCategoryDto>()), "Id", "Name");
+    var brandSelectList = new SelectList(((List<InvBrandDto>)ViewBag.Brands), "Id", "Name");
+    var colorSelectList = new SelectList(((List<InvColorDto>)ViewBag.Colors), "Id", "Name");
+    var sizeSelectList = new SelectList(((List<InvSizeDto>)ViewBag.Sizes), "Id", "Name");
+}
+@section Styles{
+    <!--select2-->
+    <link href="~/app-assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+}
+
+
+@section Scripts{
+    <script src="~/app-assets/vendors/select2/dist/js/select2.min.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="~/js/Areas/InventoryManagement/Items/Create.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/InventoryManagement/Items/Create.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create Item</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-item-form" class="form" autocomplete="off" asp-route="CreateItem" method="post" enctype="multipart/form-data">
+                            <input hidden type="number" asp-for="ItemType" />
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user-plus"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Name" type="text" class="form-control border-grey" oninput="NameAttribute_OnChange()" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.FullName"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.FullName" type="text" class="form-control border-grey disabled" readonly="readonly" style="background-color:white; cursor:default;" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.InvItemBarCode[0].BarCode"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.InvItemBarCode[0].BarCode" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Measurement"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.Measurement" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.UnitId"></label>&nbsp;<span class="red"></span>
+                                            <select asp-for="@Model.UnitId" asp-items="unitsSelectList" class="custom-select select">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="padding-top: 35px; position: absolute;">
+                                            @if (ViewBag.rights.ContainsKey("CreateUnit"))
+                                            {
+                                                <a href="/Units/Create" class="btn btn-sm btn-flat bg-blue white" data-original-title="Create" title="Add Unit">
+                                                    Add Unit
+                                                </a>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="row">
+
+                                    </div>*@
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.PurchaseRate"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.PurchaseRate" type="number" step="any" class="form-control border-grey" required readonly="@((Model.ItemType == Models.Enums.ItemTypes.DealItem.ToInt() || Model.ItemType == Models.Enums.ItemTypes.RecipeItem.ToInt()) == true? "readonly":null)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.SalesRate"></label>@*&nbsp;<span class="red font-small-1">(Exc Tax & Discount)</span>*@
+                                            <input asp-for="@Model.SalesRate" type="number" step="any" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-3">
+                                            <div class="form-group">
+                                                <label asp-for="@Model.DiscountAmount"></label>&nbsp;<span class="red"></span>
+                                                <input asp-for="@Model.DiscountAmount" type="number" step="any" class="form-control border-grey" oninput="Calculate_SalesIncOthers()" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-switch" style="padding-top:35px;">
+                                                    <input type="checkbox" asp-for="IsDiscountInPercent" class="custom-control-input" id="IsDiscountInPercentSwitch" onchange="Calculate_SalesIncOthers()">
+                                                    <label class="custom-control-label" asp-for="IsDiscountInPercent" for="IsDiscountInPercentSwitch"></label>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                </div>
+                                @*<div class="row">
+                                        <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label asp-for="@Model.TaxId"></label>&nbsp;<span class="red"></span>
+                                                    <select asp-for="@Model.TaxId" class="custom-select select" onchange="Calculate_SalesIncOthers()">
+                                                        <option value=""></option>
+                                                        @foreach (TaxDto tax in TaxSelectList.Items)
+                                                        {
+                                                            <option value="@tax.Id" data-tax-amount="@tax.Amount" data-is-in-percent="@tax.IsInPercent">@tax.Name</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label asp-for="@Model.SalesRate"></label>&nbsp;<span class="red font-small-1">(Inc Tax & Discount)</span>
+                                                <input asp-for="FinalSalesRate" type="number" step="any" class="form-control border-grey" disabled />
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                                <h4 class="form-section"><i class="fa fa-plus"></i> Item Attributes</h4>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.CategoryId"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="@Model.CategoryId" asp-items="categorySelectList" class="custom-select select" onchange="MainCategory_OnChange()" required>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="padding-top: 35px; position: absolute;">
+                                            @if (ViewBag.rights.ContainsKey("CreateMainCategory"))
+                                            {
+                                                <a href="/MainCategory/Create" class="btn btn-sm btn-flat bg-blue white" data-original-title="Create" title="Add Category">
+                                                    Add Category
+                                                </a>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.SubCategoryId"></label>&nbsp;<span class="red"></span>
+                                            <select asp-for="@Model.SubCategoryId" asp-items="subCategorySelectList" class="custom-select select" disabled="@(Model.CategoryId== null? "disabled": null)">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="padding-top: 35px; position: absolute;">
+                                            @if (ViewBag.rights.ContainsKey("CreateSubCategory"))
+                                            {
+                                                <a href="/SubCategory/Create" id="btnAddSubCategory" class="btn btn-sm btn-flat bg-blue white disabled" data-original-title="Create" title="Add Sub-Category">
+                                                    Add Sub-Category
+                                                </a>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.MinimumQuantity"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.MinimumQuantity" type="number" step="any" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.BrandId"></label>&nbsp;<span class="red"></span>
+                                            <select asp-for="@Model.BrandId" asp-items="brandSelectList" class="custom-select select" onchange="NameAttribute_OnChange()">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="padding-top: 35px; position: absolute;">
+                                            @if (ViewBag.rights.ContainsKey("CreateBrand"))
+                                            {
+                                                <a href="/Brands/Create" class="btn btn-sm btn-flat bg-blue white" data-original-title="Create" title="Add Brand">
+                                                    Add Brand
+                                                </a>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.ColorId"></label>&nbsp;<span class="red"></span>
+                                            <select asp-for="@Model.ColorId" asp-items="colorSelectList" class="custom-select select" onchange="NameAttribute_OnChange()">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="padding-top: 35px; position: absolute;">
+                                            @if (ViewBag.rights.ContainsKey("CreateColor"))
+                                            {
+                                                <a href="/Colors/Create" class="btn btn-sm btn-flat bg-blue white" data-original-title="Create" title="Add Color">
+                                                    Add Color
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.SizeId"></label>&nbsp;<span class="red"></span>
+                                            <select asp-for="@Model.SizeId" asp-items="sizeSelectList" class="custom-select select" onchange="NameAttribute_OnChange()">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="padding-top: 35px; position: absolute;">
+                                            @if (ViewBag.rights.ContainsKey("CreateSize"))
+                                            {
+                                                <a href="/Sizes/Create" class="btn btn-sm btn-flat bg-blue white" data-original-title="Create" title="Add Size">
+                                                    Add Size
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group" style="padding-top: 35px;">
+                                        <label asp-for="@Model.ImageUrl"></label>&nbsp;<span class="red"></span>
+                                        <input type="file" name="itemImage" accept="image/*" class="border-grey" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @*<input hidden="hidden" asp-for="ManageStock" checked="checked" />*@
+                                        <div class="custom-control custom-switch" style="padding-top:35px;" id="manageStockSwitchContainer">
+                                            <input type="checkbox" asp-for="ManageStock" class="custom-control-input">
+                                            <label class="custom-control-label" asp-for="ManageStock" for="ManageStock"></label>
+                                        </div>
+                                        <div class="custom-control custom-switch" style="padding-top: 35px;" id="isReturnableSwitchContainer">
+                                            <input type="checkbox" asp-for="IsReturnable" class="custom-control-input">
+                                            <label class="custom-control-label" asp-for="IsReturnable" for="IsReturnable"></label>
+                                        </div>
+                                        <div class="custom-control custom-switch" style="padding-top: 35px;" id="displayOnPosSwitchContainer">
+                                            <input type="checkbox" asp-for="DisplayOnPos" class="custom-control-input" onclick="DisplayOnPos_OnClick()" disabled="@(Model.IsRawItem == true ? "disabled" : null)" checked="@(Model.IsRawItem == false ? "checked" : null)">
+                                            <label class="custom-control-label" asp-for="DisplayOnPos" for="DisplayOnPos"></label>
+                                        </div>
+                                        <div class="custom-control custom-switch" style="padding-top: 35px;" id="isRawItemSwitchContainer">
+                                            <input type="checkbox" asp-for="IsRawItem" onclick="IsRawItem_OnClick()" class="custom-control-input">
+                                            <label class="custom-control-label" asp-for="IsRawItem" for="IsRawItem"></label>
+                                        </div>
+
+
+                                        <div class="custom-control custom-switch d-inline-block" style="padding-top: 35px;">
+                                            <input type="checkbox" asp-for="IsDeal" onclick="IsDeal_OnClick()" class="custom-control-input" id="IsDeal">
+                                            <label class="custom-control-label" for="IsDeal">Add As Deal</label>
+                                        </div>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div class="custom-control custom-switch d-inline-block" style="padding-top: 35px;">
+                                            <input type="checkbox" asp-for="IsRecipe" onclick="AddRecipe_OnClick()" class="custom-control-input">
+                                            <label class="custom-control-label" for="IsRecipe">Add Recipe </label>
+                                        </div>
+
+
+                                        <div class="row" id="recipe-table-container" hidden="@(Model.IsRecipe == false && Model.IsDeal == false ? "hidden" : null)">
+
+                                            <div class="col-md-12">
+
+                                                <div class="card-body card-dashboard table-responsive">
+                                                    <label id="table-label">
+                                                        @if (Model.IsDeal == true)
+                                                        {<span>DEAL ITEMS</span>}
+                                                        @if (Model.IsRecipe == true)
+                                                        {<span>RECIPE ITEMS</span>}
+                                                    </label>
+                                                    <table class="table table-striped table-bordered" id="subitems-table">
+                                                        <thead class="subitems-table-thead" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>Name <span class="red">*</span></th>
+                                                                <th>Barcode</th>
+                                                                <th>Unit Measurement</th>
+                                                                <th>Quantity</th>
+                                                                <th>Unit Amount</th>
+                                                                <th>Total Amount</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.InvItemRecipeChild != null)
+                                                            {
+                                                                for (int i = 0; i < Model.InvItemRecipeChild.Count(); i++)
+                                                                {
+                                                                    @await Component.InvokeAsync("AddItem_SubItemRow",
+                                                                        new Tuple<int, InvItemRecipeDto, int>(i,
+                                                                            Model.InvItemRecipeChild[i],
+                                                                            Model.ItemType))
+                                                                    ;
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                        <tfoot class="subitems-table-tfoot" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>Name <span class="red">*</span></th>
+                                                                <th>Barcode</th>
+                                                                <th>Unit Measurement</th>
+                                                                <th>Quantity</th>
+                                                                <th>Unit Amount</th>
+                                                                <th>Total Amount</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                            <tr class="border-1 border-white">
+                                                                <td class="border-0"><input id="btn-add-subitems-row" type="button" class="btn btn-sm bg-blue btn-flat white" value="Add More" onclick="AddSubItemsRow()" /></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+
+                                                    <!--NEVER EVER REMOVE THIS TABLE-->
+                                                    <table style="display: none;" id="subitems-deleted-rows-table">
+                                                        <tbody>
+                                                            <!--NEVER EVER REMOVE THIS ROW-->
+                                                            <tr></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="custom-control custom-switch" style="padding-top: 35px;" id="Add">
+                                            <input type="checkbox" class="custom-control-input" id="addModifiersSwitch" onclick="AddModifiers_OnClick()" disabled="@(Model.IsRawItem == true ? "disabled" : null)" checked="@(Model.InvItemModifiers.Count() > 0 ? "checked" : null)">
+                                            <label class="custom-control-label" for="addModifiersSwitch">Add Modifiers</label>
+                                        </div>
+
+                                        <div class="row" id="modifiers-table-container" hidden="@(!Model.InvItemModifiers.Any() ? "hidden" : null)">
+
+                                            <div class="col-md-12">
+
+                                                <div class="card-body card-dashboard table-responsive">
+                                                    <label>Modifiers</label>
+                                                    <table class="table table-striped table-bordered" id="modifiers-table">
+                                                        <thead class="modifiers-table-thead" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>Name <span class="red">*</span></th>
+                                                                <th>Quantity</th>
+                                                                <th>Is Mandatory</th>
+                                                                <th>Modifier Charges</th>
+                                                                <th>Total</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.InvItemModifiers != null)
+                                                            {
+                                                                for (int i = 0; i < Model.InvItemModifiers.Count(); i++)
+                                                                {
+                                                                    @await Component.InvokeAsync("AddItem_ItemModifiersRow",
+                                                                        new Tuple<int, InvItemModifierDto>(i,
+                                                                            Model.InvItemModifiers[i]))
+                                                                    ;
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                        <tfoot class="modifiers-table-tfoot" style="font-size: smaller;">
+                                                            <tr>
+                                                                <th>Name <span class="red">*</span></th>
+                                                                <th>Quantity</th>
+                                                                <th>Is Mandatory</th>
+                                                                <th>Modifier Charges</th>
+                                                                <th>Total</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                            <tr class="border-1 border-white">
+                                                                <td class="border-0"><input id="btn-add-modifiers-row" type="button" class="btn btn-sm bg-blue btn-flat white" value="Add More" onclick="AddModifiersRow()" /></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+
+                                                    <!--NEVER EVER REMOVE THIS TABLE-->
+                                                    <table style="display: none;" id="modifiers-deleted-rows-table">
+                                                        <tbody>
+                                                            <!--NEVER EVER REMOVE THIS ROW-->
+                                                            <tr></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*<div class="custom-control custom-switch" style="padding-top:35px;" id="allowBackOrderSwitchContainer">
+                                                <input type="checkbox" asp-for="AllowBackOrder" class="custom-control-input" id="allowBackOrderSwitch">
+                                                <label class="custom-control-label" asp-for="AllowBackOrder" for="allowBackOrderSwitch"></label>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+
+                                <button id="btn-create-item" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                                <button type="button" class="btn btn-raised btn-warning mr-1" style="float:right" onclick="ResetForm()">
+                                    <i class=""></i> Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

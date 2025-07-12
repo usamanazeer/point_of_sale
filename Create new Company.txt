@@ -1,0 +1,8 @@
+When Add new Company
+
+Tables
+0. BusinessType
+1. Company
+2. User
+Assgin modules
+3. CompanyModules

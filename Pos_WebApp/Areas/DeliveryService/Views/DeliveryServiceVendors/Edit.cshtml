@@ -1,0 +1,89 @@
+﻿@model DeliDeliveryServiceVendorDto
+@{
+    ViewData["Title"] = "DeliveryServiceVendors - Edit";
+}
+
+
+@section Scripts{
+
+    <environment include="Development">
+        <script src="~/js/Areas/DeliveryService/DeliveryServiceVendors/Edit.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/DeliveryService/DeliveryServiceVendors/Edit.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Edit DeliveryServiceVendors</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="edit-delivery-service-form" class="form" autocomplete="off" method="post">
+                            <div class="form-body">
+                                <input type="hidden" asp-for="Id" />
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Name" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.ServiceDiscount"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.ServiceDiscount" type="number" step="any" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch" style="padding-top: 35px;" id="IsServiceDiscountInPercentContainer">
+                                                <input type="checkbox" asp-for="IsServiceDiscountInPercent" class="custom-control-input">
+                                                <label class="custom-control-label" asp-for="IsServiceDiscountInPercent" for="IsServiceDiscountInPercent"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-1">
+                                        <div class="custom-control custom-switch" style="padding-top: 35px;" id="isSelfSwitchContainer">
+                                            <input type="checkbox" asp-for="IsSelf" class="custom-control-input" id="isSelfSwitch" disabled="@(ViewBag.IsSelfExist == null || (ViewBag.IsSelfExist == true) && Model.IsSelf == false ? "disabled" : null)">
+                                            <label class="custom-control-label" asp-for="IsSelf" for="isSelfSwitch"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 accountNoRow">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.AccountNo"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.AccountNo" type="text" maxlength="50" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Status"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="Status" class="form-control border-grey" required>
+                                                <option value="">Select Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="2">InActive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button id="btn-edit-delivery-service" type="submit" class="btn btn-raised btn-success" style="float:right" value="Save">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

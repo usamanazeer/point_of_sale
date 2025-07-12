@@ -1,0 +1,186 @@
+﻿@model UserDto
+@{
+    ViewData["Title"] = "Edit - User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rolesSelectList = new SelectList(Model.Role.Roles, "Id", "Name");
+}
+
+@section Scripts{
+   
+
+    <script>
+        bindSubmit('edit-user-form', 'btn-edit-user', '/Users/Edit', null, null);
+    </script>
+}
+@if (Model.Response != null)
+{
+    @if (Model.Response.ResponseCode == StatusCodes.Updated.ToInt())
+    {
+        <script type="text/javascript">
+            swal('Success!', '@Model.Response.ResponseMessage', 'success');
+        </script>
+    }
+    @if (Model.Response.ErrorOccured)
+    {
+        @if (Model.Response.ErrorCode == StatusCodes.Invalid_State.ToInt())
+        {
+            <script type="text/javascript">
+                swal('Invalid Info!', '@Model.Response.ErrorMessage', 'error');
+            </script>
+        }
+        @if (Model.Response.ErrorCode == StatusCodes.Error_Occured.ToInt())
+        {
+            <script type="text/javascript">
+                swal('Error!', '@Model.Response.ErrorMessage', 'error');
+            </script>
+        }
+    }
+}
+@if (Model.Role.Response != null)
+{
+    @if (Model.Role.Response.ErrorOccured)
+    {
+        <script type="text/javascript">
+            swal('Error!', '@Model.Role.Response.ErrorMessage', 'error');
+        </script>
+    }
+}
+
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Edit User</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                @*<div class="card-header">
+                        <h4 class="card-title" id="basic-layout-colored-form-control">General</h4>
+                        <p class="mb-0">
+                            You can always change the border color of the form controls using <code>border-*</code>
+                            class. In this example we have user <code>border-grey</code> class for form controls. Form action
+                            buttons are on the bottom right position.
+                        </p>
+                    </div>*@
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="edit-user-form" class="form" autocomplete="off" method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" name="Password" value="12345" />
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user-plus"></i> General</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.FirstName"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.FirstName" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.LastName"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.LastName" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Gender"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="@Model.Gender" class="custom-select" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="true">Male</option>
+                                                <option value="false">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Phone"></label>
+                                            <input asp-for="@Model.Phone" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.PrimaryEmail"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.PrimaryEmail" type="email" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.OtherEmail"></label>
+                                            <input asp-for="@Model.OtherEmail" type="email" class="form-control border-grey">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Status"></label>&nbsp;<span class="red">*</span>
+                                            @if (!Model.MainUser)
+                                            {
+                                                <select asp-for="@Model.Status" class="custom-select" required>
+                                                    <option value="">Select Status</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="2">InActive</option>
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                var roleName = rolesSelectList.Where(x => x.Value == @Model.RoleId.ToString()).Select(x => x.Text.ToString()).FirstOrDefault();
+                                                <input asp-for="StatusText" type="text" class="form-control border-grey" disabled />
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="form-section"><i class="fa fa-key"></i> Account Info</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.UserName"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.UserName" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="@Model.RoleId"></label>&nbsp;<span class="red">*</span>
+                                                @if (!Model.MainUser)
+                                                {
+                                                    <select asp-for="@Model.RoleId" asp-items="rolesSelectList" class="custom-select" required>
+                                                        <option value="">Select Role</option>
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    var roleName = rolesSelectList.Where(x => x.Value == @Model.RoleId.ToString()).Select(x => x.Text.ToString()).FirstOrDefault();
+                                                    <input asp-for="@roleName" type="text" class="form-control border-grey" disabled />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-actions right">
+
+                                <button id="btn-edit-user" type="submit" class="btn btn-raised btn-success" style="float:right" value="Save">Save</button>
+                                @*<button type="reset" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                        <i class=""></i> Reset
+                                    </button>*@
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

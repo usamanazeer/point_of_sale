@@ -1,0 +1,190 @@
+@model RoleDto
+@{
+    ViewData["Title"] = "Edit - Role";
+    Dictionary<int, bool> printedmenu = new Dictionary<int, bool>();
+    int[] NotificationTypesVals = (int[])ViewBag.NotificationTypesVals;
+
+}
+
+@section Styles{
+    <!--select2-->
+    <link href="~/app-assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+}
+@section Scripts{
+    @if (Model.Response != null)
+    {
+        @if (Model.Response.ErrorOccured)
+        {
+            @if (Model.Response.ErrorCode == StatusCodes.Error_Occured.ToInt())
+            {
+                <script type="text/javascript">
+                        swal('Error!', '@Model.Response.ErrorMessage', 'error');
+                </script>
+            }
+        }
+    }
+    <script src="~/app-assets/vendors/select2/dist/js/select2.min.js" type="text/javascript" asp-append-version="true"></script>
+
+    <environment include="Development">
+        <script src="~/js/Areas/UserManagement/Roles/Edit.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/UserManagement/Roles/Edit.min.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Edit Role</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form class="form" id="updateRoleForm" autocomplete="off" method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-info"></i> General</h4>
+
+                                @*<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group alert-container" id="alert-container">
+                                                @if (Model.Response.ErrorOccured)
+                                                {
+                                                    if (Model.Response.ErrorCode == StatusCodes.ErrorOccured.ToInt())
+                                                    {
+                                                        <div class="alert alert-danger alert-dismissible">
+                                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                            <strong>Error!</strong> @Model.Response.ErrorMessage
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Name" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Description"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.Description" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Status"></label>&nbsp;<span class="red">*</span>
+                                            <select asp-for="@Model.Status" class="custom-select" required>
+                                                <option value="">Select Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="2">InActive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Assign Notifications</label>&nbsp;<span class="red"></span>
+                                            <input type="hidden" id="notification-type-values" value="" />
+                                            <select class="form-control" asp-items="ViewBag.NotificationTypes" id="notification-types-select" data-placeholder="Select Notifications" multiple="multiple" data-allow-clear="true" asp-for="@NotificationTypesVals">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section"><i class="fa fa-key"></i> Role Rights</h4>
+
+                                <!--Role rights assignment table here-->
+                                <ul>
+                                    @if (Model.CompanyModules != null)
+                                    {
+                                        @foreach (var module in Model.CompanyModules)
+                                        {
+                                            if (@module.Module != null)
+                                            {
+                                                <li>@module.Module.Name</li>
+                                                @foreach (var firstLevel in @module.Module.Rights)
+                                                {
+                                                    <li style="list-style:none;">
+                                                        <ul>
+                                                            @if ((!printedmenu.ContainsKey(firstLevel.Id.Value)) && firstLevel.DepthLevel == 1)
+                                                            {
+                                                                <li>
+                                                                    <input type="checkbox" class="role-right" id="right-id-@firstLevel.Id" asp-for="@firstLevel.IsSelected" onclick="firstChild_Onclick('@firstLevel.Id')" data-id="@firstLevel.Id" /> <span>&nbsp;</span> @firstLevel.Name
+                                                                    @{printedmenu.Add(firstLevel.Id.Value, true);}
+                                                                </li>
+
+                                                                <li style="list-style:none;">
+                                                                    <ul>
+                                                                        @foreach (var secondLevel in firstLevel.InverseParent)
+                                                                        {
+                                                                            if ((!printedmenu.ContainsKey(secondLevel.Id.Value)) && secondLevel.DepthLevel == 2)
+                                                                            {
+                                                                                <li>
+                                                                                    <input type="checkbox" class="role-right child-of-id-@firstLevel.Id" id="right-id-@secondLevel.Id" asp-for="@secondLevel.IsSelected" onclick="secondChild_Onclick('@secondLevel.Id','@firstLevel.Id')" data-id="@secondLevel.Id" /> <span>&nbsp;</span> @secondLevel.Name
+                                                                                    @{printedmenu.Add(secondLevel.Id.Value, true);}
+                                                                                </li>
+                                                                                <li style="list-style:none;">
+                                                                                    <ul>
+                                                                                        @foreach (var thirdLevel in secondLevel.InverseParent)
+                                                                                        {
+                                                                                            if ((!printedmenu.ContainsKey(thirdLevel.Id.Value)) && thirdLevel.DepthLevel == 3)
+                                                                                            {
+                                                                                                <li>
+                                                                                                    <input type="checkbox" class="role-right child-of-id-@firstLevel.Id child-of-id-@secondLevel.Id" id="right-id-@thirdLevel.Id" asp-for="@thirdLevel.IsSelected" onclick="thirdChild_Onclick('@thirdLevel.Id','@firstLevel.Id','@secondLevel.Id')" data-id="@thirdLevel.Id" /> <span>&nbsp;</span> @thirdLevel.Name
+                                                                                                    @{printedmenu.Add(thirdLevel.Id.Value, true);}
+                                                                                                </li>
+                                                                                                <li style="list-style:none;">
+                                                                                                    <ul>
+                                                                                                        @foreach (var fourthLevel in thirdLevel.InverseParent)
+                                                                                                        {
+                                                                                                            if ((!printedmenu.ContainsKey(fourthLevel.Id.Value)) && fourthLevel.DepthLevel == 4)
+                                                                                                            {
+                                                                                                                <li>
+                                                                                                                    <input type="checkbox" class="role-right child-of-id-@firstLevel.Id child-of-id-@secondLevel.Id child-of-id-@thirdLevel.Id" id="right-id-@fourthLevel.Id" asp-for="@fourthLevel.IsSelected" onclick="fourthChild_Onclick('@fourthLevel.Id','@firstLevel.Id','@secondLevel.Id', '@thirdLevel.Id')" data-id="@fourthLevel.Id" /> <span>&nbsp;</span> @fourthLevel.Name
+                                                                                                                    @{printedmenu.Add(fourthLevel.Id.Value, true);}
+                                                                                                                </li>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            }
+                                                                                        }
+                                                                                    </ul>
+                                                                                </li>
+                                                                            }
+                                                                        }
+                                                                    </ul>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </div>
+
+                            <div class="form-actions right">
+                                <button type="submit" id="btn-edit-role" class="btn btn-raised btn-success" style="float:right" value="Save">Save</button>
+                                @*<button type="reset" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                        <i class=""></i> Reset
+                                    </button>*@
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+

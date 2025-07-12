@@ -1,0 +1,224 @@
+﻿@model SalesOrderMasterDto
+@{
+    ViewData["Title"] = "Order - Details";
+}
+
+@section Styles{}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Areas/SalesManagement/Orders/Details.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/SalesManagement/Orders/Details.min.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+}
+<section id="about">
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">Order Details</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    @*<h5>Order Details</h5>*@
+                </div>
+                <div class="card-content" style="padding-top:0px;">
+                    <div class="card-body" style="padding-top:0px;">
+                        @if (Model.Status != StatusTypes.Delete.ToInt())
+                        {
+                            @if (Model.OrderStatusId != null && !(new List<int>() { @*OrderStatus.Billed.ToInt(), OrderStatus.Delivered.ToInt(),*@ OrderStatus.Cancelled.ToInt(), OrderStatus.Returned.ToInt() }).Contains(Model.OrderStatusId.Value))
+                            {
+                                if (ViewBag.rights.ContainsKey(UserRights.PrintOrderReceipt))
+                                {
+                                    <button type="button" class="btn btn-sm btn-dark mb-0 btn-print-receipt" onclick="PrintReceipt('@Model.Id')" data-original-title="Print Receipt" title="Print Receipt">
+                                        Print Receipt
+                                    </button>
+                                }
+                            }
+                            @if (!(new List<int>() { OrderStatus.Cancelled.ToInt(), OrderStatus.Returned.ToInt() }).Contains(Model.OrderStatusId.Value))
+                            {
+                                if (ViewBag.rights.ContainsKey(UserRights.SalesReturn))
+                                {
+                                    @*<a type="button" class="btn btn-sm btn-primary mb-0 ml-1" href="/Orders/SalesReturn/@Model.Id" data-original-title="Sales Return" title="Sales Return">
+                                            Sales Return
+                                        </a>*@
+                                }
+                                if (ViewBag.rights.ContainsKey(UserRights.CancelOrder))
+                                {
+                                    <a class="btn btn-sm btn-danger mb-0 ml-1 btn-cancel-order" onclick="CancelOrder('@Model.Id')" data-original-title="Cancel Order" title="Cancel Order">
+                                        Cancel Order
+                                    </a>
+                                }
+                            }
+                        }
+                        <hr class="mt-1">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Order No:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.OrderNo</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Order Type:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.OrderTypeText</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Order Status:</a></span>
+                                        <span class="d-block overflow-hidden order-status"><span class="@(Model.OrderStatusId == OrderStatus.Cancelled.ToInt()?"red":null)">@Model.OrderStatusText</span></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a> Status:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.StatusText</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created By:</a></span>
+                                        @if (Model.CreatedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.CreatedByUser.FirstName @Model.CreatedByUser.LastName (@Model.CreatedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Created On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.CreatedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified By:</a></span>
+                                        @if (Model.ModifiedByUser != null)
+                                        {
+                                            <span class="d-block overflow-hidden">@Model.ModifiedByUser.FirstName @Model.ModifiedByUser.LastName (@Model.ModifiedByUser.Role.Name) </span>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2 pb-3">
+                                        <span class="text-bold-500 primary"><a>Last Modified On:</a></span>
+                                        <span class="d-block overflow-hidden">@Model.ModifiedOn.ToString("dd MMM, yyyy")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row" id="table-container">
+                                        <div class="col-md-12">
+                                            <div class="card-body card-dashboard table-responsive">
+                                                <label id="table-label" style="padding-left:10px;" class="text-bold-600">Order Items</label>
+                                                <table class="table table-striped table-bordered" id="subitems-table">
+                                                    <thead class="subitems-table-thead" style="font-size: smaller;">
+                                                        <tr>
+                                                            <th>Name <span class="red">*</span></th>
+                                                            @*<th>Unit Measurement</th>*@
+                                                            <th>Amount(per unit)</th>
+                                                            <th>Quantity</th>
+                                                            <th>Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.SalesOrderDetails.OrderBy(x => x.Item.Name))
+                                                        {
+                                                            <tr>
+                                                                <td>@item.Item.FullName</td>
+                                                                @*<td>@item.Item.Measurement @item.Item.Unit.Name</td>*@
+                                                                <td>@item.FinalSalesRate</td>
+                                                                <td>@item.Quantity</td>
+                                                                <td>@(item.Quantity * item.FinalSalesRate)</td>
+                                                            </tr>
+                                                            if (item.SalesOrderItemModifiers != null && item.SalesOrderItemModifiers.Count > 0)
+                                                            {
+                                                                <tr>
+                                                                    <td colspan="4">Modifiers</td>
+                                                                </tr>
+                                                            }
+                                                            foreach (var modifer in item.SalesOrderItemModifiers)
+                                                            {
+                                                                <tr>
+                                                                    <td>@modifer.Modifier.Name</td>
+                                                                    <td>@modifer.Charges</td>
+                                                                    <td>@modifer.Quantity</td>
+                                                                    <td>@(modifer.Charges * modifer.Quantity)</td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td colspan="4" style="padding-bottom:50px!important;"></td>
+                                                            </tr>
+                                                        }
+                                                        @*@if (Model.TaxId!= null)
+                                                            {
+
+                                                            }*@
+                                                    </tbody>
+                                                    <tfoot class="subitems-table-tfoot" style="font-size: smaller;">
+                                                        <tr>
+                                                            <th colspan="3" class="text-right"><span class="float-right pr-3"> Discount: </span></th>
+                                                            <th>
+                                                                @Model.GetDiscount()
+                                                            @if ((Model.IsDiscountInPercent ?? false))
+                                                            {
+                                                                <span>( @(Model.DiscountAmount) %)</span>
+                                                            }
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="3" class="text-right"><span class="float-right pr-3"> Delivery Charges: </span></th>
+                                                        <th>
+                                                            @Model.GetDeliveryCharges()
+                                                        @if ((Model.IsChargesInPercent ?? false))
+                                                        {
+                                                            <span>( @(Model.DeliveryCharges) %)</span>
+                                                        }
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="3" class="text-right"><span class="float-right pr-3"> Tax: </span></th>
+                                                    <th>@Model.TaxAmount</th>
+                                                </tr>
+
+                                                <tr class="">
+                                                    <th colspan="3"><span class="float-right pr-3"> Total: </span></th>
+                                                    <th><span> @Model.GetOrderAmountPayable()</span></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+<!--About section ends-->

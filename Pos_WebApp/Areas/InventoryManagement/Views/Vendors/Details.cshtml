@@ -1,0 +1,236 @@
+﻿@model InvVendorDto
+@{
+    ViewData["Title"] = "Vendor Details";
+}
+
+<section id="about">
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">Vendor Details</div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            @if (Model.Response.ErrorOccured)
+            {
+                <div class="row" style="margin:auto !important">
+                    <div class="col-md-12">
+                        <div class="form-group" style="margin:auto !important">
+                            @if (Model.Response.ErrorOccured)
+                            {
+                                <div class="alert alert-danger alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Error!</strong> @Model.Response.ErrorMessage
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.Id != null && Model.Id != 0)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Vendor Information</h5>
+                        <label asp-for="@Model.VendorCode">Vendor</label>&nbsp;<span class="red"></span>
+                        <span type="text" class=" border-grey red">#@Model.VendorCode</span>
+                    </div>
+                    <div class="card-content" style="padding-top:0px;">
+                        <div class="card-body" style="padding-top:0px;">
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Contact Name:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.ContactName</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Company Name:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.CompanyName</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ City:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.City</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Country:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.Country</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Address:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.Address</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Primary Email:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.PrimaryEmail</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Secondory Email:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.OtherEmail</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Phone:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.Phone</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Mobile:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.Mobile</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Account No:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.AccountNo</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>@*<i class="icon-present font-small-3"></i>*@ Status:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.StatusText</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>Created By:</a></span>
+                                            @if (Model.CreatedByUser != null)
+                                            {
+                                                <span class="d-block overflow-hidden">@Model.CreatedByUser.FirstName @Model.CreatedByUser.LastName (@Model.CreatedByUser.Role.Name) </span>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>Created On:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.CreatedOn.ToString("dd MMM, yyyy")</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>Last Modified By:</a></span>
+                                            @if (Model.ModifiedByUser != null)
+                                            {
+                                                <span class="d-block overflow-hidden">@Model.ModifiedByUser.FirstName @Model.ModifiedByUser.LastName (@Model.ModifiedByUser.Role.Name) </span>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <ul class="no-list-style">
+                                        <li class="mb-2 pb-3">
+                                            <span class="text-bold-500 primary"><a>Last Modified On:</a></span>
+                                            <span class="d-block overflow-hidden">@Model.ModifiedOn.ToString("dd MMM, yyyy")</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            @*<hr>
+                                <div class="mt-3">
+                                    <span class="text-bold-500 primary">Hobbies:</span>
+                                    <span class="d-block overflow-hidden">
+                                        I like to ride the cycle to work, swimming, listning music and
+                                        working out. I also like reading magazines, go to museums, watching good movies and eat spicy food
+                                        while
+                                        it’s raining outside.Twin siblings Dipper and Mabel Pines spend the summer at their uncle's tourist
+                                        trap
+                                        in the enigmatic town of Gravity Falls.A mysterious Hollywood stuntman and mechanic moonlights as a
+                                        getaway driver.Scuba Diving, Skiing, Surfing, Photography, Long drive.
+                                    </span>
+                                </div>
+                                <div class="mt-2 overflow-hidden">
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-plane danger font-large-2"></i>
+                                        <span class="mt-2">Travelling</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-speedometer danger font-large-2"></i>
+                                        <span class="mt-2">Driving</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-camera danger font-large-2"></i>
+                                        <span class="mt-2">Photography</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-game-controller danger font-large-2"></i>
+                                        <span class="mt-2">Gaming</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-music-tone-alt danger font-large-2"></i>
+                                        <span class="mt-2">Music</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="ft-monitor danger font-large-2"></i>
+                                        <span class="mt-2">Surfing</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="ft-pie-chart danger font-large-2"></i>
+                                        <span class="mt-2">Foodie</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="ft-tv danger font-large-2"></i>
+                                        <span class="mt-2">TV</span>
+                                    </span>
+                                    <span class="mr-3 mt-2 text-center float-left width-100">
+                                        <i class="icon-basket-loaded danger font-large-2"></i>
+                                        <span class="mt-2">Shopping</span>
+                                    </span>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+<!--About section ends-->

@@ -1,0 +1,110 @@
+﻿@model BranchDto
+@{
+    ViewData["Title"] = "Edit - Branch";
+}
+
+
+@if (Model.Response != null)
+{
+    @if (Model.Response.ResponseCode == StatusCodes.Updated.ToInt())
+    {
+        <script type="text/javascript">
+        sweetAlert.success({ text: '@Model.Response.ResponseMessage' });
+        </script>
+    }
+    @if (Model.Response.ErrorOccured)
+    {
+        @if (Model.Response.ErrorCode == StatusCodes.Invalid_State.ToInt())
+        {
+            <script type="text/javascript">
+            sweetAlert.error({ title: 'Invalid Info!', text: '@Model.Response.ResponseMessage' });
+            </script>
+        }
+        @if (Model.Response.ErrorCode == StatusCodes.Error_Occured.ToInt())
+        {
+            <script type="text/javascript">
+            sweetAlert.error({ text: '@Model.Response.ErrorMessage' });
+            </script>
+        }
+    }
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Edit Branch</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form class="form" autocomplete="off" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="icon-info"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Name" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Phone"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.Phone" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.City"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.City" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Address"></label>&nbsp;<span class="red"></span>
+                                            <input asp-for="@Model.Address" type="text" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.IsMainBranch"></label>&nbsp;<span class="red"></span>
+                                            <span type="text" class="form-control border-grey bg-light" style="cursor:not-allowed">@Model.IsMainBranchText</span>
+                                        </div>
+                                    </div>
+                                    @if (!Model.IsMainBranch??true)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="@Model.Status"></label>&nbsp;<span class="red">*</span>
+                                                <select asp-for="Status" class="form-control border-grey" required>
+                                                    <option value="">Select Status</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="2">InActive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" asp-for="Status" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <input type="submit" class="btn btn-raised btn-success" style="float:right" value="Save" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

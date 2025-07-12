@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "_BasicLayout";
+    var isLicenseInvalid = (bool)ViewBag.isLicenseInvalid;
+    var issueText = (isLicenseInvalid ? "Invalid" : "Expired");
+    ViewData["Title"] = $"License {issueText}";
+}
+<br />
+<div class="main-content">
+    <div class="content-wrapper">
+        <h1 class="text-danger">License @issueText.</h1>
+        @if (isLicenseInvalid)
+        {
+            <p>
+                The License is not valid for you. Please contact to Nedo Corporation.
+            </p>
+        }
+        else
+        {
+            <p>
+                The License is Expired. Please contact to Nedo Corporation to re-new the license.
+            </p>   
+        }
+    </div>
+</div>

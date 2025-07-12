@@ -1,0 +1,80 @@
+﻿@model DeliDeliveryServiceVendorDto
+@{
+    ViewData["Title"] = "DeliveryServiceVendor - Create";
+}
+
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Areas/DeliveryService/DeliveryServiceVendors/Create.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/DeliveryService/DeliveryServiceVendors/Create.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Create DeliveryServiceVendor</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form id="create-delivery-service-form" class="form" autocomplete="off" asp-route="CreateDeliveryServiceVendor" method="post">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user-plus"></i> General</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Name"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.Name" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.ServiceDiscount"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.ServiceDiscount" type="number" step="any" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch" style="padding-top: 35px;" id="IsServiceDiscountInPercentContainer">
+                                                <input type="checkbox" asp-for="IsServiceDiscountInPercent" class="custom-control-input">
+                                                <label class="custom-control-label" asp-for="IsServiceDiscountInPercent" for="IsServiceDiscountInPercent"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="custom-control custom-switch" style="padding-top:35px;" id="isSelfSwitchContainer">
+                                            <input type="checkbox" asp-for="IsSelf" class="custom-control-input" id="isSelfSwitch" disabled="@((ViewBag.IsSelfExist== null || ViewBag.IsSelfExist==true) && Model.IsSelf == false ?"disabled":null)">
+                                            <label class="custom-control-label" asp-for="IsSelf" for="isSelfSwitch"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 accountNoRow">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.AccountNo"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.AccountNo" type="number" step="any" class="form-control border-grey" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button id="btn-create-delivery-service" type="submit" class="btn btn-raised btn-primary" style="float:right" value="Create">Create</button>
+                                <button type="button" onclick="Reset()" class="btn btn-raised btn-warning mr-1" style="float:right">
+                                    <i class=""></i> Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+

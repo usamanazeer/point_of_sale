@@ -1,0 +1,79 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Not Found";
+    Layout = "_BasicLayout"; ;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<!-- BEGIN : Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Apex admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Apex admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Error Page - Apex responsive bootstrap 4 admin template</title>
+    <link rel="apple-touch-icon" sizes="60x60" href="~/app-assets/img/ico/apple-icon-60.png" asp-append-version="true">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/app-assets/img/ico/apple-icon-76.png" asp-append-version="true">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/app-assets/img/ico/apple-icon-120.png" asp-append-version="true">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/app-assets/img/ico/apple-icon-152.png" asp-append-version="true">
+    <link rel="shortcut icon" type="image/x-icon" href="~/app-assets/img/ico/favicon.ico" asp-append-version="true">
+    <link rel="shortcut icon" type="image/png" href="~/app-assets/img/ico/favicon-32.png" asp-append-version="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link href="~/app-assets/fonts/fonts.css" rel="stylesheet" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900|Montserrat:300,400,500,600,700,800,900" rel="stylesheet" asp-append-version="true">
+</head>
+<!-- END : Head-->
+<!-- BEGIN : Body-->
+<body data-col="1-column" class=" 1-column  blank-page">
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <div class="wrapper">
+        <div class="main-panel">
+            <!-- BEGIN : Main Content-->
+            <div class="main-content">
+                <div class="content-wrapper">
+                    <!--Error page starts-->
+                    <section id="error">
+                        <div class="container-fluid forgot-password-bg overflow-hidden">
+                            <div class="row full-height-vh">
+                                <div class="col-12 d-flex align-items-center justify-content-center">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                            <img src="~/app-assets/img/gallery/error.png" alt="" class="img-fluid error-img mt-2" height="300"
+                                                 width="500">
+                                            <h1 class="text-white mt-4"> @Model.Response.ResponseMessage</h1>
+                                            <h3 class="text-white mt-0 red"><span class="text-bold-500">ErrorCode: @Model.Response.ResponseCode</span> </h3>
+                                            <div class="w-75 error-text mx-auto mt-4">
+                                                <p class="text-white">
+                                                    @*paraphonic unassessable foramination Caulopteris worral Spirophyton
+                                                    encrimson esparcet aggerate chondrule restate whistler shallopy biosystematy area
+                                                    bertram plotting unstarting quarterstaff.*@
+                                                </p>
+                                            </div>
+                                            <a href="@Model.BackURL" class="text-decoration-none text-white btn btn-primary btn-lg mt-3">
+                                                    Back
+                                                </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--Error page ends-->
+
+                </div>
+            </div>
+            <!-- END : End Main Content-->
+        </div>
+    </div>
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <!-- BEGIN VENDOR JS-->
+    
+    
+</body>
+<!-- END : Body-->
+</html>

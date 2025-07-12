@@ -1,0 +1,118 @@
+﻿@model Models.DTO.Reporting.Sales.RptTaxCollectionDto
+@{
+    ViewData["Title"] = "Tax Collection Report";
+}
+@{
+    ViewData["Title"] = "IncomeStatement";
+    string dateFormat = "dd MMM, yyyy";
+}
+@section Styles{
+
+}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Services/JsPdfService.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Services/JsPdfService.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<!--from user-profile-page.html-->
+<!--About section starts-->
+
+<section class="journal-template">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Tax Collection Report</h4>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <div class="col-md-12">
+                                <form method="post">
+                                    @*<div class="col-lg-1 disp-inline-block"><label>Filters:</label></div>*@
+                                    <div class="col-lg-3 disp-inline-block font-small-3">
+                                        <label>From Date</label><span class="red">*</span>
+                                        <div class="input-group font-small-3">
+                                            <input type="date" asp-for="@Model.FromDate" class="form-control filter bg-white" required="required" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 disp-inline-block font-small-3">
+                                        <label>To Date</label><span class="red">*</span>
+                                        <div class="input-group font-small-3">
+                                            <input type="date" asp-for="@Model.ToDate" class="form-control filter bg-white" required="required" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 disp-inline-block font-small-5"><input type="submit" class="btn btn-sm btn-raised btn-success right" value="Apply"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br /><br />
+            @if (Model.TaxCollectionData.Any())
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <button onclick="printDiv('pdf-content')" class="btn btn-md btn-success mb-0">Print</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="card-content" id="pdf-content">
+            <div id="journal-template" class="card-body pt-0">
+                <div id="journal-details" class="pt-2">
+                    <div class="row">
+                        <div class="table-responsive col-sm-6">
+                            @if (Model.TaxCollectionData.Any())
+                            {
+                                <table class="table mb-0 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" colspan="3"> Tax Collection From @Model.FromDate.ToString(dateFormat), To @Model.ToDate.ToString(dateFormat)</th>
+                                        </tr>
+                                        <tr>
+                                            <th>SNo.</th>
+                                            <th>Tax</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.TaxCollectionData.Count(); i++)
+                                        {
+                                            var record = Model.TaxCollectionData[i];
+                                            <tr>
+                                                <td class="pl-4">@(i+1)</td>
+                                                <td>@record.Name</td>
+                                                <td>@record.TaxAmount.ToNDecimalPlaces(2)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <!-- PO Footer -->
+
+                <div id="po-footer">
+                    <div class="row">
+                    </div>
+                    <!--/ PO Footer -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagebreak"></div>
+</section>
+
+<!--About section ends-->

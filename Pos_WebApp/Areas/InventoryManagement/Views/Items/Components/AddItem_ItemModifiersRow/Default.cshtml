@@ -1,0 +1,43 @@
+﻿@model Tuple<int, InvItemModifierDto>
+@{
+    Layout = null;
+    var ModifiersList = (List<Models.DTO.ViewModels.SelectList.InventoryManagement.InvModifier_SLM>)ViewBag.Modifiers;
+    var rowNo = Model.Item1;
+    var _model = Model.Item2 ?? new InvItemModifierDto();
+}
+<tr class="add-stock-row row-no-@rowNo" data-row-no="@rowNo">
+    <td>
+        <input type="hidden" id="InvItemModifiers_@rowNo.ToString()__Status" name="InvItemModifiers[@rowNo].Status" value="1" class="row-status" />
+        <select id="InvItemModifiers_@rowNo.ToString()__ModifierId"  asp-for="@_model.ModifierId" name="InvItemModifiers[@rowNo].ModifierId" class="form-control item-select col-md-12 select" onchange="ModifierSelect_OnChange('@rowNo')" style="width:534.500px;max-width:534.500px;"    uired>
+            <option value="-1" data-ModifierCharges=""></option>
+            @foreach (var item in ModifiersList)
+            {
+                <option value="@item.Value" data-ModifierCharges="@item.ModifierCharges">@item.Text</option>
+            }
+        </select>
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Please Select Modifier</span>
+    </td>
+    <td>
+        <input type="number" step="any" id="InvItemModifiers_@rowNo.ToString()__Quantity" oninput="CalculateModifiers_Total('@rowNo')" asp-for="@_model.Quantity" name="InvItemModifiers[@rowNo].Quantity" class="form-control measurement" />
+        <span class="red font-small-1 invalid-span font-weight-bold" style="display:none;">Quantity is  required.</span>
+    </td>
+    <td>
+        <div class="custom-control custom-switch" style="padding-top:6px;margin-left: 30px" id="Add">
+            <input type="checkbox" asp-for="@_model.IsMandatory" class="custom-control-input" id="InvItemModifiers_@rowNo.ToString()__IsMandatory" name="InvItemModifiers[@rowNo].IsMandatory">
+            <label class="custom-control-label" for="InvItemModifiers_@rowNo.ToString()__IsMandatory"></label>
+        </div>
+        @*<input type="checkbox" id="InvItemModifiers_@rowNo.ToString()__IsMandatory" asp-for="@_model.IsMandatory" oninput="CalculateSubItems_Total('@rowNo')" name="InvItemModifiers[@rowNo].IsMandatory" class="form-control modifier-charges" />*@
+        
+    </td>
+    <td>
+        <input type="number" step="any" readonly id="InvItemModifiers_@rowNo.ToString()__ModifierCharges" name="InvItemModifiers[@rowNo].ModifierCharges" class="form-control sales-rate" />
+    </td>
+
+    <td>
+        <input type="number" step="any" readonly id="InvItemModifiers_@rowNo.ToString()__Total" name="InvItemModifiers[@rowNo].Total" class="form-control modifiers-total" />
+    </td>
+
+    <td>
+        <span onclick="RemoveModifiersRow('@rowNo')" class="btn bg-transparent red border-1 border-lighten-1 border-grey" style="cursor:pointer;"><i class="fa fa-close"></i></span>
+    </td>
+</tr>

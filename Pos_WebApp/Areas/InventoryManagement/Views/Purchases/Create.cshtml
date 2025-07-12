@@ -1,0 +1,191 @@
+﻿@model InvPurchaseMasterDto
+@{
+    ViewData["Title"] = "Create - Purchases";
+    var vendorsList = (IList<InvVendor_SLM>)ViewBag.Vendors;
+}
+@section Styles{
+    <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" asp-append-version="true" />
+    <!--select2-->
+    <link href="~/app-assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/pickadate/pickadate.min.css" asp-append-version="true" />
+}
+
+@section Scripts{
+
+    <!--select2-->
+    <script src="~/app-assets/vendors/select2/dist/js/select2.min.js" type="text/javascript" asp-append-version="true"></script>
+    <!-- BEGIN pickadate JS-->
+    <script src="~/app-assets/js/datetime-plugin-bundle.min.js" type="text/javascript" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="~/app-assets/vendors/js/datatable/datatables.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/app-assets/js/data-tables/datatable-basic.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/js/Areas/InventoryManagement/Purchases/Create.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Shared/Index.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/js/Areas/InventoryManagement/Purchases/Create.min.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+}
+
+
+<!-- File export table -->
+<section id="file-export">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Create Purchases</h4>
+                    <p class="card-text">
+                    </p>
+                </div>
+                @* ReSharper disable once UnknownCssClass *@
+                <div class="card-content ">
+                    <div class="row" style="margin:auto !important">
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin:auto !important">
+                            </div>
+                        </div>
+                    </div>
+                    <form id="create-purchase-form" autocomplete="off" class="form pt-3" asp-route="CreatePurchases" method="post">
+                        <div class="form-body">
+                            <div class="px-3">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.BillNo"></label>&nbsp;<span class="red">*</span>
+                                            <input asp-for="@Model.BillNo" type="text" class="form-control border-grey" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.PurchaseDate"></label>&nbsp;<span class="red">*</span>
+                                            <div class="input-group font-small-3">
+                                                @* ReSharper disable once UnknownCssClass *@
+                                                <input type='text' asp-for="@Model.PurchaseDate" class="form-control pickadate-selectors filter  bg-white" value="@(Model.PurchaseDate!=null?Model.PurchaseDate.ToString("dd MMMM, yyyy"):DateTime.Now.ToString("dd MMMM, yyyy"))" required />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <span class="fa fa-calendar-o"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            @*<input asp-for="@Model.BillDate" type="date" class="form-control border-grey" required />*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Vendor"></label>&nbsp;<span class="red">*</span>
+                                            @* ReSharper disable once UnknownCssClass *@
+                                            <select class="form-control select" asp-for="@Model.VendorId" required="required">
+                                                <option value=""></option>
+                                                @foreach (var branch in vendorsList)
+                                                {
+                                                    <option value="@branch.Value" data-company-name="@branch.CompanyName">@branch.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.BillDueDate"></label>&nbsp;<span class="red">*</span>
+                                            <div class="input-group font-small-3">
+                                                @* ReSharper disable once UnknownCssClass *@
+                                                <input type='text' asp-for="@Model.BillDueDate" class="form-control pickadate-selectors filter  bg-white" value="@(Model.BillDueDate!=null?Model.BillDueDate.ToString("dd MMMM, yyyy"):DateTime.Now.ToString("dd MMMM, yyyy"))" required />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <span class="fa fa-calendar-o"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            @*<input asp-for="@Model.BillDate" type="date" class="form-control border-grey" required />*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @* ReSharper disable once UnknownCssClass *@
+                                    <div class="card-body card-dashboard table-responsive">
+                                        <table class="table table-striped table-bordered" id="purchases-table">
+                                            @* ReSharper disable once UnknownCssClass *@
+                                            <thead class="purchases-table-thead" style="font-size: smaller;">
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Bar Code</th>
+                                                    <th>Quantity</th>
+                                                    <th>Expiry</th>
+                                                    <th>Purchase Rate</th>
+                                                    <th>Sales Rate</th>
+                                                    <th>Remove</th>
+                                                    @*<th style="visibility:hidden;"></th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @await Component.InvokeAsync("PurchaseDetailRow",
+                                                            new Tuple<int, InvPurchaseDetailDto>(0,
+                                                                null))
+                                                @*@if (!Model.InvPurchaseDetail.Any())
+                                                {
+                                                    @for (var i = 0; i < 5; i++)
+                                                    {
+                                                        @await Component.InvokeAsync("PurchaseDetailRow",
+                                                            new Tuple<int, InvPurchaseDetailDto>(i,
+                                                                null))
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    @for (int i = 0; i < Model.InvPurchaseDetail.Count(); i++)
+                                                    {
+                                                        @await Component.InvokeAsync("PurchaseDetailRow",
+                                                            new Tuple<int, InvPurchaseDetailDto>(i,
+                                                                Model.InvPurchaseDetail[i]))
+                                                    }
+                                                }*@
+                                            </tbody>
+                                            @* ReSharper disable once UnknownCssClass *@
+                                            <tfoot class="purchases-table-tfoot" style="font-size: smaller;">
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Bar Code</th>
+                                                    <th>Quantity</th>
+                                                    <th>Expiry</th>
+                                                    <th>Purchase Rate</th>
+                                                    <th>Sales Rate</th>
+                                                    <th>Remove</th>
+                                                    @*<th style="visibility:hidden;"></th>*@
+                                                </tr>
+                                                @* ReSharper disable once UnknownCssClass *@
+                                                <tr class="border-1 border-white">
+                                                    <td class="border-0"><input type="button" class="btn btn-sm bg-blue btn-flat white" value="Add More" onclick="AddRow()" /></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
+
+                                        <!--NEVER EVER REMOVE THIS TABLE-->
+                                        <table style="display:none;" id="deleted-rows-table">
+                                            <tbody>
+                                                <!--NEVER EVER REMOVE THIS ROW-->
+                                                <tr></tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <button id="btn-create-purchase" type="submit" class="btn btn-block btn-lg bg-blue btn-flat white" value=" Save "> Save </button>
+                                                <input type="button" class="btn btn-block btn-lg btn-raised btn-warning" value=" Clear " style="float:right;" onclick="ResetForm()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- File export table -->

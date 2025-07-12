@@ -1,0 +1,140 @@
+﻿@using System.Globalization
+@model RptAccountBalanceSheetDto
+@{
+    ViewData["Title"] = "Balance Sheet";
+    string dateFormat = "dd MMM, yyyy";
+}
+@section Styles{
+
+}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Services/JsPdfService.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Services/JsPdfService.min.js" type="text/javascript" asp-append-version="true"></script>
+    </environment>
+}
+
+<section class="journal-template">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Balance Sheet</h4>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <div class="col-md-12">
+                                <form method="post">
+                                    @*<div class="col-lg-1 disp-inline-block"><label>Filters:</label></div>*@
+                                    <div class="col-lg-3 disp-inline-block font-small-3">
+                                        <label>Select Date</label><span class="red">*</span>
+                                        <div class="input-group font-small-3">
+                                            <input type="date" asp-for="@Model.OnDate" class="form-control filter bg-white" required="required" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 disp-inline-block font-small-5"><input type="submit" class="btn btn-sm btn-raised btn-success right" value="Apply"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br /><br />
+            @if (Model.TrialBalanceData.Any())
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <button onclick="printDiv('pdf-content')" class="btn btn-md btn-success mb-0">Print</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="card-content" id="pdf-content">
+            <div id="journal-template" class="card-body pt-0">
+                <div id="journal-details" class="pt-2">
+                    <div class="row">
+                        <div class="table-responsive col-sm-6">
+                            @if (Model.TrialBalanceData.Any())
+                            {
+                                <table class="table mb-0 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" colspan="2"> Balance Sheet On @Model.OnDate.ToString(dateFormat)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="2">Assets</th>
+                                        </tr>
+                                        @for (int i = 0; i < Model.AssetData.Count(); i++)
+                                        {
+                                            var record = Model.AssetData[i];
+                                            <tr>
+                                                <td class="pl-4">@record.Title (@record.Code)</td>
+                                                <td>@(record.Balance >= 0 ? record.Balance.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture) : "("+record.Balance.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture).Replace("-","")+")")</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <th class="pl-4">Total Assets</th>
+                                            <th>@(Model.LeftSideTotal >= 0 ? Model.LeftSideTotal.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture) : "("+ Model.LeftSideTotal.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture).Replace("-","")+")")</th>
+                                        </tr>
+                                        <tr><th colspan="2"></th></tr>
+                                        <tr><th colspan="2">Liabilities and Owner's Equity</th></tr>
+                                        <tr><td colspan="2">Liabilities</td></tr>
+                                        @for (int i = 0; i < Model.LiabilityData.Count(); i++)
+                                        {
+                                            var record = Model.LiabilityData[i];
+                                            <tr>
+                                                <td class="pl-4">@record.Title (@record.Code)</td>
+                                                <td>@(record.Balance >= 0 ? record.Balance.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture) : record.Balance.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture).Replace("-",""))</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <th class="pl-4">Total Liabilities</th>
+                                            <th>@(Model.LiabilityData.Sum(x=>x.Balance) >= 0 ? Model.LiabilityData.Sum(x => x.Balance).ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture) : Model.LiabilityData.Sum(x => x.Balance).ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture).Replace("-",""))</th>
+                                        </tr>
+                                        <tr><td colspan="2">Owner's Equity</td></tr>
+                                        @for (int i = 0; i < Model.EquityData.Count(); i++)
+                                        {
+                                            var record = Model.EquityData[i];
+                                            <tr>
+                                                <td class="pl-4">@record.Title (@record.Code)</td>
+                                                <td>@(record.Balance >= 0 ? record.Balance.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture) : record.Balance.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture).Replace("-",""))</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td class="pl-4">Net Income</td>
+                                            <td>@(Model.NetIncome >= 0 ? Model.NetIncome.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture) : "("+ Model.NetIncome.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture).Replace("-","")+")")</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="pl-4">Total Liabilities and Owner's Equity</th>
+                                            <th>@(Model.RightSideTotal >= 0 ? Model.RightSideTotal.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture) : "("+ Model.RightSideTotal.ToNDecimalPlaces(2).ToString(CultureInfo.InvariantCulture).Replace("-","")+")")</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- PO Footer -->
+
+                <div id="po-footer">
+                    <div class="row">
+                    </div>
+                    <!--/ PO Footer -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagebreak"></div>
+</section>
+
+<!--About section ends-->

@@ -1,0 +1,221 @@
+﻿@model CompanyDto
+@{
+    ViewData[index: "Title"] = "Setup";
+}
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Areas/UserManagement/Home/Setup.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Areas/UserManagement/Home/Setup.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<!-- BEGIN : Main Content-->
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="content-header">Setup</div>
+        </div>
+    </div>
+    @if (Model != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        @*<h4 class="card-title" id="basic-layout-colored-form-control">General</h4>*@
+                        @*<p class="mb-0">
+                                You can always change the border color of the form controls using <code>border-*</code>
+                                class. In this example we have user <code>border-grey</code> class for form controls. Form action
+                                buttons are on the bottom right position.
+                            </p>*@
+                    </div>
+                    <div class="card-content">
+                        <div class="px-3">
+                            <form id="company-setup-form" class="form" asp-route="CompanySetup" method="post" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <h4 class="form-section"><i class="ft-info"></i> General</h4>
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" asp-for="BusinessTypeId" />
+                                    @if (Model.Branch.Any())
+                                    {
+                                        <input type="hidden" asp-for="Branch[0].Id" />
+                                    }
+                                    <input type="hidden" asp-for="Status" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @if ((Model.Response ?? new Response()).ResponseCode == StatusCodes.Updated.ToInt())
+                                                {
+                                                    <div class="alert alert-success alert-dismissible">
+                                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                        <strong>Success!</strong> @Model.Response?.ResponseMessage
+                                                    </div>
+                                                }
+                                                @if ((Model.Response ?? new Response()).ErrorOccured)
+                                                {
+                                                    <div class="alert alert-danger alert-dismissible">
+                                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                        <strong>Error!</strong> @Model.Response?.ErrorMessage
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="Name"></label>&nbsp;<span class="red">*</span>
+                                                <input asp-for="Name" type="text" class="form-control border-grey" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="Email"></label>&nbsp;<span class="red">*</span>
+                                                <input asp-for="Email" type="tel" class="form-control border-grey" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (Model.Branch.Any())
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label asp-for="Branch[0].Phone"></label>&nbsp;<span class="red">*</span>
+                                                    <input asp-for="Branch[0].Phone" min="15" type="tel" class="form-control border-grey" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch" style="padding-top: 35px;" id="Branch_0__ShowPhoneOnBillContainer">
+                                                        <input type="checkbox" class="custom-control-input" asp-for="Branch[0].ShowPhoneOnBill">
+                                                        <label class="custom-control-label" for="Branch_0__ShowPhoneOnBill">Show On Bill</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label asp-for="Branch[0].Mobile"></label>&nbsp;<span class="red">*</span>
+                                                    <input asp-for="Branch[0].Mobile" type="tel" class="form-control border-grey" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch" style="padding-top: 35px;" id="Branch_0__ShowMobileOnBillContainer">
+                                                        <input type="checkbox" class="custom-control-input" asp-for="Branch[0].ShowMobileOnBill">
+                                                        <label class="custom-control-label" for="Branch_0__ShowMobileOnBill">Show On Bill</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div class="row">
+                                        @if (Model.Branch.Any())
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="Branch[0].City"></label>&nbsp;<span class="red">*</span>
+                                                    <input asp-for="Branch[0].City" type="text" class="form-control border-grey" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="Branch[0].Address"></label>&nbsp;<span class="red">*</span>
+                                                    <input asp-for="Branch[0].Address" type="text" class="form-control border-grey" required>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <div class="col-md-6">
+                                            <div class="form-group" style="padding-top: 35px;">
+                                                <label asp-for="Logo"></label>&nbsp;
+                                                <input type="file" name="companyLogo" accept="image/*" class="border-grey" />
+                                                @if (!string.IsNullOrEmpty(value: Model.Logo))
+                                                {
+                                                    <div class="d-inline">
+                                                        <img id="company-logo" src="@Model.Logo" width="80" height="80" />
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions right">
+                                        <button type="button" class="btn btn-raised btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                        <button id="btn-company-setup" type="submit" class="btn btn-raised btn-success" value="Save">
+                                            Save
+                                        </button>
+                                        @*<i class="fa fa-check-square-o"></i> Save*@
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        @*<h4 class="card-title" id="basic-layout-colored-form-control">General</h4>*@
+                        @*<p class="mb-0">
+                                You can always change the border color of the form controls using <code>border-*</code>
+                                class. In this example we have user <code>border-grey</code> class for form controls. Form action
+                                buttons are on the bottom right position.
+                            </p>*@
+                    </div>
+                    <div class="card-content">
+                        <div class="px-3">
+                            <form id="setup-printers-form" autocomplete="off" class="form" asp-route="SetupPrinters" method="post">
+                                <div class="form-body">
+                                    <h4 class="form-section"><i class="ft-info"></i> Printer Setup</h4>
+                                    <input type="hidden" asp-for="Id" />
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="OnDeskPrinter"></label>
+                                                <input type="text" asp-for="OnDeskPrinter" class="form-control" />
+                                                @*<select asp-for="OnDeskPrinter" class="form-control">
+                                                        <option value="">Select Printer</option>
+                                                        @foreach (var printer in printersList)
+                                                        {
+                                                            <option value="@printer.Name">@printer.Name</option>
+                                                        }
+                                                    </select>*@
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="OffDeskPrinter">Kitchen Printer</label>
+                                                <input type="text" asp-for="OffDeskPrinter" class="form-control" />
+                                                @*<select asp-for="OffDeskPrinter" class="form-control">
+                                                        <option value="">Select Printer</option>
+                                                        @foreach (var printer in printersList)
+                                                        {
+                                                            <option value="@printer.Name">@printer.Name</option>
+                                                        }
+                                                    </select>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions right">
+                                        <button type="button" class="btn btn-raised btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                        <button id="btn-setup-printers" type="submit" class="btn btn-raised btn-success" value="Save">Save</button>
+                                        @*<i class="fa fa-check-square-o"></i> Save*@
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>
