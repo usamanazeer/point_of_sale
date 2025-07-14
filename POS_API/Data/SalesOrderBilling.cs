@@ -8,13 +8,13 @@ namespace POS_API.Data
         public int Id { get; set; }
         public int? OrderId { get; set; }
         public int? TaxId { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public bool? IsTaxInPercent { get; set; }
-        public double? TotalBillAmount { get; set; }
-        public double? TotalAmountPaid { get; set; }
+        public decimal? TotalBillAmount { get; set; }
+        public decimal? TotalAmountPaid { get; set; }
         public int? PaymentType { get; set; }
-        public double? CashReceived { get; set; }
-        public double? CashReturn { get; set; }
+        public decimal? CashReceived { get; set; }
+        public decimal? CashReturn { get; set; }
         public int Status { get; set; }
         public int? BranchId { get; set; }
         public int CompanyId { get; set; }

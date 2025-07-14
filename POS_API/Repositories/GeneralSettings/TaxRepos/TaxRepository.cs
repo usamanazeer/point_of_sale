@@ -221,7 +221,7 @@ namespace POS_API.Repositories.GeneralSettings.TaxRepos
                  {
                      Id = Convert.ToInt32(dr["Id"]),
                      Name = Convert.ToString(dr["Name"]),
-                     TaxAmount = Convert.ToDouble(dr["TaxAmount"]),
+                     TaxAmount = Convert.ToDecimal(dr["TaxAmount"]),
                  }).ToList();
             return rptTaxCollectionDto;
         }

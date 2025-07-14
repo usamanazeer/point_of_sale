@@ -17,22 +17,22 @@ namespace Models
             var newStringVal = stringVal.Substring(0, newLen);
             return Convert.ToSingle(newStringVal);
         }
-        public static double ToNDecimalPlaces(this double val, int n)
+        public static decimal ToNDecimalPlaces(this decimal val, int n)
         {
             var stringVal = val.ToString(CultureInfo.InvariantCulture);
             var newLen = stringVal.IndexOf('.') + (n + 1);
             if (newLen > stringVal.Length || !stringVal.Contains('.'))
                 return val;
             var newStringVal = stringVal.Substring(0, newLen);
-            return Convert.ToDouble(newStringVal);
-        }
-        public static decimal ToNDecimalPlaces(this decimal val, int n)
-        {
-            var stringVal = val.ToString(CultureInfo.InvariantCulture);
-            var newLen = stringVal.IndexOf('.') + (n + 1);
-            if (newLen > stringVal.Length || !stringVal.Contains('.')) return val;
-            var newStringVal = stringVal.Substring(0,newLen);
             return Convert.ToDecimal(newStringVal);
         }
+        //public static decimal ToNDecimalPlaces(this decimal val, int n)
+        //{
+        //    var stringVal = val.ToString(CultureInfo.InvariantCulture);
+        //    var newLen = stringVal.IndexOf('.') + (n + 1);
+        //    if (newLen > stringVal.Length || !stringVal.Contains('.')) return val;
+        //    var newStringVal = stringVal.Substring(0,newLen);
+        //    return Convert.ToDecimal(newStringVal);
+        //}
     }
 }

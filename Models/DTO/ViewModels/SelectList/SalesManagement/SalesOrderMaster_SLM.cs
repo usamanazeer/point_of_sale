@@ -3,7 +3,7 @@
     // ReSharper disable once InconsistentNaming
     public class SalesOrderMaster_SLM : SelectListModel
     {
-        public double? DiscountAmount { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public bool? IsDiscountInPercent { get; set; }
         public int? OrderTypeId { get; set; }
         public int? DiningTableId { get; set; }

@@ -8,8 +8,8 @@ namespace POS_API.Data
         public int Id { get; set; }
         public int PoId { get; set; }
         public int ItemId { get; set; }
-        public double RequestedQuantity { get; set; }
-        public double Rate { get; set; }
+        public decimal RequestedQuantity { get; set; }
+        public decimal Rate { get; set; }
         public int CompanyId { get; set; }
         public int Status { get; set; }
         public int? CreatedBy { get; set; }

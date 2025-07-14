@@ -276,13 +276,13 @@ namespace POS_API.Services.InventoryManagement.ItemServices
                         var barCode = temp[2].Trim();
                         var measurement = temp[3].Trim();
                         var unitName = temp[4].Trim();
-                        var purchaseRate = temp[5]!="" ? Convert.ToDouble( temp[5].Trim()) : 0;
-                        var salesRate = temp[6] != "" ? Convert.ToDouble(temp[6].Trim()) : 0;
-                        //var discountAmount = temp[7] != "" ? Convert.ToDouble(temp[7].Trim()) : 0;
+                        var purchaseRate = temp[5]!="" ? Convert.ToDecimal( temp[5].Trim()) : 0;
+                        var salesRate = temp[6] != "" ? Convert.ToDecimal(temp[6].Trim()) : 0;
+                        //var discountAmount = temp[7] != "" ? Convert.ToDecimal(temp[7].Trim()) : 0;
                         //var isDiscountInPercentage = trueValList.Contains(temp[8].Trim().ToLower());
                         var categoryName = temp[7].Trim();
                         var subCategoryName =temp[8].Trim();
-                        var minimumQuantity = temp[9] != "" ? Convert.ToDouble(temp[9].Trim()):0;
+                        var minimumQuantity = temp[9] != "" ? Convert.ToDecimal(temp[9].Trim()):0;
                         var brandName = temp[10].Trim();
                         var colorName = temp[11].Trim();
                         var sizeName = temp[12].Trim();

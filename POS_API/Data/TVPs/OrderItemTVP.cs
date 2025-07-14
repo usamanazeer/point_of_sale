@@ -10,7 +10,7 @@ namespace POS_API.Data.TVPs
     {
         public int ItemId { get; set; }
         public int? BarCodeId { get; set; }
-        public double Quantity { get; set; }
+        public decimal Quantity { get; set; }
         public int? BranchId { get; set; }
         public int CompanyId { get; set; }
     }

@@ -9,6 +9,6 @@ namespace POS_API.Data
         public int OrderId { get; set; }
         public int? InventoryItemId { get; set; }
         public int? ItemId { get; set; }
-        public double Quantity { get; set; }
+        public decimal Quantity { get; set; }
     }
 }

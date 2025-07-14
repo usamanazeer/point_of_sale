@@ -24,10 +24,10 @@ namespace Models.DTO.InventoryManagement.ViewDTO
         public string IsRecipeText => IsRecipe == false ? "No" : "Yes";
         public bool? IsRawItem { get; set; }
         public string IsRawItemText => IsRawItem == false ? "No" : "Yes";
-        public double? MinimumQuantity { get; set; }
-        public double? PurchaseRate { get; set; }
-        public double? SalesRate { get; set; }
-        public double? DiscountAmount { get; set; }
+        public decimal? MinimumQuantity { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? SalesRate { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public bool? IsDiscountInPercent { get; set; }
         public string IsDiscountInPercentText => IsDiscountInPercent == false ? "No" : "Yes";
         public string ImageUrl { get; set; }
@@ -67,7 +67,7 @@ namespace Models.DTO.InventoryManagement.ViewDTO
         public int? SizeStatus { get; set; }
         public int? TaxId { get; set; }
         public string TaxName { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public bool? TaxIsInPercent { get; set; }
         public int? TaxStatus { get; set; }
         public int? CreatedById { get; set; }
@@ -76,18 +76,18 @@ namespace Models.DTO.InventoryManagement.ViewDTO
         public int? ModifiedById { get; set; }
         public string ModifiedByFirstName { get; set; }
         public string ModifiedByLastName { get; set; }
-        public double RemainingInventory { get; set; }
-        public double? FinalSalesRate { get; set; }
+        public decimal RemainingInventory { get; set; }
+        public decimal? FinalSalesRate { get; set; }
 
 
 
         //never eve delete code below
         //dto prop
-        //public double? FinalSalesRate => calculateFinalSalesRate();
-        public double? DiscountedAmount => getDiscountedAmount();
+        //public decimal? FinalSalesRate => calculateFinalSalesRate();
+        public decimal? DiscountedAmount => getDiscountedAmount();
         public List<InvItemModifierDto> ItemModifiers { get; set; }
         // ReSharper disable once InconsistentNaming
-        public double? getDiscountedAmount()
+        public decimal? getDiscountedAmount()
         {
             return (new InvItemDto()
             {

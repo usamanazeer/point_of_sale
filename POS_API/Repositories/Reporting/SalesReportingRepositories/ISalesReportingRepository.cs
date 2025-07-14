@@ -9,7 +9,7 @@ namespace POS_API.Repositories.Reporting.SalesReportingRepositories
         Task<List<RptSalesSalesReportRowDto>> GetItemSales(RptSalesSalesReportDto filters);
         Task<List<RptSalesSalesReportRowDto>> GetItemSales_ByItems(RptSalesSalesReportDto filters);
 
-        Task<double> GetSalesAmount(RptSalesSalesReportDto filters);
+        Task<decimal> GetSalesAmount(RptSalesSalesReportDto filters);
         //Task<double> GetTaxCollectedAmount(RptSalesSalesReportDto filters);
         Task<List<RptSalesSalesReportRowDto>> GetSales_ByDeliveryServices(RptSalesSalesReportDto filters);
     }

@@ -18,8 +18,8 @@ namespace Models.DTO.Reporting.Accounts
             AccLedgerPostings = new List<AccLedgerPostingDto>();
         }
         public int AccountId {get; set; }
-        public double OpeningBalance {get; set; }
-        public double ClosingBalance => AccLedgerPostings.Any() ? AccLedgerPostings.Last().Balance : OpeningBalance;
+        public decimal OpeningBalance {get; set; }
+        public decimal ClosingBalance => AccLedgerPostings.Any() ? AccLedgerPostings.Last().Balance : OpeningBalance;
         public IList<AccLedgerPostingDto> AccLedgerPostings { get; set; }
         public Response Response { get; set; }
     }

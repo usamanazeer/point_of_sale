@@ -8,7 +8,7 @@ namespace Models.DTO.DeliveryService
         public string Name { get; set; }
 
         [DisplayName(displayName: "Service Charges")]
-        public double ServiceDiscount { get; set; }
+        public decimal ServiceDiscount { get; set; }
 
         [DisplayName(displayName: "Charges In Percent?")]
         public bool IsServiceDiscountInPercent { get; set; }

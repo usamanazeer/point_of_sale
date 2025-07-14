@@ -8,8 +8,8 @@ namespace POS_API.Data
         public int Id { get; set; }
         public int BillId { get; set; }
         public int PaymentTypeId { get; set; }
-        public double? CashAmount { get; set; }
-        public double? ChequeAmount { get; set; }
+        public decimal? CashAmount { get; set; }
+        public decimal? ChequeAmount { get; set; }
         public int? BankAccountId { get; set; }
         public string ChequeNo { get; set; }
         public DateTime PaymentDate { get; set; }

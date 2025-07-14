@@ -564,4 +564,10 @@
   <data name="Waiters" xml:space="preserve">
     <value>Waiters</value>
   </data>
+  <data name="EditAccount" xml:space="preserve">
+    <value>EditAccount</value>
+  </data>
+  <data name="ViewAccount" xml:space="preserve">
+    <value>ViewAccount</value>
+  </data>
 </root>

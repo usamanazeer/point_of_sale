@@ -108,11 +108,25 @@
         foreach (var item in list)
         {
             html += $"<li class=\"branch\"><a href=\"#\">{item.Title}</a>";
-            if (item.IsEditable)
+
+            if (item.IsEditable && ViewBag.rights.ContainsKey(UserRights.EditAccount))
+
             {
-                html += $"<span><a href=\"Accounts/Edit/{item.Id}\" class=\"btn btn-sm btn-default btn-min-width mb-1\" data-original-title=\"Edit\" title=\"Edit\">Edit</a></span>";
+
+               
+                        html += $"<span><a href=\"Accounts/Edit/{item.Id}\" class=\"btn btn-sm btn-default btn-min-width mb-1\" data-original-title=\"Edit\" title=\"Edit\">Edit</a></span>";
             }
-            html += $"<span><a href=\"Accounts/Details/{item.Id}\" class=\"btn btn-sm btn-default btn-min-width mb-1\" data-original-title=\"Details\" title=\"Details\">Details</a></span>";
+
+
+
+            if (ViewBag.rights.ContainsKey(UserRights.ViewAccount))
+
+            {
+
+                html += $"<span><a href=\"Accounts/Details/{item.Id}\" class=\"btn btn-sm btn-default btn-min-width mb-1\" data-original-title=\"Details\" title=\"Details\">Details</a></span>";
+
+            }
+            
             html = GenerateCoaHtml(list: item.InverseParent, html: html);
             html += "</li>";
         }

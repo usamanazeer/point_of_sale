@@ -113,7 +113,7 @@ namespace POS_API.Repositories.AccountsManagement.AccountTransactionRepositories
                        await transaction.CommitAsync();
                       return true;
                   }
-                  catch (Exception)
+                  catch (Exception ex)
                   {
                       await transaction.RollbackAsync();
                       throw;

@@ -33,7 +33,9 @@
                             //for parents with children
                             if (firstLevelMenu.InverseParent.Count > 0 && firstLevelMenu.ParentId == null && firstLevelMenu.DepthLevel != null)
                             {
-                                <li class="nav-item @firstLevelMenu.LiCssclasses">
+                                @* <li class="nav-item @firstLevelMenu.LiCssclasses"> *@
+                            <li class="nav-item @(firstLevelMenu.InverseParent.Any() ? "has-sub":"")">
+
                                     <a href="@firstLevelMenu.Url"><i class="@firstLevelMenu.CssClasses"></i><span data-i18n="" class="menu-title">@firstLevelMenu.DisplayName</span></a>
                                     <ul class="menu-content">
                                         @foreach (var secondLevelMenu in firstLevelMenu.InverseParent)

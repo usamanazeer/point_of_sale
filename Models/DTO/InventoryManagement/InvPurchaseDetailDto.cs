@@ -8,9 +8,9 @@ namespace Models.DTO.InventoryManagement
         public int ItemId { get; set; }
         public int? BarCodeId { get; set; }
         public DateTime? ExpiryDate { get; set; }
-        public double Quantity { get; set; }
-        public double PurchaseRate { get; set; }
-        public double? SalesRate { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal PurchaseRate { get; set; }
+        public decimal? SalesRate { get; set; }
 
         public InvItemBarCodeDto BarCode { get; set; }
         public InvItemDto Item { get; set; }

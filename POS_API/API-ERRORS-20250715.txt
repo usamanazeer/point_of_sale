@@ -1,0 +1,14 @@
+2025-07-15T00:18:00.5000093+05:00 8000008f-0006-f400-b63f-84710c7967bb [ERR] Failed executing DbCommand ("14"ms) [Parameters=["@TransactionId='?' (DbType = Int32), @PostedBy='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""dbo.[Acc_JournalToLedgerPosting] @TransactionId, @PostedBy" (627a98df)
+2025-07-15T00:18:04.5604004+05:00 800000ea-0001-f900-b63f-84710c7967bb [ERR] Failed executing DbCommand ("3"ms) [Parameters=["@TransactionId='?' (DbType = Int32), @PostedBy='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""dbo.[Acc_JournalToLedgerPosting] @TransactionId, @PostedBy" (627a98df)
+2025-07-15T00:18:16.4558233+05:00 80000011-0001-f300-b63f-84710c7967bb [ERR] Failed executing DbCommand ("2"ms) [Parameters=["@TransactionId='?' (DbType = Int32), @PostedBy='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""dbo.[Acc_JournalToLedgerPosting] @TransactionId, @PostedBy" (627a98df)
+2025-07-15T00:19:04.2160443+05:00 8000017d-0000-fb00-b63f-84710c7967bb [ERR] Failed executing DbCommand ("2"ms) [Parameters=["@TransactionId='?' (DbType = Int32), @PostedBy='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""dbo.[Acc_JournalToLedgerPosting] @TransactionId, @PostedBy" (627a98df)
+2025-07-15T00:33:46.9433255+05:00 800002a8-0003-ff00-b63f-84710c7967bb [ERR] Failed executing DbCommand ("7"ms) [Parameters=["@TransactionId='?' (DbType = Int32), @PostedBy='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""dbo.[Acc_JournalToLedgerPosting] @TransactionId, @PostedBy" (627a98df)
+2025-07-15T00:34:25.8960890+05:00 80000013-0001-f300-b63f-84710c7967bb [ERR] Failed executing DbCommand ("8"ms) [Parameters=["@TransactionId='?' (DbType = Int32), @PostedBy='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""dbo.[Acc_JournalToLedgerPosting] @TransactionId, @PostedBy" (627a98df)
+2025-07-15T00:34:58.9880034+05:00 8000001d-0006-f200-b63f-84710c7967bb [ERR] Failed executing DbCommand ("2"ms) [Parameters=["@TransactionId='?' (DbType = Int32), @PostedBy='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""dbo.[Acc_JournalToLedgerPosting] @TransactionId, @PostedBy" (627a98df)

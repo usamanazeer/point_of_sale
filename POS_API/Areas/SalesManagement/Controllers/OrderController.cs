@@ -45,7 +45,7 @@ namespace POS_API.Areas.SalesManagement.Controllers
                 response = await _orderService.GetAll(model: filter);
                 return !response.ErrorOccured ? Ok(response) : StatusCode(response.ErrorCode, response);
             }
-            catch (Exception )
+            catch (Exception ex)
             {
                 response.SetError ("Api Error while Getting Orders.");
                 return BadRequest(response);

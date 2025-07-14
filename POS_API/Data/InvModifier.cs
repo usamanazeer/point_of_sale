@@ -14,7 +14,7 @@ namespace POS_API.Data
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public double ModifierCharges { get; set; }
+        public decimal ModifierCharges { get; set; }
         public int CompanyId { get; set; }
         public int Status { get; set; }
         public int? CreatedBy { get; set; }

@@ -28,18 +28,18 @@ namespace Models.DTO.Reporting.Accounts
                                                                      x.AccountTypeId ==
                                                                      AccountType.Equity.ToInt())
                                                           .ToList();
-        public double NetIncome =>
+        public decimal NetIncome =>
             (TrialBalanceData.Where(x => x.AccountTypeId == AccountType.Revenues.ToInt())
                             .Sum(x => x.Balance)*(-1)) - TrialBalanceData
                                                    .Where(x => x.AccountTypeId == AccountType.Expenses.ToInt())
                                                    .Sum(x => x.Balance);
 
-        public double LeftSideTotal =>
+        public decimal LeftSideTotal =>
             TrialBalanceData.Where(x => x.AccountTypeId == AccountType.Asset.ToInt())
                              .Sum(x => x.Balance);
 
 
-        public double RightSideTotal =>
+        public decimal RightSideTotal =>
             (TrialBalanceData.Where(x => x.AccountTypeId == AccountType.Liability.ToInt() || x.AccountTypeId == AccountType.Equity.ToInt())
                             .Sum(x => x.Balance) * (-1)) + NetIncome;
         public RptAccountBalanceSheetDto()

@@ -42,7 +42,7 @@ namespace POS_API.Repositories.Reporting.SalesReportingRepositories
         }
 
 
-        public async Task<double> GetSalesAmount(RptSalesSalesReportDto filters)
+        public async Task<decimal> GetSalesAmount(RptSalesSalesReportDto filters)
         {
             
             var query = _dbContext.SalesOrderBilling.AsNoTracking().Include(navigationPropertyPath: x => x.Order)
@@ -67,8 +67,8 @@ namespace POS_API.Repositories.Reporting.SalesReportingRepositories
                     {
                         ItemId = cols.Contains("ItemId") ? Convert.ToInt32(dr["ItemId"]) :0 ,
                         ItemName = cols.Contains("ItemName") ? Convert.ToString(dr["ItemName"]): null,
-                        TotalSales = cols.Contains("TotalSales") ? Convert.ToDouble(dr["TotalSales"]):0,
-                        TotalQuantity = cols.Contains("TotalQuantity") ? Convert.ToDouble(dr["TotalQuantity"]):0,
+                        TotalSales = cols.Contains("TotalSales") ? Convert.ToDecimal(dr["TotalSales"]):0,
+                        TotalQuantity = cols.Contains("TotalQuantity") ? Convert.ToDecimal(dr["TotalQuantity"]):0,
                         SalesDate = Convert.ToDateTime(dr["SalesDate"]),
                         FormattedDate = cols.Contains("FormattedDate") ? Convert.ToString(dr["FormattedDate"]):"",
                     }).ToList();

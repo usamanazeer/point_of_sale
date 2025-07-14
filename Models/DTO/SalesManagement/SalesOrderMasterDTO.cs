@@ -14,10 +14,10 @@ namespace Models.DTO.SalesManagement
             SalesOrderDetails = new List<SalesOrderDetailsDto>();
         }
         public string OrderNo { get; set; }
-        public double? DiscountAmount { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public bool? IsDiscountInPercent { get; set; }
         public int? TaxId { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public bool? IsTaxInPercent { get; set; }
         public int? OrderTypeId { get; set; }
         public string OrderTypeText => ValuesHelper.Get_OrderTypeValue(OrderTypeId);
@@ -27,7 +27,7 @@ namespace Models.DTO.SalesManagement
         public bool IsSelfDelivery { get; set; }
         public string DeliveryServiceReferenceNo { get; set; }
         public int? DeliveryBoyId { get; set; }
-        public double? DeliveryCharges { get; set; }
+        public decimal? DeliveryCharges { get; set; }
         public bool? IsChargesInPercent { get; set; }
         public int? OrderStatusId { get; set; }
         public string OrderStatusText => ValuesHelper.Get_OrderStatusValue(OrderStatusId);
@@ -45,7 +45,7 @@ namespace Models.DTO.SalesManagement
 
         //DTO PROPS
         public IList<SalesOrderMasterDto> Orders { get; set; }
-        public double GetOrderAmount()
+        public decimal GetOrderAmount()
         {
             //if (SalesOrderBilling != null)
             //{
@@ -63,32 +63,32 @@ namespace Models.DTO.SalesManagement
                 return itemTotalRates + modifiersTotalRates;
             }).Sum();
         }
-        public double GetOrderAmountWithDiscount()
+        public decimal GetOrderAmountWithDiscount()
         {
             return GetOrderAmount() - GetDiscount();
         }
-        public double GetOrderAmountAfterTax()
+        public decimal GetOrderAmountAfterTax()
         {
             return GetOrderAmountWithDiscount() + (TaxAmount ?? 0);
         }
-        public double GetOrderAmountPayable()
+        public decimal GetOrderAmountPayable()
         {
             return GetOrderAmountAfterTax()+GetDeliveryCharges();
         }
-        public double GetDeliveryCharges()
+        public decimal GetDeliveryCharges()
         {
-            double deliveryCharges = 0;
+            decimal deliveryCharges = 0;
             
             if (IsSelfDelivery && OrderTypeId == OrderTypes.Delivery.ToInt()) {
                 deliveryCharges = DeliveryCharges ?? 0;
                 if (IsChargesInPercent??false)
                 {
-                    deliveryCharges = deliveryCharges * GetOrderAmountWithDiscount() * 0.01;
+                    deliveryCharges = deliveryCharges * GetOrderAmountWithDiscount() * 0.01M;
                 }
             }
             return deliveryCharges;
         }
-        //public double GetOrderItemsTotal()
+        //public decimal GetOrderItemsTotal()
         //{
         //    if (SalesOrderDetails == null || SalesOrderDetails.Count == 0)
         //    {
@@ -96,7 +96,7 @@ namespace Models.DTO.SalesManagement
         //    }
         //    return SalesOrderDetails.Select(x => x.FinalSalesRate * x.Quantity).Sum();
         //}
-        //public double GetOrderModifiersTotal()
+        //public decimal GetOrderModifiersTotal()
         //{
         //    if (OrderItemsModifiers == null || OrderItemsModifiers.Count == 0)
         //    {
@@ -104,13 +104,13 @@ namespace Models.DTO.SalesManagement
         //    }
         //    return OrderItemsModifiers.Select(y => (y.Quantity ?? 0) * (y.Charges ?? 0)).Sum();
         //}
-        public double GetDiscount()
+        public decimal GetDiscount()
         {
             if (!(IsDiscountInPercent??false))
             {
                 return DiscountAmount??0;
             }
-            return (DiscountAmount??0) * GetOrderAmount() * .01;
+            return (DiscountAmount??0) * GetOrderAmount() * .01M;
         }
     }
 }

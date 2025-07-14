@@ -14,15 +14,15 @@ namespace Models.DTO.SalesManagement
         public int Id { get; set; }
         public int OrderId { get; set; }
         public int ItemId { get; set; }
-        public double Quantity { get; set; }
-        public double? PurchaseRate { get; set; }
-        public double SalesRate { get; set; }
-        public double? DiscountAmount { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal SalesRate { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public bool? IsDiscountInPercent { get; set; }
         public int? TaxId { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public bool? IsTaxInPercent { get; set; }
-        public double FinalSalesRate { get; set; }
+        public decimal FinalSalesRate { get; set; }
         public int? BranchId { get; set; }
         public int CompanyId { get; set; }
         public int Status { get; set; }

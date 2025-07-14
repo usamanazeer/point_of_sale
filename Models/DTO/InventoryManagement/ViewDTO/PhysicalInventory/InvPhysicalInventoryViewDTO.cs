@@ -14,20 +14,20 @@ namespace Models.DTO.InventoryManagement.ViewDTO.PhysicalInventory
         public string ModifiedByUserName { get; set; }
         public int BillItemId { get; set; }
         public DateTime? ExpiryDate { get; set; }
-        public double? Quantity { get; set; }
-        public double? RemainingQuantity { get; set; }
-        public double? PurchaseRate { get; set; }
-        public double? SalesRate { get; set; }
+        public decimal? Quantity { get; set; }
+        public decimal? RemainingQuantity { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? SalesRate { get; set; }
         public int ItemId { get; set; }
         public string ItemName { get; set; }
         public string ItemFullName { get; set; }
         public string ItemMeasurement { get; set; }
         public bool? ItemDisplayOnPos { get; set; }
         public bool? ItemIsDeal { get; set; }
-        public double? ItemMinimumQuantity { get; set; }
-        public double? DefaultPurchaseRate { get; set; }
-        public double? DefaultSalesRate { get; set; }
-        public double? DefaultDiscountAmount { get; set; }
+        public decimal? ItemMinimumQuantity { get; set; }
+        public decimal? DefaultPurchaseRate { get; set; }
+        public decimal? DefaultSalesRate { get; set; }
+        public decimal? DefaultDiscountAmount { get; set; }
         public bool? DefaultDiscountIsInPercent { get; set; }
         public string ItemImageUrl { get; set; }
         public bool? ItemAllowBackOrder { get; set; }
@@ -40,7 +40,7 @@ namespace Models.DTO.InventoryManagement.ViewDTO.PhysicalInventory
         public string VendorName { get; set; }
         public int? TaxId { get; set; }
         public string TaxName { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public bool? TaxIsInPercent { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }

@@ -12,8 +12,8 @@ namespace Models.DTO.Accounts
         public int TransactionMasterId { get; set; }
         public string Statement { get; set; }
         public int AccountId { get; set; }
-        public double Dr { get; set; }
-        public double Cr { get; set; }
+        public decimal Dr { get; set; }
+        public decimal Cr { get; set; }
 
         public virtual AccAccountDto Account { get; set; }
         public virtual AccTransactionMasterDto TransactionMaster { get; set; }

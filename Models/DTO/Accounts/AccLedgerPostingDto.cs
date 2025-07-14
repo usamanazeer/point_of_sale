@@ -10,9 +10,9 @@ namespace Models.DTO.Accounts
         public int TransactionDetailId { get; set; }
         public string VoucherNo { get; set; }
         public string Description { get; set; }
-        public double Dr { get; set; }
-        public double Cr { get; set; }
-        public double Balance { get; set; }
+        public decimal Dr { get; set; }
+        public decimal Cr { get; set; }
+        public decimal Balance { get; set; }
         public DateTime? PostedOn { get; set; }
         public int? PostedBy { get; set; }
 

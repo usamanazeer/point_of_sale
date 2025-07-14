@@ -7,13 +7,13 @@ namespace Models.DTO.Reporting.Sales
     {
         //public int Id { get; set; }
         //public string Name { get; set; }
-        //public double Quantity { get; set; }
+        //public decimal Quantity { get; set; }
         public int ItemId { get; set; }
         public string ItemName { get; set; }
-        public double TotalSales { get; set; }
-        public double TotalSalesRounded => TotalSales.ToNDecimalPlaces(2);
-        public double TotalQuantity { get; set; }
-        public double TotalQuantityRounded => TotalQuantity.ToNDecimalPlaces(2);
+        public decimal TotalSales { get; set; }
+        public decimal TotalSalesRounded => TotalSales.ToNDecimalPlaces(2);
+        public decimal TotalQuantity { get; set; }
+        public decimal TotalQuantityRounded => TotalQuantity.ToNDecimalPlaces(2);
         public DateTime? SalesDate { get; set; }
         public string FormattedDate { get; set; }
         //public int SalesYear { get; set; }

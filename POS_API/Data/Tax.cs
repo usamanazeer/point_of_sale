@@ -14,7 +14,7 @@ namespace POS_API.Data
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
         public bool IsInPercent { get; set; }
         public bool? EnableForPos { get; set; }
         public int AccountId { get; set; }

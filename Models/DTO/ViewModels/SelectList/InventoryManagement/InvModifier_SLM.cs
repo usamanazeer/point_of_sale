@@ -3,6 +3,6 @@
     // ReSharper disable once InconsistentNaming
     public class InvModifier_SLM : SelectListModel
     {
-        public double ModifierCharges { get; set; }
+        public decimal ModifierCharges { get; set; }
     }
 }

@@ -19,12 +19,12 @@ namespace POS_API.Data
         public bool? IsDeal { get; set; }
         public bool? IsRecipe { get; set; }
         public bool? IsRawItem { get; set; }
-        public double? MinimumQuantity { get; set; }
-        public double? PurchaseRate { get; set; }
-        public double? SalesRate { get; set; }
-        public double? DiscountAmount { get; set; }
+        public decimal? MinimumQuantity { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? SalesRate { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public bool? IsDiscountInPercent { get; set; }
-        public double? FinalSalesRate { get; set; }
+        public decimal? FinalSalesRate { get; set; }
         public string ImageUrl { get; set; }
         public bool? AllowBackOrder { get; set; }
         public int? Status { get; set; }
@@ -60,7 +60,7 @@ namespace POS_API.Data
         public int? SizeStatus { get; set; }
         public int? TaxId { get; set; }
         public string TaxName { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public bool? TaxIsInPercent { get; set; }
         public int? TaxStatus { get; set; }
         public int? CreatedById { get; set; }
@@ -69,6 +69,6 @@ namespace POS_API.Data
         public int? ModifiedById { get; set; }
         public string ModifiedByFirstName { get; set; }
         public string ModifiedByLastName { get; set; }
-        public double RemainingInventory { get; set; }
+        public decimal RemainingInventory { get; set; }
     }
 }

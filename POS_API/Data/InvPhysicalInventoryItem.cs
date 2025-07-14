@@ -11,11 +11,11 @@ namespace POS_API.Data
         public int? BarCodeId { get; set; }
         public int? VendorId { get; set; }
         public DateTime? ExpiryDate { get; set; }
-        public double? Quantity { get; set; }
-        public double? RemainingQuantity { get; set; }
+        public decimal? Quantity { get; set; }
+        public decimal? RemainingQuantity { get; set; }
         public int? TaxId { get; set; }
-        public double? PurchaseRate { get; set; }
-        public double? SalesRate { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? SalesRate { get; set; }
         public int CompanyId { get; set; }
         public int? Status { get; set; }
         public int? CreatedBy { get; set; }

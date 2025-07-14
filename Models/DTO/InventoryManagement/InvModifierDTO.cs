@@ -17,7 +17,7 @@ namespace Models.DTO.InventoryManagement
         public string Name { get; set; }
 
         [DisplayName("Modifier Charges")]
-        public double ModifierCharges { get; set; }
+        public decimal ModifierCharges { get; set; }
         public IList<InvModifierItemDto> InvModifierItems { get; set; }
         public IList<InvItemModifierDto> InvItemModifiers { get; set; }
         public IList<SalesOrderItemModifiersDto> SalesOrderItemModifiers { get; set; }

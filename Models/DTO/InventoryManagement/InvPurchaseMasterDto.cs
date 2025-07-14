@@ -19,8 +19,8 @@ namespace Models.DTO.InventoryManagement
         public DateTime? BillDueDate { get; set; }
         public DateTime? FromDueDate { get; set; }
         public DateTime? ToDueDate { get; set; }
-        public double BillAmount { get; set; } //=> InvPurchaseDetail.Sum(x => x.Quantity * x.PurchaseRate);
-        public double AmountPaid { get; set; }
+        public decimal BillAmount { get; set; } //=> InvPurchaseDetail.Sum(x => x.Quantity * x.PurchaseRate);
+        public decimal AmountPaid { get; set; }
         public string BillNo { get; set; }
         public int? VendorId { get; set; }
         public int BillStatusId { get; set; }

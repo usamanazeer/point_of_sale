@@ -14,8 +14,8 @@ namespace POS_API.Data
         public int TransactionMasterId { get; set; }
         public string Statement { get; set; }
         public int AccountId { get; set; }
-        public double Dr { get; set; }
-        public double Cr { get; set; }
+        public decimal Dr { get; set; }
+        public decimal Cr { get; set; }
 
         public virtual AccAccount Account { get; set; }
         public virtual AccTransactionMaster TransactionMaster { get; set; }

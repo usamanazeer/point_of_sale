@@ -29,9 +29,9 @@ namespace Models.DTO.InventoryManagement
 
         public IList<InvGrnMasterDto> GoodsReceivedNotes { get; set; }
 
-        public double GetTotalAmount()
+        public decimal GetTotalAmount()
         {
-            double total = 0.0;
+            decimal total = 0.0M;
             foreach (var item in InvGrnDetails)
             {
                 total += item.SubTotal;

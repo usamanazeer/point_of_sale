@@ -16,7 +16,7 @@ namespace Models.DTO.Reporting.Accounts
             TrialBalances = new List<AccTrialBalanceDto>();
         }
 
-        public double DrTotal => TrialBalances.Where(x => x.Balance >= 0).Sum(x => x.Balance);
-        public double CrTotal => TrialBalances.Where(x => x.Balance < 0).Sum(x => x.Balance);
+        public decimal DrTotal => TrialBalances.Where(x => x.Balance >= 0).Sum(x => x.Balance);
+        public decimal CrTotal => TrialBalances.Where(x => x.Balance < 0).Sum(x => x.Balance);
     }
 }

@@ -60,7 +60,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
                 var response = await _brandService.Create(model);
                 return Ok(response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodesEnums.Error_Occured.ToInt(), Models.Response.Error("Api Error while Creating Brand."));
             }

@@ -13,9 +13,9 @@ namespace Models.DTO.Reporting.Accounts
         public int CompanyId { get; set; }
         public IList<AccTrialBalanceDto> RevenueTrialBalances { get; set; }
         public IList<AccTrialBalanceDto> ExpenseTrialBalances { get; set; }
-        public double TotalRevenue => RevenueTrialBalances.Sum(x => x.Balance);
-        public double TotalExpense => ExpenseTrialBalances.Sum(x => x.Balance);
-        public double NetIncome => TotalRevenue - TotalExpense;
+        public decimal TotalRevenue => RevenueTrialBalances.Sum(x => x.Balance);
+        public decimal TotalExpense => ExpenseTrialBalances.Sum(x => x.Balance);
+        public decimal NetIncome => TotalRevenue - TotalExpense;
         public RptAccountsIncomeStatementDto()
         {
             RevenueTrialBalances = new List<AccTrialBalanceDto>();

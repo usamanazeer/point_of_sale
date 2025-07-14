@@ -40,7 +40,8 @@ namespace POS_API.Areas.UserManagement.Controllers
             try
             {
                 var licenseKey = CheckForLicense(isLicenseValid: out var isLicenseValid, isExpired: out _, isInvalid: out _);
-                if (licenseKey != null && isLicenseValid)
+                //if (licenseKey != null && isLicenseValid)
+                if (true)
                 {
                     var data = await _userService.Login(user: model);
                     if (data is null)

@@ -13,7 +13,7 @@ namespace Models.DTO.GeneralSettings
 
 
         public string Name { get; set; }
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [DisplayName(displayName: "Amount")]
         public string AmountText => IsInPercent == false ? Amount.ToString() : Amount + "%";

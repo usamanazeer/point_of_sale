@@ -15,8 +15,8 @@ namespace POS_API.Data
         public DateTime PurchaseDate { get; set; }
         public string BillNo { get; set; }
         public DateTime? BillDueDate { get; set; }
-        public double BillAmount { get; set; }
-        public double AmountPaid { get; set; }
+        public decimal BillAmount { get; set; }
+        public decimal AmountPaid { get; set; }
         public int? VendorId { get; set; }
         public int BillStatusId { get; set; }
         public int CompanyId { get; set; }

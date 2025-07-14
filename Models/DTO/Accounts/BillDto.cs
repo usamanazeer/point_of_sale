@@ -19,9 +19,9 @@ namespace Models.DTO.Accounts
         [DisplayName("Due Date")] public DateTime? BillDueDate { get; set; }
         public DateTime? FromDueDate { get; set; }
         public DateTime? ToDueDate { get; set; }
-        public double BillAmount { get; set; }//=> InvPurchaseDetail.Sum(x => x.Quantity * x.PurchaseRate);
-        public double AmountPaid { get; set; }//=> BillPayments?.Where(x=>x.Status == StatusTypes.Active.ToInt()).Sum(x => x.TotalAmount) ?? 0;
-        public double RemainingAmount => BillAmount - AmountPaid;
+        public decimal BillAmount { get; set; }//=> InvPurchaseDetail.Sum(x => x.Quantity * x.PurchaseRate);
+        public decimal AmountPaid { get; set; }//=> BillPayments?.Where(x=>x.Status == StatusTypes.Active.ToInt()).Sum(x => x.TotalAmount) ?? 0;
+        public decimal RemainingAmount => BillAmount - AmountPaid;
         public string BillNo { get; set; }
         public int? VendorId { get; set; }
         public int BillStatusId { get; set; }

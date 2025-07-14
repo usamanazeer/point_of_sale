@@ -12,10 +12,10 @@ namespace POS_API.Data
 
         public int Id { get; set; }
         public string OrderNo { get; set; }
-        public double? DiscountAmount { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public bool? IsDiscountInPercent { get; set; }
         public int? TaxId { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public bool? IsTaxInPercent { get; set; }
         public int? OrderTypeId { get; set; }
         public int? DiningTableId { get; set; }
@@ -24,7 +24,7 @@ namespace POS_API.Data
         public bool IsSelfDelivery { get; set; }
         public string DeliveryServiceReferenceNo { get; set; }
         public int? DeliveryBoyId { get; set; }
-        public double? DeliveryCharges { get; set; }
+        public decimal? DeliveryCharges { get; set; }
         public bool? IsChargesInPercent { get; set; }
         public int? OrderStatusId { get; set; }
         public int? BranchId { get; set; }

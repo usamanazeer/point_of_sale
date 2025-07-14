@@ -12,7 +12,7 @@ namespace POS_API.Data
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public double ServiceDiscount { get; set; }
+        public decimal ServiceDiscount { get; set; }
         public bool IsServiceDiscountInPercent { get; set; }
         public bool IsSelf { get; set; }
         public string AccountNo { get; set; }

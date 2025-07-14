@@ -191,7 +191,7 @@ namespace Pos_WebApp.Areas.RestaurantManagement.Controllers
                       });
                 return Json(data: response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 response.ErrorCode = StatusCodesEnums.Error_Occured.ToInt();
                 response.ErrorMessage = "An Error Occurred, while getting data.";

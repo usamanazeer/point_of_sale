@@ -19,13 +19,13 @@ namespace Models.DTO.SalesManagement
         }
         public int? OrderId { get; set; }
         public int? TaxId { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public bool? IsTaxInPercent { get; set; }
-        public double? TotalBillAmount { get; set; }
-        public double? TotalAmountPaid { get; set; }
+        public decimal? TotalBillAmount { get; set; }
+        public decimal? TotalAmountPaid { get; set; }
         public int? PaymentType { get; set; }
-        public double? CashReceived { get; set; }
-        public double? CashReturn { get; set; }
+        public decimal? CashReceived { get; set; }
+        public decimal? CashReturn { get; set; }
 
         public virtual SalesOrderMasterDto Order { get; set; }
         public virtual TaxDto Tax { get; set; }

@@ -80,23 +80,23 @@ namespace Models.DTO.InventoryManagement
         public int? ParentItemId { get; set; }
 
         [DisplayName("Minimum Quantity")]
-        public double? MinimumQuantity { get; set; }
+        public decimal? MinimumQuantity { get; set; }
 
         [DisplayName("Purchase Rate")]
-        public double? PurchaseRate { get; set; }
+        public decimal? PurchaseRate { get; set; }
 
         [DisplayName("Sales Rate")]
-        public double? SalesRate { get; set; }
+        public decimal? SalesRate { get; set; }
 
         //[DisplayName("Final Sales Rate")]
-        //public double? FinalSalesRate => CalculateFinalSalesRate();
+        //public decimal? FinalSalesRate => CalculateFinalSalesRate();
 
         [DisplayName("Final Sales Rate")]
-        public double? FinalSalesRate { get; set; }
+        public decimal? FinalSalesRate { get; set; }
 
         [DisplayName("Discount Amount")]
-        public double? DiscountAmount { get; set; }
-        public double? DiscountedAmount => GetDiscountedAmount();
+        public decimal? DiscountAmount { get; set; }
+        public decimal? DiscountedAmount => GetDiscountedAmount();
 
         [DisplayName("Discount In Percent")]
         public bool IsDiscountInPercent { get; set; }
@@ -154,7 +154,7 @@ namespace Models.DTO.InventoryManagement
         public int[] ItemTypesFilter { get; set; }
 
         public string SearchText { get; set; }
-        public double? GetDiscountedAmount()
+        public decimal? GetDiscountedAmount()
         {
             var result = DiscountAmount;
             if (IsDiscountInPercent)

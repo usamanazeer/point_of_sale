@@ -39,10 +39,10 @@ namespace POS_API.Data
         public bool? IsDeal { get; set; }
         public bool? IsRecipe { get; set; }
         public bool? IsRawItem { get; set; }
-        public double? MinimumQuantity { get; set; }
-        public double? PurchaseRate { get; set; }
-        public double? SalesRate { get; set; }
-        public double? DiscountAmount { get; set; }
+        public decimal? MinimumQuantity { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? SalesRate { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public bool? IsDiscountInPercent { get; set; }
         public int? TaxId { get; set; }
         public string ImageUrl { get; set; }
@@ -55,7 +55,7 @@ namespace POS_API.Data
         public DateTime? CreatedOn { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
-        public double? FinalSalesRate { get; set; }
+        public decimal? FinalSalesRate { get; set; }
 
         public virtual InvBrand Brand { get; set; }
         public virtual InvCategory Category { get; set; }
