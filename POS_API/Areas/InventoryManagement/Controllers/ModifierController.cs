@@ -16,7 +16,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
     public class ModifierController : BaseController
     {
         private readonly IModifierService _modifierService;
-        public ModifierController( ILogger<ModifierController> logger, IAuthenticationUtilities authenticationService, IModifierService modifierService) 
+        public ModifierController(ILogger<ModifierController> logger, IAuthenticationUtilities authenticationService, IModifierService modifierService)
             : base(logger, authenticationService) => _modifierService = modifierService;
 
         [HttpGet(nameof(Get))]
@@ -43,7 +43,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
                 var response = await _modifierService.GetDetails(model);
                 return Ok(response);
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return StatusCode(StatusCodesEnums.Error_Occured.ToInt(), Models.Response.Error("Api Error while Getting modifier data."));
             }

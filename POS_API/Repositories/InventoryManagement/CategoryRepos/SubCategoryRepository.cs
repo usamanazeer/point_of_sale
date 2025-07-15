@@ -62,7 +62,7 @@ namespace POS_API.Repositories.InventoryManagement.CategoryRepos
             var data = await _dbContext.InvSubCategory.FindAsync(model.Id);
             if (data is null) return null;
 
-            data.Name = model.Name;
+            data.Name = model.SubCategoryName;
             if (model.ImageUrl != null) data.ImageUrl = model.ImageUrl;
             data.DisplayOnPos = model.DisplayOnPos;
             data.CategoryId = model.CategoryId ?? 0;
@@ -104,7 +104,7 @@ namespace POS_API.Repositories.InventoryManagement.CategoryRepos
         {
             var exist = await _dbContext.InvSubCategory.AsNoTracking()
                .AnyAsync(x =>
-                                             x.Name == model.Name &&
+                                             x.Name == model.SubCategoryName &&
                                              x.CategoryId == model.CategoryId &&
                                              x.CompanyId == model.CompanyId &&
                                              x.Status != StatusType.Delete.ToInt() &&

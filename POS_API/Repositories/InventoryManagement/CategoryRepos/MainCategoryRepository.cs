@@ -61,7 +61,7 @@ namespace POS_API.Repositories.InventoryManagement.CategoryRepos
             var data = await _dbContext.InvCategory.FindAsync(model.Id);
             if (data is null) return null;
 
-            data.Name = model.Name;
+            data.Name = model.CategoryName;
             if (model.ImageUrl != null) data.ImageUrl = model.ImageUrl;
 
             data.DisplayOnPos = model.DisplayOnPos;
@@ -99,14 +99,14 @@ namespace POS_API.Repositories.InventoryManagement.CategoryRepos
             }
             return categoriesData
                 .Select(x=>new InvCategoryDto { 
-                    Id= x.Id, CategoryCode = x.CategoryCode, Name = x.Name,DisplayOnPos = x.DisplayOnPos??false, Status = x.Status, ImageUrl = x.ImageUrl,
+                    Id= x.Id, CategoryCode = x.CategoryCode, CategoryName = x.Name,DisplayOnPos = x.DisplayOnPos??false, Status = x.Status, ImageUrl = x.ImageUrl,
                     CreatedBy = x.CreatedBy, CreatedOn = x.CreatedOn, ModifiedBy= x.ModifiedBy, ModifiedOn = x.ModifiedOn, 
                 }).ToList();
         }
         public async Task<bool> IsExist(InvCategoryDto model)
         {
             return await _dbContext.InvCategory.AsNoTracking().AnyAsync(x =>
-                x.Name == model.Name &&
+                x.Name == model.CategoryName &&
                 x.CompanyId == model.CompanyId &&
                 x.Status != StatusType.Delete.ToInt() &&
                 x.Id != model.Id);

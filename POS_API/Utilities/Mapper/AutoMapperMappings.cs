@@ -284,8 +284,8 @@ namespace POS_API.Utilities.Mapper
             CreateMap<InvItemViewDto, InvItemDto> ()
                 .ForMember(dest => dest.ItemBarCode, act => act.MapFrom(src => src.BarCode))
                 .ForMember(dest => dest.InvItemBarCode, act => act.MapFrom(src => new List<InvItemBarCodeDto>() { new InvItemBarCodeDto() { Id = src.BarCodeId, BarCode = src.BarCode } } ))
-                .ForMember(dest => dest.Category, act => act.MapFrom(src => src.CategoryId == null? null : new InvCategoryDto() { Id = src.CategoryId.Value, CategoryCode = src.CategoryCode, Name = src.CategoryName, ImageUrl = src.CategoryImageUrl, DisplayOnPos = src.CategoryDisplayOnPos??false, Status = src.CategoryStatus }))
-                .ForMember(dest => dest.SubCategory, act => act.MapFrom(src => src.SubCategoryId == null ? null : new InvSubCategoryDto() { Id = src.SubCategoryId.Value, CategoryCode = src.SubCategoryCode, Name = src.SubCategoryName, ImageUrl = src.SubCategoryImageUrl, DisplayOnPos = src.SubCategoryDisplayOnPos ?? false, Status = src.SubCategoryStatus }))
+                .ForMember(dest => dest.Category, act => act.MapFrom(src => src.CategoryId == null? null : new InvCategoryDto() { Id = src.CategoryId.Value, CategoryCode = src.CategoryCode, CategoryName = src.CategoryName, ImageUrl = src.CategoryImageUrl, DisplayOnPos = src.CategoryDisplayOnPos??false, Status = src.CategoryStatus }))
+                .ForMember(dest => dest.SubCategory, act => act.MapFrom(src => src.SubCategoryId == null ? null : new InvSubCategoryDto() { Id = src.SubCategoryId.Value, CategoryCode = src.SubCategoryCode, SubCategoryName = src.SubCategoryName, ImageUrl = src.SubCategoryImageUrl, DisplayOnPos = src.SubCategoryDisplayOnPos ?? false, Status = src.SubCategoryStatus }))
                 .ForMember(dest => dest.Unit, act => act.MapFrom(src => src.UnitId == null ? null : new InvUnitDto() { Id = src.UnitId.Value, Name = src.UnitName, Description = src.UnitDescription, Status = src.UnitStatus }))
                 .ForMember(dest => dest.Brand, act => act.MapFrom(src => src.BrandId == null ? null : new InvBrandDto() { Id = src.BrandId.Value, Name = src.BrandName, Status = src.UnitStatus }))
                 .ForMember(dest => dest.Color, act => act.MapFrom(src => src.ColorId == null ? null : new InvColorDto() { Id = src.ColorId.Value, Name = src.ColorName, ColorValue = src.ColorValue, Status = src.ColorStatus }))
@@ -308,7 +308,7 @@ namespace POS_API.Utilities.Mapper
 
             CreateMap<InvSubCategoryDto, InvSubCategory_SLM>()
                .ForMember(d => d.Value, a => a.MapFrom(s => s.Id))
-               .ForMember(d => d.Text, a => a.MapFrom(s => s.Name))
+               .ForMember(d => d.Text, a => a.MapFrom(s => s.SubCategoryName))
                .ReverseMap();
 
             CreateMap<InvItemViewDto, InvItem_SLM>()

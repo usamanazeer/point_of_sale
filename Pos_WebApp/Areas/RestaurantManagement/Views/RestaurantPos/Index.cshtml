@@ -104,7 +104,7 @@
                         @foreach (var cat in Categories)
                         {
                             <li v-on:click="CategoryClick('@cat.Id')" :class="'nav-item '+(Active_Category == @cat.Id ? 'active' : '')" id="category-li-@cat.Id">
-                                <a class="category" data-cat-id="@cat.Id" data-item-type="@(ItemTypes.NormalItem.ToInt())" data-cat-name="@cat.Name">@cat.Name</a>
+                                <a class="category" data-cat-id="@cat.Id" data-item-type="@(ItemTypes.NormalItem.ToInt())" data-cat-name="@cat.CategoryName">@cat.CategoryName</a>
                             </li>
                         }
                         <li v-on:click="DealsClick()" :class="'nav-item '+(Active_Category == 'deals' ? 'active' : '')" id="category-li-deals">
@@ -313,7 +313,7 @@
                                         @for (var i = 0; i < Categories.Count(); i++)
                                         {
                                             <div class="card-header pb-2 ordered-items-card-header" id="order-category-container-@Categories[index: i].Id" v-show="FilterCartItemsByCategory(@Categories[index: i].Id).length > 0" @*style="display:none"*@>
-                                                <h6 class="card-title">@Categories[index: i].Name</h6>
+                                                <h6 class="card-title">@Categories[index: i].CategoryName</h6>
                                                 <div class="card-content ordered-item-card-content">
                                                     <ul id="order-item-category-@Categories[index: i].Id" class="list-group">
                                                         <li v-for="(item, index) in FilterCartItemsByCategory(@Categories[index: i].Id)" :id="'order-item-'+item.id" class="list-group-item ordered-item-li">

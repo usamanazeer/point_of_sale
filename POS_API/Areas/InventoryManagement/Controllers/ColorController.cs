@@ -15,7 +15,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
     public class ColorController : BaseController
     {
         private readonly IColorService _colorService;
-        public ColorController(ILogger<ColorController> logger, IAuthenticationUtilities authenticationService, IColorService colorService )
+        public ColorController(ILogger<ColorController> logger, IAuthenticationUtilities authenticationService, IColorService colorService)
             : base(logger, authenticationService) => _colorService = colorService;
 
         [HttpGet(nameof(Get))]
@@ -38,7 +38,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
         {
             try
             {
-                var model = new InvColorDto{ Id = id, CompanyId = COMPANY_ID };
+                var model = new InvColorDto { Id = id, CompanyId = COMPANY_ID };
                 var response = await _colorService.GetDetails(model);
                 return Ok(response);
             }
@@ -76,7 +76,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
                 var response = await _colorService.Edit(model);
                 return Ok(response);
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return StatusCode(StatusCodesEnums.Error_Occured.ToInt(), Models.Response.Error("Api Error while Updating Color."));
             }

@@ -93,7 +93,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
             }
             catch (Exception)
             {
-                response.SetError("Api Error while deleting GRRN.", model:false);
+                response.SetError("Api Error while deleting GRRN.", model: false);
                 return StatusCode(StatusCodesEnums.Error_Occured.ToInt(), response);
             }
         }

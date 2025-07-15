@@ -18,8 +18,8 @@ namespace POS_API.Areas.InventoryManagement.Controllers
         private readonly IMainCategoryService _mainCategoryService;
         private readonly ISubCategoryService _subCategoryService;
         public CategoryController(
-            ILogger<CategoryController> logger, IAuthenticationUtilities authenticationService, 
-            IMainCategoryService mainCategoryService, ISubCategoryService subCategoryService) 
+            ILogger<CategoryController> logger, IAuthenticationUtilities authenticationService,
+            IMainCategoryService mainCategoryService, ISubCategoryService subCategoryService)
             : base(logger, authenticationService)
         {
             _mainCategoryService = mainCategoryService;
@@ -40,7 +40,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
                 return StatusCode(StatusCodesEnums.Error_Occured.ToInt(), Models.Response.Error("Api Error while Getting Categories."));
             }
         }
-        
+
         [HttpPost("Main/Create")]
         public async Task<ActionResult> MainCreate([FromForm] InvCategoryDto model, [FromForm] IFormFile file = null)
         {
@@ -59,22 +59,22 @@ namespace POS_API.Areas.InventoryManagement.Controllers
             }
         }
 
-        [HttpPost("Main/Edit")]
-        public async Task<ActionResult> MainEdit([FromForm] InvCategoryDto model, [FromForm] IFormFile file = null)
-        {
-            try
-            {
-                model.CompanyId = COMPANY_ID;
-                model.ModifiedBy = USER_ID;
-                model.ModifiedOn = DateTime.Now;
-                var response = await _mainCategoryService.Edit(model, file);
-                return Ok(response);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodesEnums.Error_Occured.ToInt(), Models.Response.Error("Api Error while Updating Category."));
-            }
-        }
+        //[HttpPost("Main/Edit")]
+        //public async Task<ActionResult> MainEdit([FromForm] InvCategoryDto model, [FromForm] IFormFile file = null)
+        //{
+        //    try
+        //    {
+        //        model.CompanyId = COMPANY_ID;
+        //        model.ModifiedBy = USER_ID;
+        //        model.ModifiedOn = DateTime.Now;
+        //        var response = await _mainCategoryService.Edit(model, file);
+        //        return Ok(response);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(StatusCodesEnums.Error_Occured.ToInt(), Models.Response.Error("Api Error while Updating Category."));
+        //    }
+        //}
 
         [HttpGet("Main/Delete/{id}")]
         public async Task<ActionResult> MainDelete(int id)
@@ -131,7 +131,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
                 model.CompanyId = COMPANY_ID;
                 model.ModifiedBy = USER_ID;
                 model.ModifiedOn = DateTime.Now;
-                var response = await _subCategoryService.Edit(model,file);
+                var response = await _subCategoryService.Edit(model, file);
                 return Ok(response);
             }
             catch (Exception)
@@ -158,7 +158,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
         public async Task<IActionResult> SubGetSelectList(InvSubCategoryDto model)
         {
             try
-            { 
+            {
                 model.CompanyId = COMPANY_ID;
                 var response = await _subCategoryService.GetSelectList(model);
                 return Ok(response);

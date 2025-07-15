@@ -20,7 +20,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
         private readonly IPhysicalInventoryService _physicalInventoryService;
         public PhysicalStockController(
             ILogger<PhysicalStockController> logger, IAuthenticationUtilities authenticationService
-            ,IPhysicalInventoryService physicalInventoryService
+            , IPhysicalInventoryService physicalInventoryService
             )
             : base(logger, authenticationService) =>
             _physicalInventoryService = physicalInventoryService;
@@ -35,7 +35,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
             {
                 model.Id = id;
                 model.Status = status;
-                model.DisplayDeleted = getDeleted??false;
+                model.DisplayDeleted = getDeleted ?? false;
                 model.CompanyId = COMPANY_ID;
                 response = await _physicalInventoryService.GetAll(model);
                 return !response.ErrorOccured ? Ok(response) : StatusCode(response.ErrorCode, response);
@@ -53,7 +53,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
             var model = new PhysicalInventoryViewFilter { Id = id };
             try
             {
-                
+
                 model.CompanyId = COMPANY_ID;
                 response = await _physicalInventoryService.GetBillDetails(model);
                 return !response.ErrorOccured ? Ok(response) : StatusCode(response.ErrorCode, response);
@@ -71,7 +71,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
             var response = new Response();
             try
             {
-                
+
                 model.CompanyId = COMPANY_ID;
                 model.CreatedBy = USER_ID;
                 model.CreatedOn = DateTime.Now;
@@ -88,7 +88,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
             }
         }
         [HttpPost(nameof(GetLowInventory))]
-        public async Task<ActionResult> GetLowInventory(PhysicalInventoryViewFilter filters) 
+        public async Task<ActionResult> GetLowInventory(PhysicalInventoryViewFilter filters)
         {
             var response = new Response();
             try

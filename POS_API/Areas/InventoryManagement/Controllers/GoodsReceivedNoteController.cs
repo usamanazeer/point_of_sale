@@ -15,7 +15,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
     public class GoodsReceivedNoteController : BaseController
     {
         private readonly IGrnService _grnService;
-        public GoodsReceivedNoteController(ILogger<GoodsReceivedNoteController> logger, IAuthenticationUtilities authenticationService, IGrnService grnService) 
+        public GoodsReceivedNoteController(ILogger<GoodsReceivedNoteController> logger, IAuthenticationUtilities authenticationService, IGrnService grnService)
             : base(logger, authenticationService) => _grnService = grnService;
 
         [HttpGet(nameof(Get))]
@@ -76,7 +76,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
                 var response = await _grnService.Edit(model);
                 return Ok(response);
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return StatusCode(StatusCodesEnums.Error_Occured.ToInt(), Models.Response.Error("Api Error while Updating GRN."));
             }
@@ -84,10 +84,10 @@ namespace POS_API.Areas.InventoryManagement.Controllers
 
         [HttpGet("Delete/{id}")]
         public async Task<ActionResult> Delete(int id)
-        {   
+        {
             try
             {
-                var model = new InvGrnMasterDto{ Id = id, CompanyId = COMPANY_ID, ModifiedBy = USER_ID, ModifiedOn = DateTime.Now };
+                var model = new InvGrnMasterDto { Id = id, CompanyId = COMPANY_ID, ModifiedBy = USER_ID, ModifiedOn = DateTime.Now };
                 return Ok(await _grnService.Delete(model));
             }
             catch (Exception)

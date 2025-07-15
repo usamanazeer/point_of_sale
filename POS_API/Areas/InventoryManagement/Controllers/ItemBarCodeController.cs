@@ -15,7 +15,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
     public class ItemBarCodeController : BaseController
     {
         private readonly IItemBarCodeService _itemBarCodeService;
-        public ItemBarCodeController( ILogger<ItemBarCodeController> logger, IAuthenticationUtilities authenticationService ,IItemBarCodeService itemBarCodeService)
+        public ItemBarCodeController(ILogger<ItemBarCodeController> logger, IAuthenticationUtilities authenticationService, IItemBarCodeService itemBarCodeService)
             : base(logger, authenticationService) => _itemBarCodeService = itemBarCodeService;
 
         [HttpPost(nameof(Get))]
@@ -102,7 +102,7 @@ namespace POS_API.Areas.InventoryManagement.Controllers
         [HttpPost(nameof(GetSelectList))]
         public async Task<IActionResult> GetSelectList(InvItemBarCodeDto model)
         {
-            
+
             try
             {
                 model.CompanyId = COMPANY_ID;
